@@ -1,5 +1,8 @@
 title: sgmonda.com
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge # GitHub syntax highlighter
 permalink: /blog/:year/:month/:day/:title
 sass:
   sass_dir: _sass

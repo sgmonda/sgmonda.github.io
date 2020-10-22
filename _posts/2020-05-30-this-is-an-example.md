@@ -25,13 +25,32 @@ comitatur tamquam captus per sensit. Instructo manibus **pugnat** ast iamque
 nobis, repressit terraque copia? Uvis tradat illa focus subito una sed iam
 inpune, deus **maius**.
 
-    xmpKeyboardBatch -= newlineSubdirectoryMultiplatform.searchBrowserWord(
-            hypertext(topology, icmp, hoc_twitter), default - kbps,
-            application.rw_storage_cron(sprite_table_party,
-            oleIntelligenceBitrate, processorLink));
-    vdsl_user -= design_hdmi;
-    newsgroup = ups;
-    var version = clientText(denial, host + -2, goodput_software + domain);
+```javascript
+import { FunctionComponent } from "react";
+
+type Props = {
+  options: { [key: string]: string };
+  onChange: (value: string) => void;
+  value: string;
+  color?: string;
+};
+
+// @TODO Implement onChange()
+
+const Dropdown: FunctionComponent<Props> = ({ options, value, onChange, color }) => {
+  return (
+    <div className="select">
+      <select value={value} onChange={(e) => onChange(e.target.value)} style={{ background: color || undefined }}>
+        {Object.entries(options).map(([key, label]) => (
+          <option key={key} value={key}>{label}</option>
+        ))}
+      </select>
+    </div>
+  );
+};
+export default Dropdown;
+
+```
 
 ## Ponere non dum
 

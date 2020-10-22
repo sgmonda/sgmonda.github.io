@@ -5,9 +5,16 @@
     aria-label="main navigation"
   >
     <div class="navbar-brand">
-      <a class="navbar-item" href="/"> <i class="fas fa-home"></i> </a>
-      <a class="navbar-item" href="/blog"> Blog </a>
-      <a class="navbar-item" href="/projects"> <i class="fas fa-flask"></i> </a>
+      {% for item in site.data.menu %}
+      <a
+        class="navbar-item has-tooltip-bottom"
+        href="{{ item.url }}"
+        data-tooltip="{{ item.tooltip }}"
+      >
+        <!-- <i class="{{ item.icon }}"></i> -->
+        <span>{{ item.tooltip }}</span>
+      </a>
+      {% endfor %}
     </div>
 
     <div class="navbar-menu">
