@@ -4,6 +4,8 @@
   "description": "sgmonda.com",
   "main": "index.html",
   "scripts": {
+    "dev": "jekyll serve",
+    "install": "bundle install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,7 +18,5 @@
     "url": "https://github.com/sgmonda/sgmonda.github.io/issues"
   },
   "homepage": "https://github.com/sgmonda/sgmonda.github.io#readme",
-  "dependencies": {
-    "bulma": "^0.9.1"
-  }
+  "dependencies": {}
 }
