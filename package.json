@@ -1,0 +1,22 @@
+{
+  "name": "sgmonda.github.io",
+  "version": "1.0.0",
+  "description": "sgmonda.com",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sgmonda/sgmonda.github.io.git"
+  },
+  "author": "Sergio Garcia Mondaray <sgmonda@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sgmonda/sgmonda.github.io/issues"
+  },
+  "homepage": "https://github.com/sgmonda/sgmonda.github.io#readme",
+  "dependencies": {
+    "bulma": "^0.9.1"
+  }
+}
