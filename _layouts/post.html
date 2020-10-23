@@ -1,0 +1,27 @@
+---
+layout: default
+---
+
+<div class="content">
+  <h1>{{ page.title }}</h1>
+  <p class="excerpt">{{ page.description }}</p>
+  <p class="author-date">
+    {{ site.author }} &bull; {{ page.date | date_to_long_string }}
+  </p>
+  <hr />
+
+  <figure class="image is-2by1"><img src="{{ page.image }}" /></figure>
+
+  {{ content }}
+
+  <hr />
+
+  <h5>Otros artículos</h5>
+  <ul class="posts">
+    {% for post in site.related_posts %}
+    <li>
+      <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
