@@ -1,15 +1,15 @@
 - icon: fas fa-home
-  tooltip: Inicio
+  label: Inicio
   url: /
 
 - icon: fas fa-sticky-note
-  tooltip: Blog
+  label: Blog
   url: /blog
 
 - icon: fas fa-user
-  tooltip: Acerca de mí
+  label: Acerca de mí
   url: /about
 
 - icon: fas fa-flask
-  tooltip: Proyectos
+  label: Proyectos
   url: /labs

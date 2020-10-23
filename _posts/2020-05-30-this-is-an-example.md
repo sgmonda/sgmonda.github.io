@@ -2,6 +2,7 @@
 layout: default
 title: "This is an example post"
 date: 2020-05-29
+excerpt: Una situación de confinamiento es la oportunidad perfecta para encontrar formas de entretenimiento que puedan desarrollarse sin salir de casa.
 ---
 
 

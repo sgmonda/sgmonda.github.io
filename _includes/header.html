@@ -6,13 +6,11 @@
   >
     <div class="navbar-brand">
       {% for item in site.data.menu %}
-      <a
-        class="navbar-item has-tooltip-bottom"
-        href="{{ item.url }}"
-        data-tooltip="{{ item.tooltip }}"
-      >
-        <!-- <i class="{{ item.icon }}"></i> -->
-        <span>{{ item.tooltip }}</span>
+      <a class="navbar-item" href="{{ item.url }}">
+        <span class="icon has-tooltip-bottom" data-tooltip="{{ item.label }}">
+          <i class="{{ item.icon }}"></i>
+        </span>
+        <span class="label">{{ item.label }}</span>
       </a>
       {% endfor %}
     </div>
@@ -21,7 +19,7 @@
       <div class="navbar-start"></div>
 
       <div class="navbar-end">
-        <div class="navbar-item">hello</div>
+        <div class="navbar-item">{{ site.title }}</div>
       </div>
     </div>
   </nav>
