@@ -1,4 +1,13 @@
 title: sgmonda.com
+description: Web personal de Sergio García Mondaray
+url: https://sgmonda.com
+author: Sergio García Mondaray
+twitter:
+  card: summary
+  username: sgmonda
+logo: /assets/img/logo.png
+locale: es_ES
+layout: default
 markdown: kramdown
 kramdown:
   input: GFM
@@ -7,3 +16,5 @@ permalink: /blog/:year/:month/:day/:title
 sass:
   sass_dir: _sass
   style: compressed
+plugins:
+  - jekyll-seo-tag

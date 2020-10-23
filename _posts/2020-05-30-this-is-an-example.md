@@ -1,16 +1,9 @@
 ---
-layout: default
-title: "This is an example post"
 date: 2020-05-29
-excerpt: Una situación de confinamiento es la oportunidad perfecta para encontrar formas de entretenimiento que puedan desarrollarse sin salir de casa.
+title: "This is an example post"
+description: Una situación de confinamiento es la oportunidad perfecta para encontrar formas de entretenimiento que puedan desarrollarse sin salir de casa
+image: https://images.unsplash.com/photo-1520809227329-2f94844a9635?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
 ---
-
-
-Well. Finally got around to putting this old website together. Neat thing about it - powered by [Jekyll](http://jekyllrb.com) and I can use Markdown to author my posts. It actually is a lot easier than I thought it was going to be.
-
-# Flebile Hyadasque audetis dat fatigant
-
-## Fugit late
 
 Lorem markdownum terrae, ast ingrate [postera precor](http://vires.org/) urguet
 cupidoque manibus! Marem iussum: Ide tento ad obsequio, genitor diffudit contra
@@ -41,7 +34,7 @@ type Props = {
 const Dropdown: FunctionComponent<Props> = ({ options, value, onChange, color }) => {
   return (
     <div className="select">
-      <select value={value} onChange={(e) => onChange(e.target.value)} style={{ background: color || undefined }}>
+      <select value={value} onChange={(e) => onChange(e.target.value)} style={ background: color || undefined }>
         {Object.entries(options).map(([key, label]) => (
           <option key={key} value={key}>{label}</option>
         ))}
