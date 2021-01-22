@@ -1,0 +1,93 @@
+@import "constants"
+@import "header"
+@import "footer"
+
+*
+  font-family: "Roboto", sans-serif
+  font-weight: 300
+a
+  font-weight: normal
+pre, pre *, code, code *
+  font-family: monospace
+body
+  min-height: 100vh
+.other
+  color: orange !important
+  font-family: sans-serif
+.container
+  @media screen
+    max-width: $page-width !important
+  body
+    padding: 0 1em !important
+  p
+    &.excerpt
+      @media (min-width: $page-width)
+        padding: 0 3em !important
+    &.author-date
+      opacity: 0.5
+      text-align: center
+      text-transform: uppercase
+      font-family: "Roboto Condensed", "Roboto", sans-serif
+  hr
+    margin: 3em 0
+  div
+    &.highlighter-rouge
+      margin-bottom: 1em
+.content
+  @media (max-width: $page-width)
+    padding: 0 1em
+  a
+    color: $color-link
+    text-decoration: underline
+  p
+    text-align: justify
+
+  ul
+    margin-left: 1.2em !important
+  h1, h2, h3, h4, h5
+    font-family: "Roboto Condensed", sans-serif
+    text-transform: uppercase
+  h1
+    font-size: 2em !important
+    text-align: center
+    @media (min-width: $page-width)
+      padding: 0 3em !important
+  h2
+    font-size: 2em !important
+    color: $color-primary !important
+  h3
+    font-size: 1.5em !important
+    opacity: 0.75
+  h4
+    font-size: 1.3em !important
+    opacity: 0.5
+  h5
+    font-size: 1em !important
+
+  figure
+    margin: 1.5em 0 !important
+    overflow: hidden
+    img
+      width: auto !important
+      height: auto !important
+      position: absolute
+      left: 50% !important
+      top: 50% !important
+      -webkit-transform: translate(-50%, -50%)
+      -moz-transform: translate(-50%, -50%)
+      -ms-transform: translate(-50%, -50%)
+      -o-transform: translate(-50%, -50%)
+      transform: translate(-50%, -50%)
+
+  .video
+    position: relative
+    padding-bottom: 56.25%
+    padding-top: 25px
+    height: 0
+    margin-bottom: 1em
+    iframe
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%

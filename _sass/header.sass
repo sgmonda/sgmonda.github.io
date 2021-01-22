@@ -1,0 +1,28 @@
+@import "constants"
+
+#header
+  margin-bottom: 5em
+
+  @media (max-width: $page-width)
+    padding: 0 1em
+
+  .navbar-brand
+    justify-content: space-between
+
+  a.navbar-item
+    .icon
+      margin-right: 0.5em
+      @media (min-width: $page-width)
+        display: none !important
+    .label
+      font-family: "Roboto Condensed", sans-serif !important
+      font-weight: bold
+      text-transform: uppercase
+      color: $color-menu
+
+      @media (max-width: $page-width)
+        display: none !important
+
+    &:hover
+      .label
+        color: $color-menu-hover

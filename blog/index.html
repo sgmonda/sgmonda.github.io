@@ -3,24 +3,24 @@ layout: default
 title: Blog
 ---
 
-<div class="content">
-  <h1>{{ page.title }}</h1>
-  <p class="excerpt">
-    De vez en cuando escribo cosas. Si no tienes nada más interesante que hacer
-    con tu vida puedes echarle un vistazo a alguna de estas publicaciones.
+<h1>{{ page.title }}</h1>
+
+<p class="excerpt">
+  De vez en cuando escribo cosas. Si no tienes nada más interesante que hacer
+  puedes echarle un vistazo a alguna de estas publicaciones.
+</p>
+
+<hr />
+
+{% for post in site.posts %}
+
+<article>
+  <h4>{{post.title}}</h4>
+  <p>{{ post.description }}</p>
+  <p>
+    <a href="{{ post.url }}">Leer artículo completo</a>
   </p>
-  <hr />
+  <div style="margin-bottom: 3em"></div>
+</article>
 
-  {% for post in site.posts %}
-
-  <article class="content">
-    <h4>{{post.title}}</h4>
-    <p>{{ post.excerpt }}</p>
-    <p>
-      <a href="{{ post.url }}">Leer artículo completo</a>
-    </p>
-    <div style="margin-bottom: 3em"></div>
-  </article>
-
-  {% endfor %}
-</div>
+{% endfor %}

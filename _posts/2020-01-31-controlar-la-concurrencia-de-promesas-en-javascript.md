@@ -1,7 +1,7 @@
 ---
 date: 2020-03-23
 title: Controlar la concurrencia de promesas en Javascript
-description: ¿Conoces las limitaciones de Promise.all() y los problemas que puede traerte? Muchas veces intentamos paralelizar promesas de la forma incorrecta y podemos acabar con los recursos del sistema rápidamente.
+description: ¿Conoces las formas de paralelizar promesas en Javascript y los problemas que pueden traerte? Muchas veces intentamos hacerlo de la forma incorrecta y podemos acabar con los recursos del sistema rápidamente. En este artículo aprenderemos la manera correcta.
 image: https://images.unsplash.com/photo-1516996087931-5ae405802f9f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ
 ---
 
