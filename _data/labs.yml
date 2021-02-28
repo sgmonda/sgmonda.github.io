@@ -1,0 +1,29 @@
+categories:
+  - id: software
+    title: Software
+    description: Bla bla software hello
+  - id: music
+    title: Música
+    description: Hello music bla bla
+  - id: illustrations
+    title: Ilustraciones
+    description: Hello illustra
+
+projects:
+  - icon: fas fa-home
+    title: Nombre del proyecto
+    description: Esta es la descripción del proyecto
+    url: /
+    category: software
+
+  - icon: fas fa-user
+    title: Otro proyecto
+    description: Y bla bla bla
+    url: /
+    category: software
+
+  - icon: fas fa-user-alt
+    title: Canción
+    description: Descripción de un dibujo
+    url: /
+    category: music
