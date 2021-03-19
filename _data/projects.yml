@@ -9,7 +9,7 @@ categories:
     title: Ilustraciones
     description: Hello illustra
 
-projects:
+items:
   - title: Nombre del proyecto
     description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
     url: /prueba
