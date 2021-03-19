@@ -4,7 +4,7 @@ categories:
     description: Bla bla software hello
   - id: music
     title: Música
-    description: Hello music bla bla
+    description: 'Me gusta componer y escribir canciones. Puedes ver mis trabajos en solitario y colaboraciones en las plataformas de streaming, bajo mi nombre artístico: "Monda". También he producido música para otros artistas.'
   - id: illustrations
     title: Ilustraciones
     description: Hello illustra
@@ -36,8 +36,23 @@ items:
     description: Y bla bla bla
     category: software
 
-  - icon: fas fa-user-alt
-    title: Canción
-    description: Descripción de un dibujo
+  - title: La Tierra Gira (2021)
+    # icon: fas fa-music
+    description: Álbum escrito durante 2020, en parte durante el confinamiento por la pandemia del COVID-19.
+    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    url: /
+    category: music
+
+  - title: La Tierra Gira (2021)
+    # icon: fas fa-music
+    description: Álbum escrito durante 2020, en parte durante el confinamiento por la pandemia del COVID-19.
+    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    url: /
+    category: music
+
+  - title: La Tierra Gira (2021)
+    # icon: fas fa-music
+    description: Álbum escrito durante 2020, en parte durante el confinamiento por la pandemia del COVID-19.
+    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
     url: /
     category: music
