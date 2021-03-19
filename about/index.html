@@ -1,6 +1,25 @@
 ---
 layout: default
-title: Acerca de mí
+title: Sergio García Mondaray
+description: Ingeniero, fotógrafo, músico e ilustrador
 ---
 
-<dev> Hello, bla bla bla </dev>
+<div class="columns">
+  <div class="column">
+    <figure class="image is-3by4" style="margin: 0 !important">
+      <img src="https://images.unsplash.com/photo-1551678549-99e9cc32b4f3" />
+    </figure>
+  </div>
+  <div class="column">
+    <h2 class="black">Información personal</h2>
+    <p>bla bla</p>
+  </div>
+</div>
+
+<h2 class="black">Formación</h2>
+
+{% include cv-section.html data=site.data.studies %}
+
+<h2 class="black">Proyectos</h2>
+
+{% include cv-section.html data=site.data.projects %}

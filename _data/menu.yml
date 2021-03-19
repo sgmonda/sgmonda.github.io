@@ -4,12 +4,12 @@
 
 - icon: fas fa-sticky-note
   label: Blog
-  url: /blog
+  url: /blog/
 
 - icon: fas fa-user
   label: Acerca de mí
-  url: /about
+  url: /about/
 
 - icon: fas fa-flask
   label: Proyectos
-  url: /labs
+  url: /labs/

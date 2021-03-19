@@ -1,0 +1,32 @@
+{% for category in data.categories %}
+
+<h2 style="margin-top: 0">{{ category.title }}</h2>
+<p>{{ category.description }}</p>
+
+<div class="columns is-multiline">
+  {% for item in data.items %} {% if item.category == category.id %}
+
+  <div
+    class="column is-half"
+    style="flex-direction: column; display: flex; padding-bottom: 0"
+  >
+    <div style="flex: 1">
+      <h4 style="margin: 0 0 0.5em 0">
+        <i class="{{item.icon}}"></i> {{ item.title }}
+      </h4>
+
+      <p style="margin: 0" class="is-size-7">{{ item.description }}</p>
+
+      {% if item.url %}
+      <p class="is-size-7">
+        <a href="{{ item.url }}">{{ site.url }}{{ item.url }}</a>
+      </p>
+      {% endif %}
+    </div>
+    <hr style="margin: 0.5em 0 0 0" />
+  </div>
+
+  {% endif %} {% endfor %}
+</div>
+
+{% endfor %}

@@ -2,23 +2,41 @@
 
 #header
   margin-bottom: 5em
+  @media print
+    display: none
 
   @media (max-width: $page-width)
     padding: 0 1em
+    margin-top: 0.5em
 
   .navbar-brand
     justify-content: space-between
 
   a.navbar-item
+    color: $color-menu !important
+    border-bottom: solid 0.2em transparent
+    background-color: transparent !important
+
+    @media (min-width: $page-width)
+      height: 2.5em
+      margin-top: 0.5em
+
     .icon
-      margin-right: 0.5em
+      margin: auto
+      font-size: 2em
+
       @media (min-width: $page-width)
         display: none !important
+
+    &.is-active
+      border-color: $color-menu
+    &:not(.is-active)
+      opacity: 0.5
+
     .label
       font-family: "Roboto Condensed", sans-serif !important
       font-weight: bold
       text-transform: uppercase
-      color: $color-menu
 
       @media (max-width: $page-width)
         display: none !important

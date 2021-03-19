@@ -1,14 +1,8 @@
 ---
 layout: default
+title: Sergio García Mondaray
+description: Ingeniero, fotógrafo, músico e ilustrador  
 ---
-
-# Sergio García Mondaray
-
-<p class="excerpt" style="text-align: center">
-  Ingeniero, fotógrafo, músico e ilustrador  
-</p>
-
-<hr/>
 
 De mente inquieta y creativa. Apasionado del aprendizaje y la creación. Me encanta conocer disciplinas, herramientas y técnicas nuevas cada día y crear experiencias completas desde cero. He estudiado Ingeniería Informática, pero no me gusta definirme como "ingeniero" porque esa es sólo una parte de mí. También soy fotógrafo, videógrafo, músico e ilustrador.
 

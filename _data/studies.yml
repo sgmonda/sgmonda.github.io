@@ -1,0 +1,38 @@
+categories:
+  - id: academic
+    title: Académica
+    description: Bla bla academic hello
+  - id: complementary
+    title: Complementaria
+    description: Hello complementary bla bla
+  - id: other
+    title: Otras
+    description: Hello illustra
+
+items:
+  - title: Nombre del proyecto
+    description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
+    category: academic
+
+  - title: Nombre del proyecto
+    description: Esta es la descripción del proyecto,
+    category: academic
+
+  - title: Nombre del proyecto
+    description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
+    category: academic
+
+  - icon: fas fa-home
+    title: Nombre del proyecto
+    description: Esta es la descripción del proyecto,
+    category: academic
+
+  - icon: fas fa-user
+    title: Otro proyecto
+    description: Y bla bla bla
+    category: academic
+
+  - icon: fas fa-user-alt
+    title: Canción
+    description: Descripción de un dibujo
+    category: complementary
