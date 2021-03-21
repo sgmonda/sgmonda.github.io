@@ -13,25 +13,52 @@
     <div style="flex: 1">
       {% if item.image %}
       <figure
-        class="image is-2by1"
+        class="image {% if item.imageSize %}{{ item.imageSize }}{% else %}is-3by2{% endif %}"
         style="margin: 0 0 1em 0 !important; border-radius: 5px"
       >
         <img src="{{ item.image }}" />
       </figure>
       {% endif %}
-      <h4 style="margin: 0 0 0.5em 0">
-        <i class="{{item.icon}}"></i> {{ item.title }}
-      </h4>
 
-      <p style="margin: 0" class="is-size-7">{{ item.description }}</p>
+      <div class="columns">
+        {% if item.imageIcon %}
+        <div class="column is-narrow">
+          <figure
+            class="image {% if item.imageSize %}{{ item.imageSize }}{% else %}is-96x96{% endif %}"
+            style="margin: 0 0 1em 0 !important; border-radius: 5px"
+          >
+            <img src="{{ item.imageIcon }}" />
+          </figure>
+        </div>
+        {% endif %}
 
-      {% if item.url %}
-      <p class="is-size-7">
-        <a href="{{ item.url }}">{{ site.url }}{{ item.url }}</a>
-      </p>
-      {% endif %}
+        <div class="column">
+          <h4 style="margin: 0">
+            <i class="{{item.icon}}"></i> {{ item.title }}
+          </h4>
+          {% if item.subtitle %}
+          <small
+            ><strong style="opacity: 0.3">{{ item.subtitle }}</strong></small
+          >
+          {% endif %}
+
+          <p style="margin: 0" class="is-size-7">{{ item.description }}</p>
+
+          {% if item.url %}
+          <p class="is-size-7">
+            {% assign linkStart = item.url | slice: 0, 1 %}
+            <a target="_blank" href="{{ item.url }}"
+              >{% if linkStart == "/" %}{{ site.url }}{% endif %}{{ item.url
+              }}</a
+            >
+          </p>
+          {% endif %}
+        </div>
+      </div>
     </div>
+    {% unless item.noseparator %}
     <hr style="margin: 0.5em 0 0 0" />
+    {% endunless %}
   </div>
 
   {% endif %} {% endfor %}

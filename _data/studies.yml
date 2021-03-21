@@ -13,10 +13,14 @@ items:
   - title: Nombre del proyecto
     description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
     category: academic
+    imageIcon: /assets/img/esi.png
+    url: http://esi.uclm.es
 
   - title: Nombre del proyecto
     description: Esta es la descripción del proyecto,
     category: academic
+    imageIcon: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    imageSize: is128x128
 
   - title: Nombre del proyecto
     description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.

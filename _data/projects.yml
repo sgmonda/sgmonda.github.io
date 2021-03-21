@@ -1,58 +1,106 @@
 categories:
   - id: software
     title: Software
-    description: Bla bla software hello
+    description: Llevo unos cuantos años dedicándome profesionalmente al desarrollo de software, creando experiencias completas desde cero y liderando equipos de desarrollo. Pero más allá de lo extrictamente profesional, mis conocimientos y experiencia me permiten divertirme con experimentos y productos propios.
   - id: music
     title: Música
-    description: 'Me gusta componer y escribir canciones. Puedes ver mis trabajos en solitario y colaboraciones en las plataformas de streaming, bajo mi nombre artístico: "Monda". También he producido música para otros artistas.'
+    description: 'Me gusta componer música y escribir canciones. Puedes ver mis trabajos en solitario y colaboraciones en las plataformas de streaming (como Spotify o Apple Music), bajo mi nombre artístico: "Monda". Esta es una pequeña muestra de lo que encontrarás.'
+  - id: fotovideo
+    title: Fotografía y vídeo
+    description: La creación audiovisual es otra disciplina con la que disfruto con regularidad. La fotografía y la videografía están tan estrechamente relacionadas que raramente se concibe la una sin la otra. Estas son algunas de las creaciones de las que estoy más orgulloso.
   - id: illustrations
     title: Ilustraciones
-    description: Hello illustra
+    description: Desde pequeño, siempre he encontrado un hueco para pintar, desde obras realistas hasta graciosos personajes para niños. Me gusta partir de un lienzo en blanco y acabar creando algo único que poder compartir con el mundo. Esta es una pequeña muestra de lo que hago.
 
 items:
   - title: Nombre del proyecto
     description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
     url: /prueba
+    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    imageSize: is-3by1
     category: software
 
   - title: Nombre del proyecto
     description: Esta es la descripción del proyecto,
     url: /labs/otro
+    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    imageSize: is-3by1
     category: software
 
   - title: Nombre del proyecto
     description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
+    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    imageSize: is-3by1
     url: /labs/algo
     category: software
 
   - icon: fas fa-home
     title: Nombre del proyecto
     description: Esta es la descripción del proyecto,
+    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    imageSize: is-3by1
     url: /
     category: software
 
   - icon: fas fa-user
     title: Otro proyecto
+    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    imageSize: is-3by1
     description: Y bla bla bla
     category: software
 
-  - title: La Tierra Gira (2021)
+  - title: La Tierra Gira
+    subtitle: 2021
     # icon: fas fa-music
-    description: Álbum escrito durante 2020, en parte durante el confinamiento por la pandemia del COVID-19.
-    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
-    url: /
+    description: Álbum de 8 canciones escrito durante 2020, en parte durante el confinamiento por la pandemia del COVID-19.
+    imageIcon: /assets/img/tierra-gira.png
     category: music
 
-  - title: La Tierra Gira (2021)
+  - title: Renegado
+    subtitle: 2019
     # icon: fas fa-music
-    description: Álbum escrito durante 2020, en parte durante el confinamiento por la pandemia del COVID-19.
-    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
-    url: /
+    description: Colaboración con Deivid y Gude, en forma de single que trata de ofrecer una visión atípica del amor.
+    imageIcon: /assets/img/renegado.png
     category: music
 
-  - title: La Tierra Gira (2021)
+  - title: Voces del incomprendido
+    subtitle: 2019
     # icon: fas fa-music
-    description: Álbum escrito durante 2020, en parte durante el confinamiento por la pandemia del COVID-19.
-    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
-    url: /
+    description: Colaboración con Deivid, para su álbum "Desde mi azotea", en el que conversamos con las supuestas voces que nos susurran.
+    imageIcon: /assets/img/azotea.png
     category: music
+
+  - title: Ferrallas y movidas
+    subtitle: YouTube / +25k suscriptores
+    # icon: fas fa-music
+    description: Canal protagonizado por dos amigos míos en un taller. Yo grabo y monto los vídeos.
+    imageIcon: /assets/img/fym.png
+    category: fotovideo
+    url: http://ferrallasymovidas.com
+
+  - title: CAPTUR.AS
+    subtitle: Producción audiovisual
+    # icon: fas fa-music
+    description: Bajo esta marca creo contenido como videoclips, cortometrajes y vídeos de boda.
+    imageIcon: /assets/img/capturas.png
+    category: fotovideo
+    url: http://captur.as
+
+  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    category: illustrations
+    noseparator: true
+  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    category: illustrations
+    noseparator: true
+  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    category: illustrations
+    noseparator: true
+  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    category: illustrations
+    noseparator: true
+  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    category: illustrations
+    noseparator: true
+  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    category: illustrations
+    noseparator: true
