@@ -1,9 +1,9 @@
 {% for category in include.data.categories %}
 
-<h2 style="margin-top: 0">{{ category.title }}</h2>
+<h2 class="white" style="margin-top: 0">{{ category.title }}</h2>
 <p>{{ category.description }}</p>
 
-<div class="columns is-multiline">
+<div class="columns is-multiline" style="margin-bottom: 2em">
   {% for item in include.data.items %} {% if item.category == category.id %}
 
   <div

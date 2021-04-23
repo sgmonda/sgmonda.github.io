@@ -71,7 +71,7 @@ items:
     category: music
 
   - title: Ferrallas y movidas
-    subtitle: YouTube / +25k suscriptores
+    subtitle: YouTube / +27k suscriptores
     # icon: fas fa-music
     description: Canal protagonizado por dos amigos míos en un taller. Yo grabo y monto los vídeos.
     imageIcon: /assets/img/fym.png
@@ -86,8 +86,25 @@ items:
     category: fotovideo
     url: http://captur.as
 
-  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+  - image: /assets/img/beach.jpeg
     category: illustrations
+    imageSize: is-square
+    noseparator: true
+  - image: /assets/img/covid.jpeg
+    category: illustrations
+    imageSize: is-square
+    noseparator: true
+  - image: /assets/img/sheep.jpeg
+    category: illustrations
+    imageSize: is-square
+    noseparator: true
+  - image: /assets/img/cat.jpeg
+    category: illustrations
+    imageSize: is-square
+    noseparator: true
+  - image: /assets/img/fym-poster.jpg
+    category: illustrations
+    imageSize: is-square
     noseparator: true
   - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
     category: illustrations
