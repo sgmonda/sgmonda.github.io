@@ -1,3 +1,6 @@
+title: Formación
+description: Hola mundo, bla bla estudios
+
 categories:
   - id: academic
     title: Académica
@@ -5,42 +8,51 @@ categories:
   - id: complementary
     title: Complementaria
     description: Hello complementary bla bla
-  - id: other
-    title: Otras
-    description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
 
 items:
-  - title: Nombre del proyecto
-    description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
+  - title: Licenciatura en Ingeniería Informática
+    subtitle: UCLM / 2007-2012
+    description: Licenciado obteniendo Matrícula de Honor en el Proyecto Fin de Carrera
     category: academic
     imageIcon: /assets/img/esi.png
     url: http://esi.uclm.es
+    imageSize: is-64x64
 
-  - title: Nombre del proyecto
+  - title: Bachillerato en Ciencias Puras
+    subtitle: I.E.S. Alfonso VIII / 2005-2007
     description: Esta es la descripción del proyecto,
     category: academic
-    imageIcon: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
-    imageSize: is128x128
+    imageIcon: /assets/img/alfonso.png
+    imageSize: is-64x64
 
-  - title: Nombre del proyecto
-    description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
-    category: academic
-    imageIcon: /assets/img/esi.png
-
-  - icon: fas fa-home
-    title: Nombre del proyecto
-    description: Esta es la descripción del proyecto,
-    category: academic
-    imageIcon: /assets/img/esi.png
-
-  - icon: fas fa-user
-    title: Otro proyecto
-    description: Y bla bla bla
-    category: academic
-    imageIcon: /assets/img/esi.png
-
-  - icon: fas fa-user-alt
-    title: Canción
-    description: Descripción de un dibujo
+  - title: Master en desarrollo de videojuegos con Unity
+    subtitle: Udemy / 2019
+    url: https://udemy.com
+    description: Curso completo de desarrollo de software 3D con el motor Unity y el lenguaje C#, enfocado a la creación de videojuegos.
     category: complementary
-    imageIcon: /assets/img/esi.png
+    imageIcon: /assets/img/unity.png
+    imageSize: is-64x64
+
+  - title: Power Searching
+    subtitle: Google / 2012
+    url: https://google.com
+    description: Curso online sobre técnicas de búsqueda y recuperación de información, aplicado a la resolución de casos reales.
+    category: complementary
+    imageIcon: /assets/img/google.png
+    imageSize: is-64x64
+
+  - title: Introducción avanzada a la Inteligencia Artificial
+    subtitle: Stanford University (online) / 2011
+    url: https://www.stanford.edu
+    description: Curso de 100 horas sobre fundamentos y aplicaciones de machine learning, razonamiento probabilístico, robótica y procesamiento de lenguaje natural.
+    category: complementary
+    imageIcon: /assets/img/stanford.png
+    imageSize: is-64x64
+
+  - title: Administración de sistemas GNU/Linux
+    subtitle: UCLM / 2010
+    url: https://uclm.es
+    description: Curso presencial de 30 horas sobre la administración de sistemas basados en UNIX
+    category: complementary
+    imageIcon: /assets/img/uclm.png
+    imageSize: is-64x64

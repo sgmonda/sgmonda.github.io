@@ -1,6 +1,6 @@
 {% for category in include.data.categories %}
 
-<h2 class="white" style="margin-top: 0">{{ category.title }}</h2>
+<h2 style="margin-top: 0">{{ category.title }}</h2>
 <p>{{ category.description }}</p>
 
 <div class="columns is-multiline" style="margin-bottom: 2em">
@@ -20,7 +20,7 @@
       </figure>
       {% endif %}
 
-      <div class="columns">
+      <div class="columns is-mobile">
         {% if item.imageIcon %}
         <div class="column is-narrow">
           <figure
