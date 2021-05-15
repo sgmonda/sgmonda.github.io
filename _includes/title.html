@@ -4,7 +4,8 @@
   {% endif %} {% if page.description %}
   <p class="excerpt">{{ page.description }}</p>
   <p class="author-date">
-    {{ site.author }} &bull; {{ page.date | date_to_long_string }}
+    {{ site.author }} {% if page.date %} &bull; {{ page.date | date: "%Y-%m-%d"
+    }} {% endif %}
   </p>
   <hr />
   {% endif %}
