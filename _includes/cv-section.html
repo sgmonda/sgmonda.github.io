@@ -42,15 +42,19 @@
           >
           {% endif %}
 
-          <p style="margin: 0" class="is-size-7">{{ item.description }}</p>
+          <p style="margin: 0">
+            <small> {{ item.description }} </small>
+          </p>
 
           {% if item.url %}
-          <p class="is-size-7">
-            {% assign linkStart = item.url | slice: 0, 1 %}
-            <a target="_blank" href="{{ item.url }}"
-              >{% if linkStart == "/" %}{{ site.url }}{% endif %}{{ item.url
-              }}</a
-            >
+          <p>
+            <small>
+              {% assign linkStart = item.url | slice: 0, 1 %}
+              <a target="_blank" href="{{ item.url }}"
+                >{% if linkStart == "/" %}{{ site.url }}{% endif %}{{ item.url
+                }}</a
+              >
+            </small>
           </p>
           {% endif %}
         </div>

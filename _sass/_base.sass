@@ -12,11 +12,12 @@ pre, pre *, code, code *
   font-family: monospace
 body
   min-height: 100vh
-  // @media print
-  //   margin: 2cm !important
+  @media print
+    // margin: 2cm !important
+    font-size: 9.6pt !important
 @page
   size: 210mm 297mm
-  margin: 2.5cm 2.5cm 2.5cm 2.5cm !important
+  margin: 2.5cm 2cm 2.5cm 2cm !important
 
 .other
   color: orange !important
@@ -41,6 +42,7 @@ body
   div
     &.highlighter-rouge
       margin-bottom: 1em
+
 .content
   @media (max-width: $page-width)
     padding: 0 1em
@@ -80,8 +82,8 @@ body
     font-size: 1.3em !important
     opacity: 0.75
   h4
-    font-size: 1.2em !important
-    opacity: 0.5
+    font-size: 1.1em !important
+    opacity: 0.65
   h5
     font-size: 1em !important
 
@@ -129,6 +131,6 @@ body
 section
   h1
     margin-top: 2em
-    page-break-before: always
+    // page-break-before: always
   .excerpt
     margin-bottom: 3em !important

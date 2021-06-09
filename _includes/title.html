@@ -1,12 +1,14 @@
 <div class="print-hidden" style="margin-bottom: 3em">
   {% if page.title %}
-  <h1>{{ page.title }}</h1>
-  {% endif %} {% if page.description %}
-  <p class="excerpt">{{ page.description }}</p>
-  <p class="author-date">
-    {{ site.author }} {% if page.date %} &bull; {{ page.date | date: "%Y-%m-%d"
-    }} {% endif %}
-  </p>
-  <hr />
+    <h1>{{ page.title }}</h1>
+  {% endif %} 
+  {% if page.description %}
+    <p class="excerpt">{{ page.description }}</p>
+    {% if page.date %} 
+      <p class="author-date">
+        {{ site.author }} &bull; {{ page.date | date: "%Y-%m-%d" }} 
+      </p>
+    {% endif %}
+    <hr />
   {% endif %}
 </div>

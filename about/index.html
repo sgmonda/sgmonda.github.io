@@ -5,7 +5,7 @@ layout: default
 <div class="columns">
   <div class="column is-narrow" style="width: 10em">
     <figure class="image is-3by4" style="margin: 0 !important">
-      <img src="https://images.unsplash.com/photo-1551678549-99e9cc32b4f3" />
+      <img src="/assets/img/avatar.jpg" />
     </figure>
   </div>
   <div class="column">
@@ -15,6 +15,12 @@ layout: default
 </div>
 
 <hr />
+
+<section>
+  <h1>{{ site.data.skills.title }}</h1>
+  <p class="excerpt">{{ site.data.skills.description }}</p>
+  {% include cv-section.html data=site.data.skills %}
+</section>
 
 <section>
   <h1>{{ site.data.studies.title }}</h1>

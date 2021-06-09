@@ -1,37 +1,30 @@
-title: Formación
+title: Habilidades Técnicas
 description: Hola mundo, bla bla estudios
 
 categories:
-  - id: academic
-    title: Académica
+  - id: software
+    title: Desarrollo de Software
     # description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
   - id: complementary
     title: Complementaria
     # description: Hello complementary bla bla
 
 items:
-  - title: Ingeniero en Informática
-    subtitle: Universidad de Castilla-La Mancha / 2007-2012
-    description: "Licenciado en Ingeniería Informática con Matrícula de Honor en el Proyecto Fin de Carrera: una red social para la monitorización y entrenamiento gamificado de habilidades mentales mediante videojuegos multijugador."
-    category: academic
-    url: http://esi.uclm.es
-    # imageIcon: /assets/img/esi.png
-    # imageSize: is-64x64
+  - title: Lenguajes de programación
+    category: software
+    description: Me siento cómodo con JavaScript, TypeScript, CoffeeScript, C#, Java y C. También he experimentado con Lisp, C++, Elixir, Earlang, Ada y Go.
 
-  - title: Bachillerato en Ciencias Puras
-    subtitle: I.E.S. Alfonso VIII / 2005-2007
-    description: Educación secundaria focalizada en las Matemáticas, Física y Química, Dibujo Técnico y otras disciplinas relacionadas con la Ingeniería.
-    category: academic
-    # imageIcon: /assets/img/alfonso.png
-    # imageSize: is-32x32
+  - title: Bases de datos
+    category: software
+    description: bla bla bla
 
-  - title: Desarrollo de videojuegos con Unity
-    subtitle: Udemy / 2019
-    url: https://udemy.com
-    description: Curso de desarrollo de software 3D con el motor Unity, utilizando C# como lenguaje de programación y enfocado a la creación de videojuegos.
-    category: complementary
-    # imageIcon: /assets/img/unity.png
-    # imageSize: is-32x32
+  - title: Frameworks/Bibliotecas/Runtimes
+    category: software
+    description: Node.js, Deno,
+
+  - title: Utilidades
+    category: software
+    description: Git, ESLint, Webpack
 
   - title: Power Searching with Google
     subtitle: Google Inc. / 2012
