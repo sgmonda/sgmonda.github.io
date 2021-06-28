@@ -27,10 +27,11 @@ pero tarde o temprano tendrás que crear un documento "tradicional" que comparti
 o incluso impreso, porque ese será en muchas ocasiones **el primer contacto** que tenga la empresa
 con tu perfil.
 
-Por lo tanto, según mi experiencia es muy importante cuidar dos cosas:
+Por lo tanto, según mi experiencia es muy importante cuidar tres cosas:
 
 - Documento clásico, en PDF o impreso, que sirva de primer contacto.
 - Un perfil extendido, preferiblemente online, con mayor información y que te haga destacar.
+- Reputación online
 
 Veamos para qué sirve cada uno y cómo pueden ayudarnos a ser seleccionados.
 
@@ -102,3 +103,17 @@ Si pasas el primer filtro y muestran interés en ti, analizarán las referencias
 Lúcete. Puedes marcar la diferencia con otros candidatos si demuestras proactividad y/o buen gusto. Muestra tus aficiones y todo lo que eres capaz de conseguir. Impresiona, pero siempre tratando de causar admiración y no envidia. 
 
 Déjate inspirar por lo que hayan hecho otros antes y aporta tu factor diferenciador. Haz algo único, que facilite que te recuerden por encima de otros candidatos.
+
+## Reputación online
+
+Cada vez es más frecuente que escriban tu nombre en Google para ver qué aparece. Debes cuidar tus perfiles públicos de redes sociales, para asegurar una buena primera impresión sobre ti. Esto es lo más complicado de mejorar y por eso se suele utilizar para obtener una vista rápida sobre ti "no creada por ti". 
+
+¿Qué podemos hacer para mejorar nuestra reputación online?
+
+- Reducir aspectos negativos
+
+  Elimina fotografías públicas en las que salgas de fiesta o dando una impresión poco formal.
+
+- Aumentar aspectos positivos
+
+  Crea contenido relacionado con los puestos de trabajo a los que aspires. Por ejemplo, un perfil en Stackoverflow es positivo de cara a ser contratado como desarrollador de software.
