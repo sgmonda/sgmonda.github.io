@@ -15,44 +15,44 @@ items:
     description: "Licenciado en Ingeniería Informática con Matrícula de Honor en el Proyecto Fin de Carrera: una red social para la monitorización y entrenamiento gamificado de habilidades mentales mediante videojuegos multijugador."
     category: academic
     url: http://esi.uclm.es
-    # imageIcon: /assets/img/esi.png
-    # imageSize: is-64x64
+    imageIcon: /assets/img/esi.png
+    imageSize: is-64x64
 
   - title: Bachillerato en Ciencias Puras
     subtitle: I.E.S. Alfonso VIII / 2005-2007
     description: Educación secundaria focalizada en las Matemáticas, Física y Química, Dibujo Técnico y otras disciplinas relacionadas con la Ingeniería.
     category: academic
-    # imageIcon: /assets/img/alfonso.png
-    # imageSize: is-32x32
+    imageIcon: /assets/img/alfonso.png
+    imageSize: is-64x64
 
   - title: Desarrollo de videojuegos con Unity
     subtitle: Udemy / 2019
     url: https://udemy.com
     description: Curso de desarrollo de software 3D con el motor Unity, utilizando C# como lenguaje de programación y enfocado a la creación de videojuegos.
     category: complementary
-    # imageIcon: /assets/img/unity.png
-    # imageSize: is-32x32
+    imageIcon: /assets/img/unity.png
+    imageSize: is-64x64
 
   - title: Power Searching with Google
     subtitle: Google Inc. / 2012
     url: https://google.com
     description: Curso online sobre técnicas de búsqueda y recuperación de información, aplicado a la resolución de casos reales.
     category: complementary
-    # imageIcon: /assets/img/google.png
-    # imageSize: is-32x32
+    imageIcon: /assets/img/google.png
+    imageSize: is-64x64
 
-  - title: Introducción a la Inteligencia Artificial
+  - title: Introducción avanzada a la Inteligencia Artificial
     subtitle: Stanford University (online) / 2011
     url: https://www.stanford.edu
     description: Curso de 100 horas sobre fundamentos y aplicaciones de machine learning, razonamiento probabilístico, robótica y procesamiento de lenguaje natural.
     category: complementary
-    # imageIcon: /assets/img/stanford.png
-    # imageSize: is-32x32
+    imageIcon: /assets/img/stanford.png
+    imageSize: is-64x64
 
   - title: Administración de sistemas GNU/Linux
     subtitle: Universidad de Castilla-La Mancha / 2010
     url: https://uclm.es
     description: Curso presencial de 30 horas sobre la administración de sistemas basados en UNIX
     category: complementary
-    # imageIcon: /assets/img/uclm.png
-    # imageSize: is-32x32
+    imageIcon: /assets/img/uclm.png
+    imageSize: is-64x64

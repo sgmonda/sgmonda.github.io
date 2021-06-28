@@ -5,8 +5,6 @@ description: |
   Casual colorful game, designed for all ages and ready to be played with just one finger. Perfect for playing while using public transport. Squeeze your brain and complete all the levels.
 ---
 
-<!-- DEPRECATED. /labs/cubelor replaces this -->
-
 <p class="has-text-centered">
   You can play this game from your phone:
 </p>
