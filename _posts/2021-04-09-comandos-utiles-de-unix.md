@@ -15,4 +15,3 @@ $ du -a * | sort -r -n | head -10
 
 Se trata de un comando muy útil cuando necesitamos liberar espacio en disco.
 
-## Otra cosa
