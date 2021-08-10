@@ -33,6 +33,14 @@ items:
     imageIcon: /assets/img/unity.png
     imageSize: is-64x64
 
+  - title: Javascript para profesionales
+    subtitle: Redradix / 2017
+    url: https://redradix.com
+    description: Curso avanzado de 30 horas sobre Javascript, enfocado en el funcionamiento interno y patrones de desarrollo para profesionales del lenguaje.
+    category: complementary
+    imageIcon: /assets/img/redradix.png
+    imageSize: is-64x64
+
   - title: Power Searching with Google
     subtitle: Google Inc. / 2012
     url: https://google.com

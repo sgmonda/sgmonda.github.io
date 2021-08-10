@@ -1,5 +1,5 @@
 title: Habilidades Técnicas
-description: Hola mundo, bla bla estudios
+description: Tecnologías y herramientas con las que trabajo
 
 categories:
   - id: software
@@ -10,21 +10,21 @@ categories:
     # description: Hello complementary bla bla
 
 items:
-  - title: Lenguajes de programación
+  - title: Lenguajes de programación y layout
     category: software
-    description: Me siento cómodo con JavaScript, TypeScript, CoffeeScript, C#, Java y C. También he experimentado con Lisp, C++, Elixir, Earlang, Ada y Go.
+    description: Me gusta Javascript (ESNext), Typescript, C#, Coffeescript, HTML, CSS/SASS/SCSS, EJS y Liquid. También he trabajado con Java, Clojure/Lisp, C/C++, Go, Prolog, Elixir, Earlang, Ada y PHP, entre otros.
 
-  - title: Bases de datos
+  - title: Almacenamiento y caché
     category: software
-    description: bla bla bla
+    description: Me gusta MongoDB, Mongoose ODM y Redis. También he trabajado con PostgreSQL, MySQL, SQLite, Oracle, CouchDB y Couchbase, entre otros.
 
-  - title: Frameworks/Bibliotecas/Runtimes
+  - title: Frameworks y Bibliotecas
     category: software
-    description: Node.js, Deno,
+    description: Me gusta React, React Native, Next.js, Firebase, Jekyll y Puppeteer. También he trabajado con AngularJS, JQuery, Webpack y Parcel.
 
-  - title: Utilidades
+  - title: Tecnologías
     category: software
-    description: Git, ESLint, Webpack
+    description: He trabajado con Websockets, WebRTC, WebGL y WebAssembly. Estoy actualizado y me divierto cacharreando con nuevas tecnologías.
 
   - title: Power Searching with Google
     subtitle: Google Inc. / 2012

@@ -11,6 +11,11 @@
     style="flex-direction: column; display: flex; padding-bottom: 0"
   >
     <div style="flex: 1">
+
+      {% if item.openable %}
+        <a target="_blank" href="{{ item.image }}">
+      {% endif %}
+
       {% if item.image %}
       <figure
         class="image {% if item.imageSize %}{{ item.imageSize }}{% else %}is-3by2{% endif %}"
@@ -18,6 +23,10 @@
       >
         <img src="{{ item.image }}" />
       </figure>
+      {% endif %}
+
+      {% if item.openable %}
+        </a>
       {% endif %}
 
       <div class="columns is-mobile">

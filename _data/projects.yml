@@ -16,40 +16,61 @@ categories:
     description: Desde pequeño, siempre he encontrado un hueco para pintar, desde obras realistas hasta graciosos personajes para niños. Me gusta partir de un lienzo en blanco y acabar creando algo único que poder compartir con el mundo. Esta es una pequeña muestra de lo que hago.
 
 items:
-  - title: Nombre del proyecto
-    description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
-    url: /prueba
-    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+  - title: Cubelor
+    description: Videojuego casual sobre cubos y colores, creado para estrujar la mente. Puede ser utilizado con un sólo dedo y es adecuado para todas las edades. Disponible para iOS y Android.
+    url: /labs/cubelor
+    image: /assets/img/cubelor.png
     imageSize: is-3by1
     category: software
 
-  - title: Nombre del proyecto
-    description: Esta es la descripción del proyecto,
-    url: /labs/otro
-    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+  - title: Liartist
+    description: Videojuego multijugador para dibujar con hasta 9 amigos. Disponible para iOS, Android, OSX, Linux y Windows. Lanzado durante la pandemia del COVID-19 para amenizar el confinamiento.
+    url: /labs/liartist
+    image: /assets/img/liartist.png
     imageSize: is-3by1
     category: software
 
-  - title: Nombre del proyecto
-    description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
-    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+  - title: Take6
+    description: Videojuego multijugador para retar a hasta 9 amigos. Disponible para iOS, Android, OSX, Linux y Windows. Lanzado durante la pandemia del COVID-19 para amenizar el confinamiento.
+    image: /assets/img/take6.png
     imageSize: is-3by1
-    url: /labs/algo
+    url: /labs/take6
     category: software
 
-  - icon: fas fa-home
-    title: Nombre del proyecto
-    description: Esta es la descripción del proyecto,
-    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+  - title: Stdio
+    # icon: fas fa-home
+    description: Paquete de NPM para gestión de entrada/salida estándar en Node.js, con casi 30 mil descargas semanales. Es un proyecto open source, escrito en Typescript, cuyo código está disponible en GitHub.
+    image: /assets/img/stdio.png
     imageSize: is-3by1
-    url: /
+    url: https://npmjs.org/stdio
     category: software
 
-  - icon: fas fa-user
-    title: Otro proyecto
-    image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+  - title: Formelio
+    description: Librería de NPM para creación de formularios dinámicos en React. Es un proyecto open source, escrito en Typescript, cuyo código está disponible en GitHub.
+    image: /assets/img/formelio.png
     imageSize: is-3by1
-    description: Y bla bla bla
+    url: https://npmjs.org/formelio
+    category: software
+
+  - title: Houstone
+    description: Framework de Javascript/Typescript para creación de aplicaciones web en Deno. Es un proyecto open source, escrito en Typescript, cuyo código está disponible en GitHub.
+    image: /assets/img/houstone.png
+    imageSize: is-3by1
+    url: https://houstone.org
+    category: software
+
+  - title: Schedu.land
+    description: Venta de tiempo para uso libre.
+    image: /assets/img/scheduland.png
+    imageSize: is-3by1
+    url: https://schedu.land
+    category: software
+
+  - title: Gang.as
+    description: Compra colaborativa por medio de sorteos ponderados.
+    image: /assets/img/gangas.png
+    imageSize: is-3by1
+    url: https://gang.as
     category: software
 
   - title: La Tierra Gira
@@ -74,7 +95,7 @@ items:
     category: music
 
   - title: Ferrallas y movidas
-    subtitle: YouTube / +27k suscriptores
+    subtitle: YouTube / +35k suscriptores
     # icon: fas fa-music
     description: Canal protagonizado por dos amigos míos en un taller. Yo grabo y monto los vídeos.
     imageIcon: /assets/img/fym.png
@@ -91,36 +112,51 @@ items:
 
   - image: /assets/img/beach.jpeg
     category: illustrations
+    openable: true
     imageSize: is-square
     noseparator: true
   - image: /assets/img/covid.jpeg
     category: illustrations
+    openable: true
+    imageSize: is-square
+    noseparator: true
+  - image: /assets/img/skate.jpg
+    category: illustrations
+    imageSize: is-square
+    openable: true
+    noseparator: true
+  - image: /assets/img/plane.jpg
+    category: illustrations
+    openable: true
     imageSize: is-square
     noseparator: true
   - image: /assets/img/sheep.jpeg
     category: illustrations
+    openable: true
     imageSize: is-square
     noseparator: true
   - image: /assets/img/cat.jpeg
     category: illustrations
     imageSize: is-square
+    openable: true
     noseparator: true
   - image: /assets/img/fym-poster.jpg
     category: illustrations
     imageSize: is-square
+    openable: true
     noseparator: true
-  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+  - image: /assets/img/pattern.jpg
     category: illustrations
     noseparator: true
-  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+    openable: true
+    imageSize: is-square
+  - image: /assets/img/semanasanta.jpg
     category: illustrations
+    imageSize: is-square
+    openable: true
     noseparator: true
-  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
+  - image: /assets/img/retiro.jpg
     category: illustrations
-    noseparator: true
-  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
-    category: illustrations
-    noseparator: true
-  - image: https://images.unsplash.com/photo-1551678549-99e9cc32b4f3
-    category: illustrations
+    imageSize: is-square
+    openable: true
     noseparator: true
