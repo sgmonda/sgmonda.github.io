@@ -2,7 +2,7 @@
   label: Inicio
   url: /
 
-- icon: fas fa-sticky-note
+- icon: fas fa-file-alt
   label: Blog
   url: /blog/
 

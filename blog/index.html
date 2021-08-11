@@ -7,12 +7,12 @@ description: De vez en cuando escribo cosas. Si no tienes nada más interesante 
 {% for post in site.posts %}
 
 <article>
-  <h4>{{post.title}}</h4>
-  <p>{{ post.description }}</p>
-  <p class="is-uppercase">
-    <small>
+  <h4><a href="{{ post.url  }}">{{post.title}}</a></h4>
+  <p>
+    {{ post.description }}..
+    <span class="is-uppercase is-size-7">
       <a href="{{ post.url }}">Leer más</a>
-    </small>
+    </span>
   </p>
   <div style="margin-bottom: 3em"></div>
 </article>

@@ -5,47 +5,63 @@ categories:
   - id: software
     title: Desarrollo de Software
     # description: Esta es la descripción del proyecto, y es larga para ver cómo quedaría con varias columnas. No quiero que descoloque nada.
-  - id: complementary
-    title: Complementaria
+  - id: other
+    title: Otros
     # description: Hello complementary bla bla
 
 items:
-  - title: Lenguajes de programación y layout
+  - title: Lenguajes
     category: software
-    description: Me gusta Javascript (ESNext), Typescript, C#, Coffeescript, HTML, CSS/SASS/SCSS, EJS y Liquid. También he trabajado con Java, Clojure/Lisp, C/C++, Go, Prolog, Elixir, Earlang, Ada y PHP, entre otros.
+    description: Disfruto con Javascript (ESNext), Typescript, C# y Coffeescript. También he trabajado con Java, PHP, Clojure/Lisp, C/C++, Go, Prolog, Elixir, Earlang y Ada.
+
+  - title: Desarrollo Web
+    category: software
+    description: Muy cómodo con React (JS y TS), Next.js, Websockets, HTML, CSS/SASS/SCSS, EJS, Liquid y Jekyll. También he trabajado con AngularJS, Firebase, Webpack, PHP, JQuery y tecnologías como WebRTC, WebGL y WebAssembly.
+
+  - title: Móvil / escritorio
+    category: software
+    description: Unity3D, React Native (JS y TS) y Electron.
+
+  - title: 3D
+    category: software
+    description: Unity3D, ThreeJS y WebGL.
+
+  - title: Runtimes
+    category: software
+    description: Node.js, Deno, .NET/Mono y JVM (a través de Java y Clojure).
+
+  - title: IOT / Robótica
+    category: software
+    description: Arduino y Raspberry Pi
+
+  - title: Sistemas
+    category: software
+    description: UNIX (administración y línea de comandos), Docker, Google Cloud, AWS, Vercel, Digital Ocean, MongoDB Atlas y Heroku.
 
   - title: Almacenamiento y caché
     category: software
-    description: Me gusta MongoDB, Mongoose ODM y Redis. También he trabajado con PostgreSQL, MySQL, SQLite, Oracle, CouchDB y Couchbase, entre otros.
+    description: Trabajo muy cómodo con MongoDB, Mongoose ODM y Redis. También he trabajado con PostgreSQL, MySQL, SQLite, Oracle, CouchDB y Couchbase, entre otros.
 
-  - title: Frameworks y Bibliotecas
+  - title: Editores / IDEs
     category: software
-    description: Me gusta React, React Native, Next.js, Firebase, Jekyll y Puppeteer. También he trabajado con AngularJS, JQuery, Webpack y Parcel.
+    description: Emacs, VSCode, Visual Studio, Android Studio. También he utilizado pequeños editores como Nano, Zile o Ed, y sé cómo cerrar VIM ;-)
 
-  - title: Tecnologías
+  - title: Testing y QA
     category: software
-    description: He trabajado con Websockets, WebRTC, WebGL y WebAssembly. Estoy actualizado y me divierto cacharreando con nuevas tecnologías.
+    description: ESLint, Prettier, Jest, Mocha, Cypress, Storybook, Codecov, TravisCI y Jenkins.
 
-  - title: Power Searching with Google
-    subtitle: Google Inc. / 2012
-    url: https://google.com
-    description: Curso online sobre técnicas de búsqueda y recuperación de información, aplicado a la resolución de casos reales.
-    category: complementary
-    # imageIcon: /assets/img/google.png
-    # imageSize: is-32x32
+  - title: Documentación
+    category: software
+    description: LaTeX, Markdown, Swagger / OpenAPI, Pandoc.
 
-  - title: Introducción a la Inteligencia Artificial
-    subtitle: Stanford University (online) / 2011
-    url: https://www.stanford.edu
-    description: Curso de 100 horas sobre fundamentos y aplicaciones de machine learning, razonamiento probabilístico, robótica y procesamiento de lenguaje natural.
-    category: complementary
-    # imageIcon: /assets/img/stanford.png
-    # imageSize: is-32x32
+  - title: Gestión de proyectos
+    category: software
+    description: Trello, Jira, GitHub Projects, Microsoft Project y similares.
 
-  - title: Administración de sistemas GNU/Linux
-    subtitle: Universidad de Castilla-La Mancha / 2010
-    url: https://uclm.es
-    description: Curso presencial de 30 horas sobre la administración de sistemas basados en UNIX
-    category: complementary
-    # imageIcon: /assets/img/uclm.png
-    # imageSize: is-32x32
+  - title: Control de versiones
+    category: software
+    description: Git (con hooks). También he utilizado Mercurial y Subversion.
+
+  - title: Producción audiovisual
+    category: other
+    description: Adobe Photoshop, Logic Pro X, Adobe Premiere Pro, Adobe After Effects, Davinci Resolve, Final Cut Pro X, Procreate.
