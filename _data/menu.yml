@@ -13,3 +13,7 @@
 - icon: fas fa-flask
   label: Proyectos
   url: /labs/
+
+- icon: fas fa-envelope
+  label: Contacto
+  url: /contact
