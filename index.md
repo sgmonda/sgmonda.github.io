@@ -36,7 +36,7 @@ description: Ingeniero, fotógrafo, músico... explorador
 </div>
   <article>
     <p>
-      He estudiado Ingeniería Informática, pero no me gusta definirme como "ingeniero" porque esa es sólo una parte de mí. También soy fotógrafo, videógrafo, músico e ilustrador.
+      He estudiado Ingeniería Informática, pero no me gusta definirme como "ingeniero" porque esa es sólo una parte de mí. También hago fotógrafía, producción de vídeo, música e ilustración.
     </p>
 
     <p>
