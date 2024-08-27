@@ -15,7 +15,7 @@ description: Ingeniero, fotógrafo, músico... explorador
       class="image is-square"
       style="margin: 0 0 1em 0 !important; border-radius: 5px; min-width: 256px"
     >
-      <img src="/assets/img/avatar.jpg" />
+      <img src="https://github.com/user-attachments/assets/1768f486-afe3-4c17-b597-7960fa4150d8" />
     </figure>
   </div>
   <article class="column">
