@@ -16,6 +16,6 @@ $ du -a * | sort -r -n | head -10
 Si queremos ir un paso más allá, podemos mostrar el tamaño en formato para humanos, utilizando `gsort` (es parte del paquete `coreutils`), en vez de `sort`:
 
 ```
-$ du -hs * | gsort -rh
+$ du -ah * | gsort -rh | head -10
 ```
 
