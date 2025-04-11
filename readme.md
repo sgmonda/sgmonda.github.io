@@ -7,7 +7,7 @@ After that, Jekyll has been installed following [these steps](https://outragedpi
   `brew install chruby ruby-install`
   `ruby-install ruby`
 - [Jekyll](https://jekyllrb.com/docs/installation/)
-  `gem install jekyll`
+  `gem install jekyll bundler`
 
 ## Performance
 
