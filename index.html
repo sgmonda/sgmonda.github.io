@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sergio García Mondaray — Terminal</title>
+<meta name="description" content="Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, músico... explorador.">
+<style>
+@font-face{
+  font-family:'Sergamon';
+  src:url('/assets/fonts/Sergamon.woff2') format('woff2'),
+      url('/assets/fonts/Sergamon.ttf') format('truetype');
+  font-weight:normal;
+  font-style:normal;
+  font-display:swap;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --fs:1em;
+  --fs-xs:calc(var(--fs) * 0.785);
+  --fs-sm:calc(var(--fs) * 0.857);
+  --fs-md:calc(var(--fs) * 0.928);
+  --fs-lg:var(--fs);
+  --fs-hero:clamp(calc(var(--fs) * 3),6vw,calc(var(--fs) * 3));
+  --fs-tagline:clamp(calc(var(--fs) * 2),2.5vw,calc(var(--fs) * 2));
+  --green:#00ff41;--green-dim:#00cc33;--green-dark:#00751a;--green-glow:#00ff4180;
+  --amber:#ffb000;--amber-dim:#cc8d00;--amber-glow:#ffb00060;
+  --red:#ff3333;--cyan:#00e5ff;--white:#e0ffe0;--white-bright:#ffffff;
+  --bg:#050505;--bg-panel:#0a0a0a;--bg-card:#0d1a0d;
+  --border:#00ff4125;--border-bright:#00ff4150;
+  --font:'Sergamon',monospace;
+  --glow-sm:0 0 5px var(--green-glow);
+  --glow-md:0 0 10px var(--green-glow),0 0 20px #00ff4120;
+  --glow-lg:0 0 10px var(--green-glow),0 0 30px #00ff4130,0 0 60px #00ff4110;
+  --glow-amber:0 0 10px var(--amber-glow),0 0 20px #ffb00020;
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--green-dark) var(--bg)}
+body{
+  font-family:var(--font);font-size:var(--fs);line-height:1;color:var(--green);
+  background:var(--bg);overflow-x:hidden;cursor:default;
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--green-dark);border-radius:3px}
+
+/* ═══════ CRT OVERLAY ═══════ */
+#crt-overlay{
+  position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    #00000018 2px,
+    #00000018 4px
+  );
+}
+#crt-overlay::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,transparent 60%,#000000a0 100%);
+}
+#crt-overlay::after{
+  content:'';position:absolute;inset:0;
+  animation:flicker 0.08s infinite alternate;opacity:0.015;
+  background:#fff;
+}
+@keyframes flicker{from{opacity:0.012}to{opacity:0.018}}
+
+/* ═══════ PERSPECTIVE CONTAINER ═══════ */
+#scene{
+  perspective:1200px;
+  perspective-origin:50% 50%;
+}
+
+/* ═══════ NAV ═══════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:#050505ee;backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem;height:48px;display:flex;align-items:center;
+  justify-content:space-between;
+  font-size:var(--fs-sm);
+}
+nav .nav-left{display:flex;align-items:center;gap:0.5rem}
+nav .prompt-label{color:var(--green-dim);opacity:0.6}
+nav .nav-links{display:flex;gap:0;flex-wrap:wrap}
+nav .nav-links a{
+  color:var(--green-dim);text-decoration:none;padding:0.4rem 0.8rem;
+  transition:all .2s;position:relative;font-size:var(--fs-sm);
+}
+nav .nav-links a:hover{color:var(--green);text-shadow:var(--glow-sm)}
+nav .nav-links a.active{color:var(--green);text-shadow:var(--glow-sm)}
+nav .nav-links a::before{content:'>';margin-right:4px;opacity:0;transition:opacity .2s}
+nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
+.nav-mobile-toggle{display:none;background:none;border:1px solid var(--border);
+  color:var(--green);font-family:var(--font);font-size:var(--fs-lg);padding:4px 10px;cursor:pointer}
+
+/* ═══════ SECTIONS ═══════ */
+.section{
+  min-height:100vh;padding:8rem 2rem 4rem;max-width:900px;margin:0 auto;
+  transform-style:preserve-3d;
+  opacity:0;
+  transform:translateZ(-80px) rotateX(2deg);
+  transition:opacity 0.9s cubic-bezier(.23,1,.32,1),
+             transform 0.9s cubic-bezier(.23,1,.32,1);
+}
+.section.visible{
+  opacity:1;
+  transform:translateZ(0) rotateX(0);
+}
+.section:nth-child(even){
+  transform-origin:center left;
+  transform:translateZ(-80px) rotateY(1.5deg);
+}
+.section:nth-child(even).visible{
+  transform:translateZ(0) rotateY(0);
+}
+
+/* ═══════ COMMAND HEADER ═══════ */
+.cmd-header{
+  margin-bottom:2rem;padding-bottom:1rem;
+  border-bottom:1px solid var(--border);
+}
+.cmd-line{
+  display:flex;align-items:baseline;gap:0.5rem;flex-wrap:wrap;
+  font-size:var(--fs-md);margin-bottom:0.5rem;
+}
+.cmd-prompt{color:var(--amber);font-weight:600;white-space:nowrap}
+.cmd-text{color:var(--white)}
+.cmd-output-label{
+  font-size:var(--fs-xs);color:var(--green-dark);
+  letter-spacing:0.05em;text-transform:uppercase;
+}
+
+/* ═══════ HERO ═══════ */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding-top:4rem;
+}
+.hero-pre{
+  color:var(--green-dark);font-size:var(--fs-xs);margin-bottom:1rem;
+  letter-spacing:0.1em;
+}
+.hero-name{
+    text-transform: uppercase;
+  font-size:var(--fs-hero);font-weight:700;
+  color:var(--green);line-height:1.1;
+  text-shadow:var(--glow-lg);
+  margin-bottom:0.5rem;
+  padding:0.2em 0;
+}
+.hero-name .cursor{
+  display:inline-block;width:0.6em;height:1.1em;
+  background:var(--green);margin-left:2px;
+  animation:blink 1s step-end infinite;
+  vertical-align:text-bottom;
+}
+@keyframes blink{50%{opacity:0}}
+.hero-tagline{
+  font-size:var(--fs-tagline);color:var(--amber);
+  font-weight:300;
+  /*font-style:italic;*/
+  margin-bottom:2.5rem;
+  text-shadow:var(--glow-amber);
+  text-transform: uppercase;
+}
+.hero-links{
+  display:flex;flex-direction:column;gap:0.4rem;font-size:var(--fs-md);
+}
+.hero-links .link-line{display:flex;align-items:baseline;gap:0.5rem}
+.hero-links .link-prompt{color:var(--green-dark)}
+.hero-links a{
+  color:var(--cyan);text-decoration:none;
+  transition:all .2s;
+}
+.hero-links a:hover{color:var(--white-bright);text-shadow:0 0 8px #00e5ff80}
+.hero-links .link-cmd{color:var(--white)}
+.hero-scroll-hint{
+  margin-top:4rem;font-size:var(--fs-xs);color:var(--green-dark);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:0.8}}
+
+/* ═══════ ASCII DECORATION ═══════ */
+.ascii-border{
+  color:var(--green-dark);font-size:var(--fs-xs);opacity:0.4;
+  margin:1.5rem 0;white-space:pre;overflow:hidden;
+  line-height:1.2;
+}
+
+/* ═══════ ABOUT ═══════ */
+.about-text{margin-bottom:1.5rem}
+.about-text p{margin-bottom:1rem;color:var(--white)}
+.about-quote{
+  border-left:2px solid var(--amber);padding:1rem 1.5rem;
+  margin:1.5rem 0;background:#ffb00008;
+  color:var(--amber);font-style:italic;
+}
+.about-quote .quote-author{
+  display:block;margin-top:0.5rem;
+  font-style:normal;font-size:var(--fs-sm);color:var(--amber-dim);
+}
+
+/* ═══════ SKILLS ═══════ */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
+}
+.skill-item{
+  background:var(--bg-panel);padding:1.2rem;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.skill-item::before{
+  content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+  background:var(--green);opacity:0;transition:opacity .3s;
+}
+.skill-item:hover{background:var(--bg-card)}
+.skill-item:hover::before{opacity:1}
+.skill-title{
+  color:var(--amber);font-weight:600;font-size:var(--fs-md);
+  margin-bottom:0.4rem;display:flex;align-items:center;gap:0.5rem;
+}
+.skill-title::before{content:'▸';color:var(--green)}
+.skill-desc{font-size:var(--fs-sm);color:var(--green-dim);line-height:1.6}
+.skill-category-title{
+  grid-column:1/-1;background:var(--bg);padding:1rem 1.2rem;
+  color:var(--green);font-weight:600;font-size:var(--fs-md);
+  border-bottom:1px solid var(--border);
+  letter-spacing:0.05em;
+}
+.skill-category-title::before{content:'📁 ';font-size:var(--fs-sm)}
+
+/* ═══════ PROJECTS ═══════ */
+.projects-category{margin-bottom:3rem}
+.projects-category-title{
+  color:var(--amber);font-weight:600;font-size:var(--fs-lg);
+  margin-bottom:1rem;padding-bottom:0.5rem;
+  border-bottom:1px dashed var(--border);
+}
+.project-item{
+  display:grid;grid-template-columns:auto 1fr auto;gap:1rem;
+  padding:1rem 0;border-bottom:1px solid var(--border);
+  align-items:baseline;transition:all .3s;
+}
+.project-item:hover{padding-left:0.5rem;background:#00ff4105}
+.project-perms{color:var(--green-dark);font-size:var(--fs-xs);white-space:nowrap}
+.project-info{}
+.project-name{color:var(--white);font-weight:600;font-size:var(--fs-lg)}
+.project-name a{color:var(--white);text-decoration:none;transition:color .2s}
+.project-name a:hover{color:var(--cyan);text-shadow:0 0 8px #00e5ff40}
+.project-desc{color:var(--green-dim);font-size:var(--fs-sm);margin-top:0.3rem}
+.project-meta{
+  color:var(--green-dark);font-size:var(--fs-xs);white-space:nowrap;text-align:right;
+}
+
+/* ═══════ EDUCATION ═══════ */
+.edu-item{
+  padding:1.2rem 0;border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:auto 1fr;gap:1.5rem;
+  align-items:start;
+}
+.edu-year{
+  color:var(--amber);font-weight:600;font-size:var(--fs-sm);
+  white-space:nowrap;padding-top:0.2rem;min-width:90px;
+}
+.edu-info{}
+.edu-title{color:var(--white);font-weight:600;font-size:var(--fs-lg)}
+.edu-institution{color:var(--green-dim);font-size:var(--fs-sm);margin-top:0.2rem}
+.edu-desc{color:var(--green-dark);font-size:var(--fs-sm);margin-top:0.4rem}
+
+/* ═══════ BLOG ═══════ */
+.blog-item{
+  display:grid;grid-template-columns:120px 1fr;gap:1rem;
+  padding:0.8rem 0;border-bottom:1px solid var(--border);
+  align-items:baseline;transition:all .3s;
+}
+.blog-item:hover{padding-left:0.5rem;background:#00ff4105}
+.blog-date{color:var(--green-dark);font-size:var(--fs-sm);font-weight:500}
+.blog-title{color:var(--white);font-size:var(--fs-md)}
+.blog-title a{color:var(--white);text-decoration:none;transition:color .2s}
+.blog-title a:hover{color:var(--amber);text-shadow:var(--glow-amber)}
+
+/* ═══════ CONTACT ═══════ */
+.contact-block{
+  border:1px solid var(--border);padding:2rem;
+  background:var(--bg-panel);max-width:600px;
+}
+.contact-line{margin-bottom:0.8rem}
+.contact-label{color:var(--green-dark);font-size:var(--fs-sm)}
+.contact-value{color:var(--white)}
+.contact-value a{color:var(--cyan);text-decoration:none;transition:color .2s}
+.contact-value a:hover{color:var(--white-bright);text-shadow:0 0 8px #00e5ff60}
+.contact-send{
+  display:inline-block;margin-top:1.5rem;padding:0.7rem 2rem;
+  background:transparent;border:1px solid var(--green);
+  color:var(--green);font-family:var(--font);font-size:var(--fs-md);
+  cursor:pointer;transition:all .3s;text-decoration:none;
+}
+.contact-send:hover{
+  background:var(--green);color:var(--bg);
+  box-shadow:var(--glow-md);
+}
+
+/* ═══════ FOOTER ═══════ */
+footer{
+  padding:3rem 2rem;text-align:center;
+  border-top:1px solid var(--border);
+  font-size:var(--fs-sm);color:var(--green-dark);
+}
+footer a{color:var(--green-dim);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
+.footer-links{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.footer-copy{opacity:0.4}
+
+/* ═══════ LOADING SCREEN ═══════ */
+#boot-screen{
+  position:fixed;inset:0;z-index:10000;background:var(--bg);
+  display:flex;flex-direction:column;justify-content:center;
+  align-items:flex-start;padding:3rem;
+  font-size:var(--fs-md);color:var(--green);
+  transition:opacity 0.5s,visibility 0.5s;
+}
+#boot-screen.hidden{opacity:0;visibility:hidden}
+#boot-screen .boot-line{
+  opacity:0;transform:translateY(5px);
+  transition:all 0.3s;margin-bottom:0.3rem;
+}
+#boot-screen .boot-line.show{opacity:1;transform:translateY(0)}
+#boot-screen .boot-line.dim{color:var(--green-dark)}
+#boot-screen .boot-ok{color:var(--green)}
+#boot-screen .boot-warn{color:var(--amber)}
+
+/* ═══════ STAGGER CHILDREN ═══════ */
+.stagger-children > *{
+  opacity:0;transform:translateY(20px);
+  transition:opacity 0.5s,transform 0.5s;
+}
+.stagger-children.visible > *{opacity:1;transform:translateY(0)}
+.stagger-children.visible > *:nth-child(1){transition-delay:0.05s}
+.stagger-children.visible > *:nth-child(2){transition-delay:0.1s}
+.stagger-children.visible > *:nth-child(3){transition-delay:0.15s}
+.stagger-children.visible > *:nth-child(4){transition-delay:0.2s}
+.stagger-children.visible > *:nth-child(5){transition-delay:0.25s}
+.stagger-children.visible > *:nth-child(6){transition-delay:0.3s}
+.stagger-children.visible > *:nth-child(7){transition-delay:0.35s}
+.stagger-children.visible > *:nth-child(8){transition-delay:0.4s}
+.stagger-children.visible > *:nth-child(9){transition-delay:0.45s}
+.stagger-children.visible > *:nth-child(10){transition-delay:0.5s}
+.stagger-children.visible > *:nth-child(11){transition-delay:0.55s}
+.stagger-children.visible > *:nth-child(12){transition-delay:0.6s}
+.stagger-children.visible > *:nth-child(13){transition-delay:0.65s}
+.stagger-children.visible > *:nth-child(14){transition-delay:0.7s}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:768px){
+  :root{--fs:13px}
+  .section{padding:6rem 1.2rem 3rem}
+  nav{padding:0 1rem}
+  nav .nav-links{
+    position:fixed;top:48px;left:0;right:0;
+    background:#050505f5;backdrop-filter:blur(10px);
+    flex-direction:column;padding:1rem;
+    border-bottom:1px solid var(--border);
+    display:none;
+  }
+  nav .nav-links.open{display:flex}
+  .nav-mobile-toggle{display:block}
+  .skills-grid{grid-template-columns:1fr}
+  .project-item{grid-template-columns:1fr;gap:0.3rem}
+  .project-perms{display:none}
+  .project-meta{text-align:left}
+  .edu-item{grid-template-columns:1fr;gap:0.5rem}
+  .blog-item{grid-template-columns:1fr;gap:0.2rem}
+  .ascii-border{display:none}
+  #boot-screen{padding:1.5rem}
+}
+@media(max-width:480px){
+  .section{padding:5rem 1rem 2rem}
+  .contact-block{padding:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════ BOOT SCREEN ═══════ -->
+<div id="boot-screen">
+  <div class="boot-line dim">BIOS v3.2.1 — sgmonda systems</div>
+  <div class="boot-line dim">Memory test... <span class="boot-ok">OK</span></div>
+  <div class="boot-line dim">Loading kernel... <span class="boot-ok">OK</span></div>
+  <div class="boot-line dim">Mounting /dev/portfolio... <span class="boot-ok">OK</span></div>
+  <div class="boot-line dim">Starting display server... <span class="boot-ok">OK</span></div>
+  <div class="boot-line boot-warn">Welcome, visitor.</div>
+  <div class="boot-line">Initializing sgmonda.com<span class="cursor" style="display:inline-block;width:0.6em;height:1em;background:var(--green);animation:blink 1s step-end infinite;vertical-align:text-bottom;margin-left:2px"></span></div>
+</div>
+
+<!-- ═══════ CRT OVERLAY ═══════ -->
+<div id="crt-overlay"></div>
+
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <div class="nav-left">
+    <span class="prompt-label">sgmonda@web:~$</span>
+  </div>
+  <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menú">☰</button>
+  <div class="nav-links">
+    <a href="#hero" onclick="this.parentElement.classList.remove('open')">inicio</a>
+    <a href="#about" onclick="this.parentElement.classList.remove('open')">sobre_mi</a>
+    <a href="#skills" onclick="this.parentElement.classList.remove('open')">skills</a>
+    <a href="#projects" onclick="this.parentElement.classList.remove('open')">proyectos</a>
+    <a href="#education" onclick="this.parentElement.classList.remove('open')">formacion</a>
+    <a href="#blog" onclick="this.parentElement.classList.remove('open')">blog</a>
+    <a href="#contact" onclick="this.parentElement.classList.remove('open')">contacto</a>
+  </div>
+</nav>
+
+<div id="scene">
+
+<!-- ═══════ HERO ═══════ -->
+<section class="section" id="hero">
+  <div class="hero-pre">/// PERSONAL WEBSITE v4.0 — LAST UPDATED 2026</div>
+  <h1 class="hero-name">
+    <span id="typed-name"></span><span class="cursor"></span>
+  </h1>
+  <p class="hero-tagline">Ingeniero, fotógrafo, músico... explorador</p>
+
+  <div class="ascii-border">╔══════════════════════════════════════════════════════════════╗
+║  ██████╗ ██████╗ ███╗   ███╗ ██████╗ ███╗   ██╗██████╗  █║
+║  ██╔════╝██╔════╝ ████╗ ████║██╔═══██╗████╗  ██║██╔══██╗ █║
+║  ███████╗██║  ███╗██╔████╔██║██║   ██║██╔██╗ ██║██║  ██║ █║
+║  ╚════██║██║   ██║██║╚██╔╝██║██║   ██║██║╚██╗██║██║  ██║ █║
+║  ███████║╚██████╔╝██║ ╚═╝ ██║╚██████╔╝██║ ╚████║██████╔╝ █║
+║  ╚══════╝ ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═════╝  ║
+╚══════════════════════════════════════════════════════════════╝</div>
+
+  <div class="hero-links">
+    <div class="link-line">
+      <span class="link-prompt">$</span>
+      <span class="link-cmd">open</span>
+      <a href="https://github.com/sgmonda" target="_blank" rel="noopener">github.com/sgmonda</a>
+    </div>
+    <div class="link-line">
+      <span class="link-prompt">$</span>
+      <span class="link-cmd">open</span>
+      <a href="https://stackoverflow.com/users/972197/sgmonda" target="_blank" rel="noopener">stackoverflow/sgmonda</a>
+    </div>
+    <div class="link-line">
+      <span class="link-prompt">$</span>
+      <span class="link-cmd">open</span>
+      <a href="https://twitter.com/sgmonda" target="_blank" rel="noopener">twitter.com/sgmonda</a>
+    </div>
+    <div class="link-line">
+      <span class="link-prompt">$</span>
+      <span class="link-cmd">open</span>
+      <a href="https://www.instagram.com/sgmonda/" target="_blank" rel="noopener">instagram.com/sgmonda</a>
+    </div>
+    <div class="link-line">
+      <span class="link-prompt">$</span>
+      <span class="link-cmd">mail</span>
+      <a href="mailto:sergio@sgmonda.com">sergio@sgmonda.com</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">▼ scroll para continuar ▼</div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section class="section" id="about">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">cat about.txt</span>
+    </div>
+    <div class="cmd-output-label">— output —</div>
+  </div>
+
+  <div class="about-text stagger-children">
+    <p>De mente inquieta y creativa. Apasionado del aprendizaje y la creación. Me encanta conocer disciplinas, herramientas y técnicas nuevas cada día, así como crear experiencias completas desde cero.</p>
+
+    <div class="about-quote">
+      "Vive como si fueras a morir mañana. Aprende como si fueras a vivir para siempre."
+      <span class="quote-author">— Mahatma Gandhi</span>
+    </div>
+
+    <p>He estudiado Ingeniería Informática, pero no me gusta definirme como "ingeniero" porque esa es sólo una parte de mí. También hago fotografía, producción de vídeo, música e ilustración.</p>
+
+    <p>He creado esta web para que puedas conocer más sobre mí, leer las cosillas que a veces escribo y echarle un vistazo a algunos de mis proyectos.</p>
+
+    <p style="color:var(--amber)">Bienvenido.</p>
+  </div>
+
+  <div class="ascii-border">════════════════════════════════════════════════════════════════</div>
+</section>
+
+<!-- ═══════ SKILLS ═══════ -->
+<section class="section" id="skills">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">ls -la skills/</span>
+    </div>
+    <div class="cmd-output-label">— Habilidades técnicas —</div>
+  </div>
+
+  <div class="skills-grid stagger-children">
+    <div class="skill-category-title">Desarrollo de Software</div>
+
+    <div class="skill-item">
+      <div class="skill-title">Lenguajes</div>
+      <div class="skill-desc">Javascript (ESNext), Typescript, C#, Coffeescript. También Java, PHP, C/C++, Go, Prolog, Elixir, Erlang y Ada.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Desarrollo Web</div>
+      <div class="skill-desc">React (JS y TS), Next.js, Websockets, HTML, CSS/SASS/SCSS, EJS, Liquid, Jekyll. WebRTC, WebGL, WebAssembly.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Móvil / Escritorio</div>
+      <div class="skill-desc">Unity3D, React Native (JS y TS), Electron.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">3D</div>
+      <div class="skill-desc">Unity3D, ThreeJS, WebGL.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Runtimes</div>
+      <div class="skill-desc">Node.js, Deno, .NET/Mono, JVM (Java, Clojure).</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">IoT / Robótica</div>
+      <div class="skill-desc">Arduino, Raspberry Pi.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Sistemas</div>
+      <div class="skill-desc">UNIX, Docker, Google Cloud, AWS, Vercel, Digital Ocean, MongoDB Atlas, Heroku.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Almacenamiento</div>
+      <div class="skill-desc">MongoDB, Mongoose, Redis, PostgreSQL, MySQL, SQLite, Oracle, CouchDB, Couchbase.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Editores / IDEs</div>
+      <div class="skill-desc">Emacs, VSCode, Visual Studio, Android Studio. Nano, Zile, Ed. Sé cerrar VIM ;-)</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Testing y QA</div>
+      <div class="skill-desc">ESLint, Prettier, Jest, Mocha, Cypress, Storybook, Codecov, TravisCI, Jenkins.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Documentación</div>
+      <div class="skill-desc">LaTeX, Markdown, Swagger / OpenAPI, Pandoc.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Gestión de proyectos</div>
+      <div class="skill-desc">Trello, Jira, GitHub Projects, Microsoft Project.</div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-title">Control de versiones</div>
+      <div class="skill-desc">Git (con hooks). También Mercurial y Subversion.</div>
+    </div>
+
+    <div class="skill-category-title">Otros</div>
+
+    <div class="skill-item">
+      <div class="skill-title">Producción audiovisual</div>
+      <div class="skill-desc">Adobe Photoshop, Logic Pro X, Adobe Premiere Pro, After Effects, DaVinci Resolve, Final Cut Pro X, Procreate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROJECTS ═══════ -->
+<section class="section" id="projects">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">ls -la projects/</span>
+    </div>
+    <div class="cmd-output-label">— Inquieto, no puedo parar de crear —</div>
+  </div>
+
+  <!-- Software -->
+  <div class="projects-category">
+    <h3 class="projects-category-title">📁 software/</h3>
+    <div class="stagger-children">
+      <div class="project-item">
+        <div class="project-perms">drwxr-xr-x</div>
+        <div class="project-info">
+          <div class="project-name"><a href="/labs/cubelor">Cubelor</a></div>
+          <div class="project-desc">Videojuego casual sobre cubos y colores, creado para estrujar la mente. Disponible para iOS y Android.</div>
+        </div>
+        <div class="project-meta">game</div>
+      </div>
+      <div class="project-item">
+        <div class="project-perms">drwxr-xr-x</div>
+        <div class="project-info">
+          <div class="project-name"><a href="/labs/liartist">Liartist</a></div>
+          <div class="project-desc">Videojuego multijugador para dibujar con hasta 9 amigos. Disponible para iOS, Android, OSX, Linux y Windows.</div>
+        </div>
+        <div class="project-meta">game</div>
+      </div>
+      <div class="project-item">
+        <div class="project-perms">drwxr-xr-x</div>
+        <div class="project-info">
+          <div class="project-name"><a href="/labs/take6">Take6</a></div>
+          <div class="project-desc">Videojuego multijugador para retar a hasta 9 amigos. Disponible multiplataforma.</div>
+        </div>
+        <div class="project-meta">game</div>
+      </div>
+      <div class="project-item">
+        <div class="project-perms">-rwxr-xr-x</div>
+        <div class="project-info">
+          <div class="project-name"><a href="https://npmjs.org/stdio" target="_blank" rel="noopener">Stdio</a></div>
+          <div class="project-desc">Paquete NPM para gestión de entrada/salida estándar en Node.js. ~30k descargas semanales. Open source, escrito en Typescript.</div>
+        </div>
+        <div class="project-meta">npm</div>
+      </div>
+      <div class="project-item">
+        <div class="project-perms">-rwxr-xr-x</div>
+        <div class="project-info">
+          <div class="project-name"><a href="https://npmjs.org/formelio" target="_blank" rel="noopener">Formelio</a></div>
+          <div class="project-desc">Librería NPM para creación de formularios dinámicos en React. Open source, escrito en Typescript.</div>
+        </div>
+        <div class="project-meta">npm</div>
+      </div>
+      <div class="project-item">
+        <div class="project-perms">-rwxr-xr-x</div>
+        <div class="project-info">
+          <div class="project-name"><a href="https://houstone.org" target="_blank" rel="noopener">Houstone</a></div>
+          <div class="project-desc">Framework de Javascript/Typescript para creación de aplicaciones web en Deno. Open source.</div>
+        </div>
+        <div class="project-meta">framework</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Music -->
+  <div class="projects-category">
+    <h3 class="projects-category-title">🎵 music/ <span style="color:var(--green-dark);font-weight:400;font-size:var(--fs-sm)">— como "Monda" en plataformas de streaming</span></h3>
+    <div class="stagger-children">
+      <div class="project-item">
+        <div class="project-perms">-rw-r--r--</div>
+        <div class="project-info">
+          <div class="project-name">La Tierra Gira</div>
+          <div class="project-desc">Álbum de 8 canciones escrito durante 2020, en parte durante el confinamiento por la pandemia del COVID-19.</div>
+        </div>
+        <div class="project-meta">2021</div>
+      </div>
+      <div class="project-item">
+        <div class="project-perms">-rw-r--r--</div>
+        <div class="project-info">
+          <div class="project-name">Renegado</div>
+          <div class="project-desc">Colaboración con Deivid y Gude, una visión atípica del amor.</div>
+        </div>
+        <div class="project-meta">2019</div>
+      </div>
+      <div class="project-item">
+        <div class="project-perms">-rw-r--r--</div>
+        <div class="project-info">
+          <div class="project-name">Voces del incomprendido</div>
+          <div class="project-desc">Colaboración con Deivid para su álbum "Desde mi azotea".</div>
+        </div>
+        <div class="project-meta">2019</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video/Photo -->
+  <div class="projects-category">
+    <h3 class="projects-category-title">🎬 fotovideo/</h3>
+    <div class="stagger-children">
+      <div class="project-item">
+        <div class="project-perms">drwxr-xr-x</div>
+        <div class="project-info">
+          <div class="project-name"><a href="http://ferrallasymovidas.com" target="_blank" rel="noopener">Ferrallas y movidas</a></div>
+          <div class="project-desc">Canal de YouTube protagonizado por dos amigos en un taller. Yo grabo y monto los vídeos. +100k suscriptores.</div>
+        </div>
+        <div class="project-meta">youtube</div>
+      </div>
+      <div class="project-item">
+        <div class="project-perms">drwxr-xr-x</div>
+        <div class="project-info">
+          <div class="project-name"><a href="http://captur.as" target="_blank" rel="noopener">CAPTUR.AS</a></div>
+          <div class="project-desc">Producción audiovisual: videoclips, cortometrajes y vídeos de boda.</div>
+        </div>
+        <div class="project-meta">studio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ EDUCATION ═══════ -->
+<section class="section" id="education">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">cat education.log</span>
+    </div>
+    <div class="cmd-output-label">— Formación académica y complementaria —</div>
+  </div>
+
+  <div class="stagger-children">
+    <div class="edu-item">
+      <div class="edu-year">2007–2012</div>
+      <div class="edu-info">
+        <div class="edu-title">Ingeniero en Informática</div>
+        <div class="edu-institution">Universidad de Castilla-La Mancha</div>
+        <div class="edu-desc">Licenciado con Matrícula de Honor en el PFC: red social para monitorización y entrenamiento gamificado de habilidades mentales mediante videojuegos multijugador.</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">2005–2007</div>
+      <div class="edu-info">
+        <div class="edu-title">Bachillerato en Ciencias Puras</div>
+        <div class="edu-institution">I.E.S. Alfonso VIII</div>
+        <div class="edu-desc">Matemáticas, Física y Química, Dibujo Técnico.</div>
+      </div>
+    </div>
+
+    <div class="ascii-border" style="margin:1rem 0 0.5rem">── complementaria ──────────────────────────────────────────────</div>
+
+    <div class="edu-item">
+      <div class="edu-year">2019</div>
+      <div class="edu-info">
+        <div class="edu-title">Desarrollo de videojuegos con Unity</div>
+        <div class="edu-institution">Udemy</div>
+        <div class="edu-desc">Desarrollo 3D con Unity, C# y enfoque en videojuegos.</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">2017</div>
+      <div class="edu-info">
+        <div class="edu-title">Javascript para profesionales</div>
+        <div class="edu-institution">Redradix</div>
+        <div class="edu-desc">Curso avanzado de 30 horas sobre el funcionamiento interno y patrones de desarrollo.</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">2011</div>
+      <div class="edu-info">
+        <div class="edu-title">Introducción avanzada a la Inteligencia Artificial</div>
+        <div class="edu-institution">Stanford University (online)</div>
+        <div class="edu-desc">100 horas sobre machine learning, razonamiento probabilístico, robótica y NLP.</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">2010</div>
+      <div class="edu-info">
+        <div class="edu-title">Administración de sistemas GNU/Linux</div>
+        <div class="edu-institution">Universidad de Castilla-La Mancha</div>
+        <div class="edu-desc">30 horas sobre administración de sistemas UNIX.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ BLOG ═══════ -->
+<section class="section" id="blog">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">tail -n 7 blog.log</span>
+    </div>
+    <div class="cmd-output-label">— Últimas entradas del blog —</div>
+  </div>
+
+  <div class="stagger-children">
+    <div class="blog-item">
+      <div class="blog-date">2026-02-20</div>
+      <div class="blog-title"><a href="/class-js">Deja de usar clases en JavaScript</a></div>
+    </div>
+    <div class="blog-item">
+      <div class="blog-date">2021-04-09</div>
+      <div class="blog-title"><a href="/comandos-utiles-de-unix">Comandos útiles de UNIX</a></div>
+    </div>
+    <div class="blog-item">
+      <div class="blog-date">2021-04-01</div>
+      <div class="blog-title"><a href="/limpiar-elementos-inicio-osx">Limpieza de OSX. Elementos de inicio y demonios varios</a></div>
+    </div>
+    <div class="blog-item">
+      <div class="blog-date">2021-01-17</div>
+      <div class="blog-title"><a href="/single-page-cv">Currículums de una página</a></div>
+    </div>
+    <div class="blog-item">
+      <div class="blog-date">2020-03-23</div>
+      <div class="blog-title"><a href="/como-entretenerse-durante-el-confinamiento">Cómo afrontar el confinamiento durante una pandemia</a></div>
+    </div>
+    <div class="blog-item">
+      <div class="blog-date">2020-03-23</div>
+      <div class="blog-title"><a href="/controlar-la-concurrencia-de-promesas-en-javascript">Controlar la concurrencia de promesas en Javascript</a></div>
+    </div>
+    <div class="blog-item">
+      <div class="blog-date">2020-01-29</div>
+      <div class="blog-title"><a href="/paralelismo-vs-concurrencia">Paralelismo vs. Concurrencia</a></div>
+    </div>
+  </div>
+
+  <div class="ascii-border">════════════════════════════════════════════════════════════════</div>
+</section>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section class="section" id="contact">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">mail sergio@sgmonda.com</span>
+    </div>
+    <div class="cmd-output-label">— Contacto —</div>
+  </div>
+
+  <div class="contact-block">
+    <div class="contact-line">
+      <div class="contact-label">To:</div>
+      <div class="contact-value"><a href="mailto:sergio@sgmonda.com">sergio@sgmonda.com</a></div>
+    </div>
+    <div class="contact-line">
+      <div class="contact-label">Subject:</div>
+      <div class="contact-value" style="color:var(--green-dim)">¡Hola, Sergio!</div>
+    </div>
+    <div class="contact-line">
+      <div class="contact-label">Body:</div>
+      <div class="contact-value" style="color:var(--green-dim)">Escríbeme para lo que necesites. Siempre es un placer charlar.</div>
+    </div>
+    <a href="mailto:sergio@sgmonda.com" class="contact-send">$ send_mail ▸</a>
+  </div>
+
+  <div style="margin-top:2rem;font-size:var(--fs-sm);color:var(--green-dark)">
+    <p>También puedes encontrarme en:</p>
+    <div class="hero-links" style="margin-top:0.5rem">
+      <div class="link-line">
+        <span class="link-prompt">$</span>
+        <span class="link-cmd">open</span>
+        <a href="https://github.com/sgmonda" target="_blank" rel="noopener">github.com/sgmonda</a>
+      </div>
+      <div class="link-line">
+        <span class="link-prompt">$</span>
+        <span class="link-cmd">open</span>
+        <a href="https://twitter.com/sgmonda" target="_blank" rel="noopener">twitter.com/sgmonda</a>
+      </div>
+      <div class="link-line">
+        <span class="link-prompt">$</span>
+        <span class="link-cmd">open</span>
+        <a href="https://www.instagram.com/sgmonda/" target="_blank" rel="noopener">instagram.com/sgmonda</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /scene -->
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/sgmonda" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://stackoverflow.com/users/972197/sgmonda" target="_blank" rel="noopener">StackOverflow</a>
+    <a href="https://twitter.com/sgmonda" target="_blank" rel="noopener">Twitter</a>
+    <a href="https://www.instagram.com/sgmonda/" target="_blank" rel="noopener">Instagram</a>
+    <a href="mailto:sergio@sgmonda.com">Email</a>
+  </div>
+  <div class="footer-copy">© Sergio García Mondaray — sgmonda.com — <span id="footer-year">2026</span></div>
+  <div style="margin-top:0.5rem;opacity:0.3;font-size:var(--fs-xs)">process exited with code 0</div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  // ─── BOOT SEQUENCE ───
+  const bootScreen = document.getElementById('boot-screen');
+  const bootLines = bootScreen.querySelectorAll('.boot-line');
+  let bootDelay = 0;
+  bootLines.forEach((line, i) => {
+    bootDelay += 150 + Math.random() * 200;
+    setTimeout(() => line.classList.add('show'), bootDelay);
+  });
+  setTimeout(() => {
+    bootScreen.classList.add('hidden');
+  }, bootDelay + 800);
+
+  // ─── TYPING EFFECT ───
+  const nameEl = document.getElementById('typed-name');
+  const fullName = 'Sergio García Mondaray';
+  let charIndex = 0;
+  function typeChar() {
+    if (charIndex < fullName.length) {
+      nameEl.textContent += fullName[charIndex];
+      charIndex++;
+      setTimeout(typeChar, 50 + Math.random() * 80);
+    }
+  }
+  setTimeout(typeChar, bootDelay + 1000);
+
+  // ─── INTERSECTION OBSERVER — 3D SCROLL REVEAL ───
+  const sections = document.querySelectorAll('.section');
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+  sections.forEach(s => sectionObserver.observe(s));
+
+  // ─── STAGGER CHILDREN OBSERVER ───
+  const staggerEls = document.querySelectorAll('.stagger-children');
+  const staggerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.05 });
+  staggerEls.forEach(s => staggerObserver.observe(s));
+
+  // ─── NAV ACTIVE STATE ───
+  const navLinks = document.querySelectorAll('nav .nav-links a');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active',
+            link.getAttribute('href') === '#' + entry.target.id
+          );
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => navObserver.observe(s));
+
+  // ─── PARALLAX DEPTH ON SCROLL ───
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const vh = window.innerHeight;
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          const center = rect.top + rect.height / 2;
+          const offset = (center - vh / 2) / vh;
+          const z = Math.max(-30, Math.min(30, offset * -20));
+          const ry = offset * 0.8;
+          if (section.classList.contains('visible')) {
+            section.style.transform =
+              `translateZ(${z}px) rotateY(${ry}deg)`;
+          }
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // ─── FOOTER YEAR ───
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
