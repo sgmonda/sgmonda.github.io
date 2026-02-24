@@ -16,61 +16,46 @@ categories:
     description: Con la escritura me pasa algo parecido a la música, es una actividad que me gusta mucho pero que no practico con tanta regularidad. Sin embargo, de vez en cuando encuentro tiempo para escribir algo.
 
 items:
-  - title: Cubelor
-    description: Videojuego casual sobre cubos y colores, creado para estrujar la mente. Puede ser utilizado con un sólo dedo y es adecuado para todas las edades. Disponible para iOS y Android.
-    url: /labs/cubelor
-    image: /assets/img/cubelor.png
-    imageSize: is-3by1
+  - title: Wakeful Control
+    subtitle: MacOS App
+    description: App para MacOS que permite inhibir el modo de suspensión del sistema desde la barra de menú, para evitar que el sistema se duerma mientras se realizan tareas que requieren que esté despierto, como compilación de software.
+    url: https://apps.apple.com/es/app/wakeful-control/id6744520882?mt=12
     category: software
 
-  - title: Liartist
-    description: Videojuego multijugador para dibujar con hasta 9 amigos. Disponible para iOS, Android, OSX, Linux y Windows. Lanzado durante la pandemia del COVID-19 para amenizar el confinamiento.
-    url: /labs/liartist
-    image: /assets/img/liartist.png
-    imageSize: is-3by1
+  - title: Sergamon
+    subtitle: Font
+    description: Fuente monoespaciada open-source para programación y diseño retro, de aspecto pixelado, para hackers nostálgicos. Es la fuente que se utiliza en esta web.
+    url: https://sgmonda.com/sergamon
     category: software
 
-  - title: Take6
-    description: Videojuego multijugador para retar a hasta 9 amigos. Disponible para iOS, Android, OSX, Linux y Windows. Lanzado durante la pandemia del COVID-19 para amenizar el confinamiento.
-    image: /assets/img/take6.png
-    imageSize: is-3by1
-    url: /labs/take6
+  - title: Streamfu
+    subtitle: TypeScript library
+    description: Biblioteca open-source de JS/TS para programación funcional de streams de datos. Convierte la ardua experiencia de manejar streams en algo similar a lo que es trabajar con arrays.
+    url: https://jsr.io/@sgmonda/streamfu
+    category: software
+
+  - title: Keepcalm
+    subtitle: Syntax theme
+    description: Syntax highlighting theme para desarrollo de software, pensado para amantes del modo oscuro. Es un proyecto open source.
+    url: https://marketplace.visualstudio.com/items?itemName=sgmonda.keepcalm-theme
     category: software
 
   - title: Stdio
-    # icon: fas fa-home
-    description: Paquete de NPM para gestión de entrada/salida estándar en Node.js, con casi 30 mil descargas semanales. Es un proyecto open source, escrito en Typescript, cuyo código está disponible en GitHub.
-    image: /assets/img/stdio.png
-    imageSize: is-3by1
+    subtitle: TypeScript library
+    description: Paquete de NPM para gestión de entrada/salida estándar en Node.js. Es un proyecto open source con más de 40k descargas semanales.
     url: https://npmjs.org/stdio
     category: software
 
   - title: Formelio
+    subtitle: React library
     description: Librería de NPM para creación de formularios dinámicos en React. Es un proyecto open source, escrito en Typescript, cuyo código está disponible en GitHub.
-    image: /assets/img/formelio.png
-    imageSize: is-3by1
     url: https://npmjs.org/formelio
     category: software
 
-  - title: Houstone
-    description: Framework de Javascript/Typescript para creación de aplicaciones web en Deno. Es un proyecto open source, escrito en Typescript, cuyo código está disponible en GitHub.
-    image: /assets/img/houstone.png
-    imageSize: is-3by1
-    url: https://houstone.org
-    category: software
-
   - title: Schedu.land
+    subtitle: Product
     description: Venta de tiempo para uso libre.
-    image: /assets/img/scheduland.png
-    imageSize: is-3by1
     url: https://schedu.land
-    category: software
-
-  - title: Gang.as
-    description: Compra colaborativa por medio de sorteos ponderados.
-    image: /assets/img/gangas.png
-    imageSize: is-3by1
-    url: https://gang.as
     category: software
 
   - title: La Tierra Gira

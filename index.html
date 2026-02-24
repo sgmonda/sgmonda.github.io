@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Sergio García Mondaray — Terminal
-description: Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, músico... explorador.
+title: Sergio García Mondaray
+description: Web personal de Sergio García Mondaray
 ---
 
 <!-- ═══════ BOOT SCREEN ═══════ -->
@@ -74,7 +74,7 @@ description: Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, mú
       <h1 class="hero-name">
         <span id="typed-name"></span><span class="cursor"></span>
       </h1>
-      <p class="hero-tagline">Ingeniero, fotógrafo, músico... explorador</p>
+      <p class="hero-tagline">Matrix resident</p>
       <div class="hero-links">
     <div class="link-line">
       <span class="link-prompt">$</span>
@@ -112,6 +112,7 @@ description: Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, mú
 <section class="section" id="about">
   <div class="cmd-header">
     <div class="cmd-line">
+      <span class="px-icon px-user"></span>
       <span class="cmd-prompt">sgmonda@web:~$</span>
       <span class="cmd-text">cat about.txt</span>
     </div>
@@ -140,6 +141,7 @@ description: Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, mú
 <section class="section" id="skills">
   <div class="cmd-header">
     <div class="cmd-line">
+      <span class="px-icon px-terminal"></span>
       <span class="cmd-prompt">sgmonda@web:~$</span>
       <span class="cmd-text">ls -la skills/</span>
     </div>
@@ -147,7 +149,7 @@ description: Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, mú
   </div>
 
   <div class="skills-grid stagger-children">
-    <div class="skill-category-title">Desarrollo de Software</div>
+    <div class="skill-category-title"><span class="px-icon px-folder"></span> Desarrollo de Software</div>
 
     <div class="skill-item">
       <div class="skill-title">Lenguajes</div>
@@ -202,7 +204,7 @@ description: Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, mú
       <div class="skill-desc">Git (con hooks). También Mercurial y Subversion.</div>
     </div>
 
-    <div class="skill-category-title">Otros</div>
+    <div class="skill-category-title"><span class="px-icon px-folder"></span> Otros</div>
 
     <div class="skill-item">
       <div class="skill-title">Producción audiovisual</div>
@@ -211,130 +213,12 @@ description: Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, mú
   </div>
 </section>
 
-<!-- ═══════ PROJECTS ═══════ -->
-<section class="section" id="projects">
-  <div class="cmd-header">
-    <div class="cmd-line">
-      <span class="cmd-prompt">sgmonda@web:~$</span>
-      <span class="cmd-text">ls -la projects/</span>
-    </div>
-    <div class="cmd-output-label">— Inquieto, no puedo parar de crear —</div>
-  </div>
-
-  <!-- Software -->
-  <div class="projects-category">
-    <h3 class="projects-category-title">📁 software/</h3>
-    <div class="stagger-children">
-      <div class="project-item">
-        <div class="project-perms">drwxr-xr-x</div>
-        <div class="project-info">
-          <div class="project-name"><a href="/labs/cubelor">Cubelor</a></div>
-          <div class="project-desc">Videojuego casual sobre cubos y colores, creado para estrujar la mente. Disponible para iOS y Android.</div>
-        </div>
-        <div class="project-meta">game</div>
-      </div>
-      <div class="project-item">
-        <div class="project-perms">drwxr-xr-x</div>
-        <div class="project-info">
-          <div class="project-name"><a href="/labs/liartist">Liartist</a></div>
-          <div class="project-desc">Videojuego multijugador para dibujar con hasta 9 amigos. Disponible para iOS, Android, OSX, Linux y Windows.</div>
-        </div>
-        <div class="project-meta">game</div>
-      </div>
-      <div class="project-item">
-        <div class="project-perms">drwxr-xr-x</div>
-        <div class="project-info">
-          <div class="project-name"><a href="/labs/take6">Take6</a></div>
-          <div class="project-desc">Videojuego multijugador para retar a hasta 9 amigos. Disponible multiplataforma.</div>
-        </div>
-        <div class="project-meta">game</div>
-      </div>
-      <div class="project-item">
-        <div class="project-perms">-rwxr-xr-x</div>
-        <div class="project-info">
-          <div class="project-name"><a href="https://npmjs.org/stdio" target="_blank" rel="noopener">Stdio</a></div>
-          <div class="project-desc">Paquete NPM para gestión de entrada/salida estándar en Node.js. ~30k descargas semanales. Open source, escrito en Typescript.</div>
-        </div>
-        <div class="project-meta">npm</div>
-      </div>
-      <div class="project-item">
-        <div class="project-perms">-rwxr-xr-x</div>
-        <div class="project-info">
-          <div class="project-name"><a href="https://npmjs.org/formelio" target="_blank" rel="noopener">Formelio</a></div>
-          <div class="project-desc">Librería NPM para creación de formularios dinámicos en React. Open source, escrito en Typescript.</div>
-        </div>
-        <div class="project-meta">npm</div>
-      </div>
-      <div class="project-item">
-        <div class="project-perms">-rwxr-xr-x</div>
-        <div class="project-info">
-          <div class="project-name"><a href="https://houstone.org" target="_blank" rel="noopener">Houstone</a></div>
-          <div class="project-desc">Framework de Javascript/Typescript para creación de aplicaciones web en Deno. Open source.</div>
-        </div>
-        <div class="project-meta">framework</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Music -->
-  <div class="projects-category">
-    <h3 class="projects-category-title">🎵 music/ <span style="color:var(--green-dark);font-weight:400;font-size:var(--fs-sm)">— como "Monda" en plataformas de streaming</span></h3>
-    <div class="stagger-children">
-      <div class="project-item">
-        <div class="project-perms">-rw-r--r--</div>
-        <div class="project-info">
-          <div class="project-name">La Tierra Gira</div>
-          <div class="project-desc">Álbum de 8 canciones escrito durante 2020, en parte durante el confinamiento por la pandemia del COVID-19.</div>
-        </div>
-        <div class="project-meta">2021</div>
-      </div>
-      <div class="project-item">
-        <div class="project-perms">-rw-r--r--</div>
-        <div class="project-info">
-          <div class="project-name">Renegado</div>
-          <div class="project-desc">Colaboración con Deivid y Gude, una visión atípica del amor.</div>
-        </div>
-        <div class="project-meta">2019</div>
-      </div>
-      <div class="project-item">
-        <div class="project-perms">-rw-r--r--</div>
-        <div class="project-info">
-          <div class="project-name">Voces del incomprendido</div>
-          <div class="project-desc">Colaboración con Deivid para su álbum "Desde mi azotea".</div>
-        </div>
-        <div class="project-meta">2019</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Video/Photo -->
-  <div class="projects-category">
-    <h3 class="projects-category-title">🎬 fotovideo/</h3>
-    <div class="stagger-children">
-      <div class="project-item">
-        <div class="project-perms">drwxr-xr-x</div>
-        <div class="project-info">
-          <div class="project-name"><a href="http://ferrallasymovidas.com" target="_blank" rel="noopener">Ferrallas y movidas</a></div>
-          <div class="project-desc">Canal de YouTube protagonizado por dos amigos en un taller. Yo grabo y monto los vídeos. +100k suscriptores.</div>
-        </div>
-        <div class="project-meta">youtube</div>
-      </div>
-      <div class="project-item">
-        <div class="project-perms">drwxr-xr-x</div>
-        <div class="project-info">
-          <div class="project-name"><a href="http://captur.as" target="_blank" rel="noopener">CAPTUR.AS</a></div>
-          <div class="project-desc">Producción audiovisual: videoclips, cortometrajes y vídeos de boda.</div>
-        </div>
-        <div class="project-meta">studio</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══════ EDUCATION ═══════ -->
 <section class="section" id="education">
   <div class="cmd-header">
     <div class="cmd-line">
+      <span class="px-icon px-book"></span>
       <span class="cmd-prompt">sgmonda@web:~$</span>
       <span class="cmd-text">cat education.log</span>
     </div>
@@ -401,6 +285,7 @@ description: Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, mú
 <section class="section" id="blog">
   <div class="cmd-header">
     <div class="cmd-line">
+      <span class="px-icon px-pencil"></span>
       <span class="cmd-prompt">sgmonda@web:~$</span>
       <span class="cmd-text">tail -n 7 blog.log</span>
     </div>
@@ -424,6 +309,7 @@ description: Web personal de Sergio García Mondaray. Ingeniero, fotógrafo, mú
 <section class="section" id="contact">
   <div class="cmd-header">
     <div class="cmd-line">
+      <span class="px-icon px-mail"></span>
       <span class="cmd-prompt">sgmonda@web:~$</span>
       <span class="cmd-text">mail sergio@sgmonda.com</span>
     </div>
