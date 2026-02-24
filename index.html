@@ -16,13 +16,13 @@
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --fs:1em;
-  --fs-xs:calc(var(--fs) * 0.785);
-  --fs-sm:calc(var(--fs) * 0.857);
-  --fs-md:calc(var(--fs) * 0.928);
+    --fs:1.2rem;
+  --fs-xs:calc(var(--fs) * 1);
+  --fs-sm:calc(var(--fs) * 1);
+  --fs-md:calc(var(--fs) * 1);
   --fs-lg:var(--fs);
-  --fs-hero:clamp(calc(var(--fs) * 3),6vw,calc(var(--fs) * 3));
-  --fs-tagline:clamp(calc(var(--fs) * 2),2.5vw,calc(var(--fs) * 2));
+  --fs-hero:clamp(calc(var(--fs) * 2),6vw,calc(var(--fs) * 2));
+  --fs-tagline:clamp(calc(var(--fs) * 1),2.5vw,calc(var(--fs) * 1));
   --green:#00ff41;--green-dim:#00cc33;--green-dark:#00751a;--green-glow:#00ff4180;
   --amber:#ffb000;--amber-dim:#cc8d00;--amber-glow:#ffb00060;
   --red:#ff3333;--cyan:#00e5ff;--white:#e0ffe0;--white-bright:#ffffff;
@@ -65,12 +65,6 @@ body{
 }
 @keyframes flicker{from{opacity:0.012}to{opacity:0.018}}
 
-/* ═══════ PERSPECTIVE CONTAINER ═══════ */
-#scene{
-  perspective:1200px;
-  perspective-origin:50% 50%;
-}
-
 /* ═══════ NAV ═══════ */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
@@ -97,22 +91,14 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
 /* ═══════ SECTIONS ═══════ */
 .section{
   min-height:100vh;padding:8rem 2rem 4rem;max-width:900px;margin:0 auto;
-  transform-style:preserve-3d;
   opacity:0;
-  transform:translateZ(-80px) rotateX(2deg);
-  transition:opacity 0.9s cubic-bezier(.23,1,.32,1),
-             transform 0.9s cubic-bezier(.23,1,.32,1);
+  transform:translateY(60px) scale(0.97);
+  transition:opacity 0.8s cubic-bezier(.23,1,.32,1),
+             transform 0.8s cubic-bezier(.23,1,.32,1);
 }
 .section.visible{
   opacity:1;
-  transform:translateZ(0) rotateX(0);
-}
-.section:nth-child(even){
-  transform-origin:center left;
-  transform:translateZ(-80px) rotateY(1.5deg);
-}
-.section:nth-child(even).visible{
-  transform:translateZ(0) rotateY(0);
+  transform:translateY(0) scale(1);
 }
 
 /* ═══════ COMMAND HEADER ═══════ */
@@ -135,6 +121,14 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
 #hero{
   min-height:100vh;display:flex;flex-direction:column;justify-content:center;
   padding-top:4rem;
+}
+.hero-layout{
+  display:flex;gap:2rem;align-items:center;margin-bottom:2rem;
+}
+.hero-layout .ascii-art{margin-right: 2rem}
+.hero-content{flex:1;min-width:0}
+@media(max-width:768px){
+  .hero-layout{flex-direction:column}
 }
 .hero-pre{
   color:var(--green-dark);font-size:var(--fs-xs);margin-bottom:1rem;
@@ -177,6 +171,7 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
 .hero-scroll-hint{
   margin-top:4rem;font-size:var(--fs-xs);color:var(--green-dark);
   animation:pulse 2s ease-in-out infinite;
+  text-align: center;
 }
 @keyframes pulse{0%,100%{opacity:0.3}50%{opacity:0.8}}
 
@@ -184,7 +179,15 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
 .ascii-border{
   color:var(--green-dark);font-size:var(--fs-xs);opacity:0.4;
   margin:1.5rem 0;white-space:pre;overflow:hidden;
-  line-height:1.2;
+  line-height:1;
+}
+
+.ascii-art {
+    font-size: 10px;
+    opacity: 0.4;
+    line-height: 1;
+    white-space: pre;
+    overflow: hidden;
 }
 
 /* ═══════ ABOUT ═══════ */
@@ -242,7 +245,7 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
   padding:1rem 0;border-bottom:1px solid var(--border);
   align-items:baseline;transition:all .3s;
 }
-.project-item:hover{padding-left:0.5rem;background:#00ff4105}
+.project-item:hover{background:#00ff4105}
 .project-perms{color:var(--green-dark);font-size:var(--fs-xs);white-space:nowrap}
 .project-info{}
 .project-name{color:var(--white);font-weight:600;font-size:var(--fs-lg)}
@@ -274,7 +277,7 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
   padding:0.8rem 0;border-bottom:1px solid var(--border);
   align-items:baseline;transition:all .3s;
 }
-.blog-item:hover{padding-left:0.5rem;background:#00ff4105}
+.blog-item:hover{background:#00ff4105}
 .blog-date{color:var(--green-dark);font-size:var(--fs-sm);font-weight:500}
 .blog-title{color:var(--white);font-size:var(--fs-md)}
 .blog-title a{color:var(--white);text-decoration:none;transition:color .2s}
@@ -417,22 +420,63 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
 
 <!-- ═══════ HERO ═══════ -->
 <section class="section" id="hero">
-  <div class="hero-pre">/// PERSONAL WEBSITE v4.0 — LAST UPDATED 2026</div>
-  <h1 class="hero-name">
-    <span id="typed-name"></span><span class="cursor"></span>
-  </h1>
-  <p class="hero-tagline">Ingeniero, fotógrafo, músico... explorador</p>
-
-  <div class="ascii-border">╔══════════════════════════════════════════════════════════════╗
-║  ██████╗ ██████╗ ███╗   ███╗ ██████╗ ███╗   ██╗██████╗  █║
-║  ██╔════╝██╔════╝ ████╗ ████║██╔═══██╗████╗  ██║██╔══██╗ █║
-║  ███████╗██║  ███╗██╔████╔██║██║   ██║██╔██╗ ██║██║  ██║ █║
-║  ╚════██║██║   ██║██║╚██╔╝██║██║   ██║██║╚██╗██║██║  ██║ █║
-║  ███████║╚██████╔╝██║ ╚═╝ ██║╚██████╔╝██║ ╚████║██████╔╝ █║
-║  ╚══════╝ ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═════╝  ║
-╚══════════════════════════════════════════════════════════════╝</div>
-
-  <div class="hero-links">
+  <div class="hero-layout">
+    <div class="ascii-art">
+          . ...  ## ..
+       ..%############%..
+        ################@
+        #################
+        #################-
+       ..##############%#
+          ########%:..%#::=+*+-. ..
+  .#.    .# #### -#####################-.
+ .=#%%+    .###############################% .
+  #####    *##################################% .
+ .#####%##%#############%*#######################.
+  %#######################==%#####################%
+  .####%+++################===%####################%.
+ @.+##===========###########====#%##################.
+ :###===============%########====*##=###############=
+  ###===============- .######*========##############.
+  . *===============-    .%%##========%############%.
+    =================        :=========###########.  .
+    =================            .=====########+.    %
+    -================                               .#
+    .=================                             .+#
+    .================:                              %%
+     ===============.                               #+
+       . ==========                                %#.
+     %##  .##=====             . .                  =###:
+    %+     %#####%%.. ..:############.       .*###########%
+    #.     .==+%#########%=        .#%####%####:.     +###:
+    %      .=====   #####.           ###.  ##.         ##.
+    .-     .#====    ..##.           ##   .##          @#.
+          .+#====       ##.        .*#.    :#         .#=.
+       .#-.%##===-      .%%       .##.      ##.      +#+
+      .+## @##====.      .=##@:-@##..         ###%###%
+        ...###======         ....                .
+          .+##%======.
+           -##%========.                .  ..
+           .####========.          ..####.%##%     #.
+           .#####========        =######..=####=  #*
+           .######========    @####%##.      *###.#.
+           ..######%======..%####% ..           .#%
+             .########=====. . .   #########.  .##.
+              .:########%===.      #########. ###.
+               . %##########      .#############:
+                   %%########### . *###########:
+                     %########################.
+                      .:##################### .
+                         .%#%###############
+                            .%############
+    </div>
+    <div class="hero-content">
+      <div class="hero-pre">/// PERSONAL WEBSITE v4.0 — LAST UPDATED 2026</div>
+      <h1 class="hero-name">
+        <span id="typed-name"></span><span class="cursor"></span>
+      </h1>
+      <p class="hero-tagline">Ingeniero, fotógrafo, músico... explorador</p>
+      <div class="hero-links">
     <div class="link-line">
       <span class="link-prompt">$</span>
       <span class="link-cmd">open</span>
@@ -459,6 +503,8 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
       <a href="mailto:sergio@sgmonda.com">sergio@sgmonda.com</a>
     </div>
   </div>
+    </div><!-- .hero-content -->
+  </div><!-- .hero-layout -->
 
   <div class="hero-scroll-hint">▼ scroll para continuar ▼</div>
 </section>
@@ -929,18 +975,17 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
         const vh = window.innerHeight;
         sections.forEach(section => {
+          if (!section.classList.contains('visible')) return;
           const rect = section.getBoundingClientRect();
           const center = rect.top + rect.height / 2;
           const offset = (center - vh / 2) / vh;
-          const z = Math.max(-30, Math.min(30, offset * -20));
-          const ry = offset * 0.8;
-          if (section.classList.contains('visible')) {
-            section.style.transform =
-              `translateZ(${z}px) rotateY(${ry}deg)`;
-          }
+          const ty = offset * 30;
+          const s = 1 - Math.abs(offset) * 0.02;
+          const o = 1 - Math.abs(offset) * 0.3;
+          section.style.transform = `translateY(${ty}px) scale(${s})`;
+          section.style.opacity = Math.max(0.4, o);
         });
         ticking = false;
       });
