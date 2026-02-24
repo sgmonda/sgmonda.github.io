@@ -35,7 +35,7 @@
     --white: #e0ffe0;
     --white-bright: #ffffff;
     --bg: #050505;
-    --bg-panel: #0a0a0a;
+    --bg-panel: #000f00;
     --bg-card: #0d1a0d;
     --border: #00ff4125;
     --border-bright: #00ff4150;
@@ -226,8 +226,17 @@ nav .nav-links a.active::before {
 }
 .cmd-output-label {
     font-size: var(--fs-xs);
-    color: var(--green-dark);
+    color: var(--green);
     text-transform: uppercase;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+.cmd-output-label pre {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 /* ═══════ HERO ═══════ */
@@ -829,7 +838,7 @@ footer a:hover {
 
 /* ═══════ MARKDOWN CONTENT ═══════ */
 .markdown-body {
-    line-height: 1;
+    line-height: 1.2;
     color: var(--white);
 }
 .markdown-body h1,
@@ -848,8 +857,9 @@ footer a:hover {
 }
 .markdown-body h2 {
     font-size: calc(var(--fs) * 1.5);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 2px dashed var(--border);
     padding-bottom: 0.5rem;
+    margin-top: 2em;
 }
 .markdown-body h3 {
     font-size: calc(var(--fs) * 1.2);
@@ -909,6 +919,7 @@ footer a:hover {
     padding: 0.15em 0.4em;
     font-size: var(--fs);
     border: 1px solid var(--border);
+    border-radius: 4px;
     font-family: var(--font);
 }
 .markdown-body pre {
@@ -1087,9 +1098,13 @@ footer a:hover {
 .highlight {
     background: var(--bg-panel);
     border: 1px solid var(--border);
-    padding: 1.2rem;
-    margin: 1.5rem 0;
-    overflow-x: auto;
+    border-radius: 4px;
+    /*padding: 1.2rem;*/
+    /*margin: 1.5rem 0;*/
+    /*overflow-x: auto;*/
+}
+div.highlight {
+    margin: 1em 0;
 }
 .highlight pre {
     margin: 0;

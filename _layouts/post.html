@@ -8,13 +8,14 @@ layout: default
       <span class="cmd-prompt">sgmonda@web:~$</span>
       <span class="cmd-text">cat blog/{{ page.title | slugify }}</span>
     </div>
-    <div class="cmd-output-label">— {{ page.title }} —</div>
+    <div class="cmd-output-label">
+        <pre>====================================================================================================================================================================================================================================</pre>
+        {{ page.title }}
+        <pre>====================================================================================================================================================================================================================================</pre>
+    </div>
   </div>
 
-  <div class="post-meta">
-    <span>{{ page.date | date: "%Y-%m-%d" }}</span>
-    {% if page.author %}<span>{{ page.author }}</span>{% endif %}
-  </div>
+
 
   {% if page.image %}
   <div class="post-image">
