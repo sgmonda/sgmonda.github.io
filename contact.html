@@ -4,59 +4,61 @@ title: Contacto
 description: Si crees que podemos colaborar de alguna manera, no dudes en contactarme
 ---
 
-<article>
-  <form action="https://formspree.io/f/xayalbvk" method="post">
+<div class="content-section">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">mail sergio@sgmonda.com</span>
+    </div>
+    <div class="cmd-output-label">— Formulario de contacto —</div>
+  </div>
 
-    <div class="columns">
-      <div class="column">
-        <div class="field">
-          <label class="label">Nombre</label>
-          <div class="control">
-            <input class="input" type="text" name="name">
-          </div>
-        </div>
+  <div class="contact-block">
+    <form action="https://formspree.io/f/xayalbvk" method="post" class="terminal-form">
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" name="name" required>
       </div>
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label>Mensaje:</label>
+        <textarea name="message" required></textarea>
+      </div>
+      <button type="submit" class="contact-send">$ send_mail ▸</button>
+    </form>
+  </div>
 
-      <div class="column">
-        <div class="field">
-          <label class="label">Email</label>
-          <div class="control">
-            <input class="input" type="email" name="email">
-          </div>
-        </div>
+  <div style="margin-top:2rem;font-size:var(--fs-sm);color:var(--green-dark)">
+    <p>También puedes encontrarme en:</p>
+    <div class="hero-links" style="margin-top:0.5rem">
+      <div class="link-line">
+        <span class="link-prompt">$</span>
+        <span class="link-cmd">open</span>
+        <a href="https://github.com/sgmonda" target="_blank" rel="noopener">github.com/sgmonda</a>
+      </div>
+      <div class="link-line">
+        <span class="link-prompt">$</span>
+        <span class="link-cmd">open</span>
+        <a href="https://stackoverflow.com/users/972197/sgmonda" target="_blank" rel="noopener">stackoverflow/sgmonda</a>
+      </div>
+      <div class="link-line">
+        <span class="link-prompt">$</span>
+        <span class="link-cmd">open</span>
+        <a href="https://twitter.com/sgmonda" target="_blank" rel="noopener">twitter.com/sgmonda</a>
+      </div>
+      <div class="link-line">
+        <span class="link-prompt">$</span>
+        <span class="link-cmd">open</span>
+        <a href="https://www.instagram.com/sgmonda/" target="_blank" rel="noopener">instagram.com/sgmonda</a>
+      </div>
+      <div class="link-line">
+        <span class="link-prompt">$</span>
+        <span class="link-cmd">mail</span>
+        <a href="mailto:sergio@sgmonda.com">sergio@sgmonda.com</a>
       </div>
     </div>
-
-    <div class="field">
-      <label class="label">Mensaje</label>
-      <div class="control">
-        <textarea class="textarea" name="message"></textarea>
-      </div>
-    </div>
-
-    <div class="field is-grouped">
-      <div class="control">
-        <button class="button is-link">Enviar</button>
-      </div>
-    </div>
-
-  </form>
-
-  <hr/>
-
-  <p>También puedes buscarme en redes sociales:</p>
-
-  <ul>
-    <li><a href="https://github.com/sgmonda">GitHub</a></li>
-    <li><a href="https://stackoverflow.com/users/972197/sgmonda">Stackoverflow</a></li>
-    <li><a href="https://twitter.com/sgmonda">Twitter</a></li>
-    <li><a href="https://www.instagram.com/sgmonda/">Instagram</a></li>
-  </ul>
-
-  <p>O contactarme por email:</p>
-
-  <ul>
-    <li><a href="mailto:sergio@sgmonda.com">sergio@sgmonda.com</a></li>
-  </ul>
-
-</article>
+  </div>
+</div>

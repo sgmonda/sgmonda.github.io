@@ -1,0 +1,17 @@
+---
+layout: default
+---
+
+<div class="content-section">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">cat {{ page.title | slugify }}.md</span>
+    </div>
+    {% if page.description %}<div class="cmd-output-label">— {{ page.description | truncate: 80 }} —</div>{% endif %}
+  </div>
+
+  <div class="markdown-body">
+    {{ content }}
+  </div>
+</div>

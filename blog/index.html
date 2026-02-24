@@ -4,17 +4,21 @@ title: Blog
 description: De vez en cuando escribo cosas. Si no tienes nada más interesante que hacer puedes echarle un vistazo a alguna de estas publicaciones.
 ---
 
-{% for post in site.posts %}
+<div class="content-section">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">ls -la blog/</span>
+    </div>
+    <div class="cmd-output-label">— Todas las publicaciones —</div>
+  </div>
 
-<article>
-  <h4><a href="{{ post.url  }}">{{post.title}}</a></h4>
-  <p>
-    {{ post.description }}..
-    <span class="is-uppercase is-size-7">
-      <a href="{{ post.url }}">Leer más</a>
-    </span>
-  </p>
-  <div style="margin-bottom: 3em"></div>
-</article>
-
-{% endfor %}
+  <div class="stagger-children">
+    {% for post in site.posts %}
+    <div class="blog-item">
+      <div class="blog-date">{{ post.date | date: "%Y-%m-%d" }}</div>
+      <div class="blog-title"><a href="{{ post.url }}">{{ post.title }}</a></div>
+    </div>
+    {% endfor %}
+  </div>
+</div>

@@ -1,7 +1,49 @@
 ---
 layout: default
 title: Proyectos
-description: No puedo parar de crear cosas. Desde software variado a proyectos audiovisuales, pasando por ilustraciones y cualquier otra disciplina que puedas imaginar. Aquí puedes ver algunas de mis creaciones.
+description: No puedo parar de crear cosas. Desde software variado a proyectos audiovisuales, pasando por ilustraciones y cualquier otra disciplina que puedas imaginar.
 ---
 
-{% include cv-section.html data=site.data.projects %}
+<div class="content-section">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">ls -la projects/</span>
+    </div>
+    <div class="cmd-output-label">— Inquieto, no puedo parar de crear —</div>
+  </div>
+
+  {% for category in site.data.projects.categories %}
+  <div class="projects-category">
+    <h3 class="projects-category-title">📁 {{ category.id }}/</h3>
+    <p style="color:var(--white);font-size:var(--fs-sm);margin-bottom:1rem">{{ category.description }}</p>
+    <div class="stagger-children">
+      {% for item in site.data.projects.items %}
+      {% if item.category == category.id %}
+      <div class="project-item">
+        <div class="project-perms">{% if item.url %}drwxr-xr-x{% else %}-rw-r--r--{% endif %}</div>
+        <div class="project-info">
+          <div class="project-name">
+            {% if item.url %}<a href="{{ item.url }}" {% if item.url contains "http" %}target="_blank" rel="noopener"{% endif %}>{{ item.title }}</a>{% elsif item.image and item.openable %}<a href="{{ item.image }}" target="_blank">{{ item.title | default: "ver" }}</a>{% else %}{{ item.title | default: "—" }}{% endif %}
+          </div>
+          {% if item.description %}<div class="project-desc">{{ item.description }}</div>{% endif %}
+        </div>
+        <div class="project-meta">{{ item.subtitle }}</div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <!-- Illustrations gallery -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px;margin-top:1rem">
+    {% for item in site.data.projects.items %}
+    {% if item.category == "illustrations" and item.image %}
+    <a href="{{ item.image }}" target="_blank" style="display:block;border:1px solid var(--border);transition:border-color .2s">
+      <img src="{{ item.image }}" alt="" style="width:100%;display:block;opacity:0.8;transition:opacity .2s" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+    </a>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>

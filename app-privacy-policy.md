@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 title: App Privacy Policy
 description: | 
   Sergio Garcia Mondaray built this app as a Freemium app. This SERVICE is provided at no cost and is intended for use as is. This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.

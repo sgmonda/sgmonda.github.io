@@ -1,66 +1,46 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="shortcut icon"
-      href="/assets/img/favicon.ico"
-      type="image/x-icon"
-    />
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
+{% seo %}
+<title>{% if page.title %}{{ page.title }} — sgmonda{% else %}Sergio García Mondaray — Terminal{% endif %}</title>
+<link rel="stylesheet" href="/assets/css/terminal.css">
+</head>
+<body>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-157275978-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-157275978-1');
-    </script>
+<!-- ═══════ CRT OVERLAY ═══════ -->
+<div id="crt-overlay"></div>
 
-    <!-- SEO/social tags are added automatically by jekyll-seo-tag plugin -->
-    {% seo %}
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <div class="nav-left">
+    <a href="/" class="prompt-label" style="text-decoration:none;color:var(--green-dim);opacity:0.6">sgmonda@web:~$</a>
+  </div>
+  <button class="nav-mobile-toggle" aria-label="Menú">☰</button>
+  <div class="nav-links">
+    {% for item in site.data.menu %}
+    <a href="{{ item.url }}">{{ item.label }}</a>
+    {% endfor %}
+  </div>
+</nav>
 
-    <title>{{ page.title }}</title>
+{{ content }}
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,700;1,300;1,700&family=Roboto:ital,wght@0,300;0,500;1,300;1,500&display=swap"
-      rel="stylesheet"
-    />
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/sgmonda" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://stackoverflow.com/users/972197/sgmonda" target="_blank" rel="noopener">StackOverflow</a>
+    <a href="https://twitter.com/sgmonda" target="_blank" rel="noopener">Twitter</a>
+    <a href="https://www.instagram.com/sgmonda/" target="_blank" rel="noopener">Instagram</a>
+    <a href="mailto:sergio@sgmonda.com">Email</a>
+  </div>
+  <div class="footer-copy">© Sergio García Mondaray — sgmonda.com — <span id="footer-year">2026</span></div>
+  <div style="margin-top:0.5rem;opacity:0.3;font-size:var(--fs-xs)">process exited with code 0</div>
+</footer>
 
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
-    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/style.css" media="print" /> -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/assets/css/rouge-github.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma-tooltip@3.0.2/dist/css/bulma-tooltip.min.css"
-    />
-    <script
-      defer
-      src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
-    ></script>
-    <script
-      defer
-      src="/assets/js/main.js"
-      type="application/javascript"
-    ></script>
-  </head>
-  <body>
-    {% include header.html %}
-
-    <div class="container">
-      <div class="content">{% include title.html %} {{ content }}</div>
-    </div>
-
-    {% include footer.html %}
-  </body>
+<script src="/assets/js/terminal.js"></script>
+</body>
 </html>

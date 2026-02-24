@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 title: Cubelor
 description: | 
   Casual colorful game, designed for all ages and ready to be played with just one finger. Perfect for playing while using public transport. Squeeze your brain and complete all the levels.

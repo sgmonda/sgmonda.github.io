@@ -7,7 +7,16 @@ twitter:
   username: sgmonda
 logo: /assets/img/logo.png
 locale: es_ES
-layout: default
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
 markdown: kramdown
 kramdown:
   input: GFM

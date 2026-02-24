@@ -1,58 +1,35 @@
 ---
 layout: default
+title: Sobre mí
 ---
 
-<div class="columns">
-  <div class="column is-narrow" style="min-width: 180px">
-    <figure class="image is-square" style="margin: 0 !important;">
-      <img src="/assets/img/avatar.jpg" />
-    </figure>
+<div class="content-section">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">cat about.txt</span>
+    </div>
+    <div class="cmd-output-label">— Información personal —</div>
   </div>
-  <div class="column">
-    <h2 class="black">Información personal</h2>
-    <ul>
-      <li>
-        <strong>Nombre: </strong>
-        Sergio García Mondaray
-      </li>
-      <li>
-        <strong>Nick: </strong>
-        @sgmonda
-      </li>
-      <li>
-        <strong>Web: </strong>
-        https://sgmonda.com
-      </li>
-      <li>
-        <strong>Email: </strong>
-        sergio@sgmonda.com
-      </li>
-    </ul>
+
+  <div class="markdown-body">
+    <div class="contact-block" style="max-width:100%;margin-bottom:2rem">
+      <div class="contact-line">
+        <div class="contact-label">Nombre:</div>
+        <div class="contact-value">Sergio García Mondaray</div>
+      </div>
+      <div class="contact-line">
+        <div class="contact-label">Nick:</div>
+        <div class="contact-value">@sgmonda</div>
+      </div>
+      <div class="contact-line">
+        <div class="contact-label">Web:</div>
+        <div class="contact-value"><a href="https://sgmonda.com">sgmonda.com</a></div>
+      </div>
+      <div class="contact-line">
+        <div class="contact-label">Email:</div>
+        <div class="contact-value"><a href="mailto:sergio@sgmonda.com">sergio@sgmonda.com</a></div>
+      </div>
+    </div>
   </div>
 </div>
-
-<!-- <hr/>
-
-     <a href="https://stackexchange.com/users/944724">
-     <img src="https://stackexchange.com/users/flair/944724.png" width="208" height="58" alt="profile for sgmonda on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for sgmonda on Stack Exchange, a network of free, community-driven Q&amp;A sites"/>
-     </a>
--->
-<hr style="margin-top: 0" />
-
-<section>
-  <h1>{{ site.data.skills.title }}</h1>
-  <p class="excerpt">{{ site.data.skills.description }}</p>
-  {% include cv-section.html data=site.data.skills %}
-</section>
-
-<section>
-  <h1>{{ site.data.studies.title }}</h1>
-  <p class="excerpt">{{ site.data.studies.description }}</p>
-  {% include cv-section.html data=site.data.studies %}
-</section>
-
-<section>
-  <h1>{{ site.data.projects.title }}</h1>
-  <p class="excerpt">{{ site.data.projects.description }}</p>
-  {% include cv-section.html data=site.data.projects %}
-</section>

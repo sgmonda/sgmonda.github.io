@@ -2,19 +2,36 @@
 layout: default
 ---
 
-<div class="content">
+<div class="content-section">
+  <div class="cmd-header">
+    <div class="cmd-line">
+      <span class="cmd-prompt">sgmonda@web:~$</span>
+      <span class="cmd-text">cat blog/{{ page.title | slugify }}</span>
+    </div>
+    <div class="cmd-output-label">— {{ page.title }} —</div>
+  </div>
+
+  <div class="post-meta">
+    <span>{{ page.date | date: "%Y-%m-%d" }}</span>
+    {% if page.author %}<span>{{ page.author }}</span>{% endif %}
+  </div>
+
   {% if page.image %}
-  <figure class="image is-2by1"><img src="{{ page.image }}" /></figure>
-  {% endif %} {{ content }}
+  <div class="post-image">
+    <img src="{{ page.image }}" alt="{{ page.title }}">
+  </div>
+  {% endif %}
 
-  <hr />
+  <div class="markdown-body">
+    {{ content }}
+  </div>
 
-  <h5>Otros artículos</h5>
-  <ul class="posts">
-    {% for post in site.related_posts %}
-    <li>
-      <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-    </li>
-    {% endfor %}
-  </ul>
+  <div class="related-posts">
+    <h3>Otros artículos</h3>
+    <ul>
+      {% for post in site.related_posts limit:5 %}
+      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>

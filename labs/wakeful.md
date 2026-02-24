@@ -1,11 +1,10 @@
 ---
-layout: default
+layout: page
 title: Wakeful Mac
-description: |
-  Wakeful keeps your Mac awake with a single click. Whether you’re presenting, downloading large files, or rendering for hours, Wakeful prevents your Mac from sleeping or dimming the display — no settings, no fuss.
+description: Wakeful keeps your Mac awake with a single click.
 ---
 
-Thank you for using our app! We're here to help you get the most out of your experience. If you're having trouble, found a bug, or have a feature suggestion, don’t hesitate to reach out.
+Thank you for using our app! We're here to help you get the most out of your experience. If you're having trouble, found a bug, or have a feature suggestion, don't hesitate to reach out.
 
 ## Frequently Asked Questions
 
@@ -19,7 +18,7 @@ Simply drag the app from the Applications folder to the Trash. Some apps may sto
 No. We value your privacy. Our apps are designed to run locally on your device and do not collect or transmit any personal information.
 
 ### I'm experiencing a bug. What should I do?
-We’re sorry to hear that! Please send us an email with as much detail as possible, including:
+We're sorry to hear that! Please send us an email with as much detail as possible, including:
 - A description of the issue
 - What you were doing when it occurred
 - Your macOS version
