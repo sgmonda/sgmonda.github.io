@@ -22,7 +22,7 @@
   --fs-md:calc(var(--fs) * 1);
   --fs-lg:var(--fs);
   --fs-hero:clamp(calc(var(--fs) * 2),6vw,calc(var(--fs) * 2));
-  --fs-tagline:clamp(calc(var(--fs) * 1),2.5vw,calc(var(--fs) * 1));
+  --fs-tagline:clamp(calc(var(--fs) * 1.2),2.5vw,calc(var(--fs) * 1.2));
   --green:#00ff41;--green-dim:#00cc33;--green-dark:#00751a;--green-glow:#00ff4180;
   --amber:#ffb000;--amber-dim:#cc8d00;--amber-glow:#ffb00060;
   --red:#ff3333;--cyan:#00e5ff;--white:#e0ffe0;--white-bright:#ffffff;
@@ -92,19 +92,20 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
 .section{
   min-height:100vh;padding:8rem 2rem 4rem;max-width:900px;margin:0 auto;
   opacity:0;
-  transform:translateY(60px) scale(0.97);
+  transform:translateY(40px);
   transition:opacity 0.8s cubic-bezier(.23,1,.32,1),
              transform 0.8s cubic-bezier(.23,1,.32,1);
 }
 .section.visible{
   opacity:1;
-  transform:translateY(0) scale(1);
+  transform:translateY(0);
 }
 
 /* ═══════ COMMAND HEADER ═══════ */
 .cmd-header{
-  margin-bottom:2rem;padding-bottom:1rem;
-  border-bottom:1px solid var(--border);
+  margin-bottom:2rem;
+  /*padding-bottom:1rem;*/
+  /*border-bottom:1px solid var(--border);*/
 }
 .cmd-line{
   display:flex;align-items:baseline;gap:0.5rem;flex-wrap:wrap;
@@ -137,7 +138,7 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
 .hero-name{
     text-transform: uppercase;
   font-size:var(--fs-hero);font-weight:700;
-  color:var(--green);line-height:1.1;
+  color:var(--green);line-height:1;
   text-shadow:var(--glow-lg);
   margin-bottom:0.5rem;
   padding:0.2em 0;
@@ -224,7 +225,7 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
   margin-bottom:0.4rem;display:flex;align-items:center;gap:0.5rem;
 }
 .skill-title::before{content:'▸';color:var(--green)}
-.skill-desc{font-size:var(--fs-sm);color:var(--green-dim);line-height:1.6}
+.skill-desc{font-size:var(--fs-sm);color:var(--green-dim);line-height:1}
 .skill-category-title{
   grid-column:1/-1;background:var(--bg);padding:1rem 1.2rem;
   color:var(--green);font-weight:600;font-size:var(--fs-md);
@@ -242,7 +243,8 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
 }
 .project-item{
   display:grid;grid-template-columns:auto 1fr auto;gap:1rem;
-  padding:1rem 0;border-bottom:1px solid var(--border);
+  padding:1rem 0;
+  /*border-bottom:1px solid var(--border);*/
   align-items:baseline;transition:all .3s;
 }
 .project-item:hover{background:#00ff4105}
@@ -258,7 +260,8 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
 
 /* ═══════ EDUCATION ═══════ */
 .edu-item{
-  padding:1.2rem 0;border-bottom:1px solid var(--border);
+  padding:1.2rem 0;
+  /*border-bottom:1px dashed var(--border);*/
   display:grid;grid-template-columns:auto 1fr;gap:1.5rem;
   align-items:start;
 }
@@ -274,7 +277,8 @@ nav .nav-links a:hover::before,nav .nav-links a.active::before{opacity:1}
 /* ═══════ BLOG ═══════ */
 .blog-item{
   display:grid;grid-template-columns:120px 1fr;gap:1rem;
-  padding:0.8rem 0;border-bottom:1px solid var(--border);
+  padding:0.8rem 0;
+  /*border-bottom:1px solid var(--border);*/
   align-items:baseline;transition:all .3s;
 }
 .blog-item:hover{background:#00ff4105}
@@ -534,7 +538,7 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
     <p style="color:var(--amber)">Bienvenido.</p>
   </div>
 
-  <div class="ascii-border">════════════════════════════════════════════════════════════════</div>
+  <div class="ascii-border">=======================================================================================================================================</div>
 </section>
 
 <!-- ═══════ SKILLS ═══════ -->
@@ -739,10 +743,12 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
       <span class="cmd-prompt">sgmonda@web:~$</span>
       <span class="cmd-text">cat education.log</span>
     </div>
-    <div class="cmd-output-label">— Formación académica y complementaria —</div>
+    <!--<div class="cmd-output-label">— Formación académica y complementaria —</div>-->
   </div>
 
   <div class="stagger-children">
+      <div class="ascii-border" style="margin:1rem 0 0.5rem">== FORMACIÓN ACADÉMICA =====================================================================================================================</div>
+
     <div class="edu-item">
       <div class="edu-year">2007–2012</div>
       <div class="edu-info">
@@ -760,7 +766,7 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
       </div>
     </div>
 
-    <div class="ascii-border" style="margin:1rem 0 0.5rem">── complementaria ──────────────────────────────────────────────</div>
+    <div class="ascii-border" style="margin:1rem 0 0.5rem">== FORMACIÓN COMPLEMENTARIA =====================================================================================================================</div>
 
     <div class="edu-item">
       <div class="edu-year">2019</div>
@@ -804,10 +810,14 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
       <span class="cmd-prompt">sgmonda@web:~$</span>
       <span class="cmd-text">tail -n 7 blog.log</span>
     </div>
-    <div class="cmd-output-label">— Últimas entradas del blog —</div>
+
   </div>
 
+
   <div class="stagger-children">
+
+      <div class="ascii-border" style="margin:1rem 0 0.5rem">== ÚLTIMAS ENTRADAS DEL BLOG =====================================================================================================================</div>
+
     <div class="blog-item">
       <div class="blog-date">2026-02-20</div>
       <div class="blog-title"><a href="/class-js">Deja de usar clases en JavaScript</a></div>
@@ -836,9 +846,11 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
       <div class="blog-date">2020-01-29</div>
       <div class="blog-title"><a href="/paralelismo-vs-concurrencia">Paralelismo vs. Concurrencia</a></div>
     </div>
+
+    <div class="ascii-border">======================================================================================================================================</div>
   </div>
 
-  <div class="ascii-border">════════════════════════════════════════════════════════════════</div>
+
 </section>
 
 <!-- ═══════ CONTACT ═══════ -->
@@ -874,6 +886,11 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
         <span class="link-prompt">$</span>
         <span class="link-cmd">open</span>
         <a href="https://github.com/sgmonda" target="_blank" rel="noopener">github.com/sgmonda</a>
+      </div>
+      <div class="link-line">
+        <span class="link-prompt">$</span>
+        <span class="link-cmd">open</span>
+        <a href="https://stackoverflow.com/users/972197/sgmonda" target="_blank" rel="noopener">stackoverflow/sgmonda</a>
       </div>
       <div class="link-line">
         <span class="link-prompt">$</span>
@@ -969,29 +986,6 @@ footer a:hover{color:var(--green);text-shadow:var(--glow-sm)}
     });
   }, { threshold: 0.3 });
   sections.forEach(s => navObserver.observe(s));
-
-  // ─── PARALLAX DEPTH ON SCROLL ───
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const vh = window.innerHeight;
-        sections.forEach(section => {
-          if (!section.classList.contains('visible')) return;
-          const rect = section.getBoundingClientRect();
-          const center = rect.top + rect.height / 2;
-          const offset = (center - vh / 2) / vh;
-          const ty = offset * 30;
-          const s = 1 - Math.abs(offset) * 0.02;
-          const o = 1 - Math.abs(offset) * 0.3;
-          section.style.transform = `translateY(${ty}px) scale(${s})`;
-          section.style.opacity = Math.max(0.4, o);
-        });
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
 
   // ─── FOOTER YEAR ───
   document.getElementById('footer-year').textContent = new Date().getFullYear();
