@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tirada de estudio — Licencia de armas D · E · F</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#15181c; --steel:#1e232a; --raised:#262d35; --line:#39424c;
+  --brass:#c79a4b; --brass-dim:#8b6d34; --brass-soft:rgba(199,154,75,.14);
+  --text:#e7eaee; --dim:#98a2ad; --faint:#69727c;
+  --card:#edeff2; --card-line:#d4d9df; --ink-text:#1a1f25; --ink-dim:#5b646e;
+  --ok:#46a173; --ok-soft:rgba(70,161,115,.16); --ok-line:#46a173;
+  --err:#d2625a; --err-soft:rgba(210,98,90,.15); --err-line:#d2625a;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--ink); color:var(--text);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.5;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.mono{font-family:"IBM Plex Mono",monospace}
+.cond{font-family:"Barlow Condensed",sans-serif}
+button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
+:focus-visible{outline:2px solid var(--brass); outline-offset:2px; border-radius:6px}
+
+.wrap{max-width:660px; margin:0 auto; padding:18px 16px 40px; min-height:100%}
+
+/* Header */
+header{display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:22px}
+.brand{display:flex; flex-direction:column; gap:1px}
+.brand .eyebrow{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--brass)}
+.brand h1{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:25px;
+  letter-spacing:.01em; margin:0; line-height:1; text-transform:uppercase}
+.headstat{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--dim); text-align:right; white-space:nowrap}
+.headstat b{color:var(--text); font-weight:600}
+
+/* Screens */
+.screen{display:none}
+.screen.on{display:block; animation:fade .25s ease}
+@keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
+
+/* Rack (signature) */
+.rack-card{background:var(--steel); border:1px solid var(--line); border-radius:var(--r); padding:18px 18px 14px}
+.rack-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px}
+.rack-head .lbl{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--faint)}
+.rack-head .pend{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:15px; color:var(--brass)}
+.rack{display:grid; grid-template-columns:repeat(5,1fr); gap:8px; align-items:end; height:118px}
+.cell{display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; justify-content:flex-end}
+.bar{width:100%; background:var(--raised); border:1px solid var(--line); border-radius:6px 6px 3px 3px;
+  position:relative; min-height:8px; transition:height .5s cubic-bezier(.2,.8,.2,1)}
+.bar .fill{position:absolute; left:0; right:0; bottom:0;
+  background:linear-gradient(180deg,var(--brass),var(--brass-dim));
+  border-radius:5px 5px 2px 2px; transition:height .5s cubic-bezier(.2,.8,.2,1)}
+.cell.master .bar .fill{background:linear-gradient(180deg,#e7c87f,var(--brass))}
+.cell .n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--text)}
+.cell .cl{font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.12em; color:var(--faint)}
+.cell.master .cl{color:var(--brass)}
+
+.metrics{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px}
+.metric{background:var(--steel); border:1px solid var(--line); border-radius:12px; padding:13px 14px}
+.metric .v{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:30px; line-height:.95}
+.metric .v small{font-size:15px; color:var(--dim); font-weight:600}
+.metric .k{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--faint); margin-top:5px}
+
+/* Controls */
+.controls{margin-top:22px}
+.row-lbl{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--faint); margin:0 0 9px}
+.chips{display:flex; flex-wrap:wrap; gap:7px}
+.chip{background:var(--steel); border:1px solid var(--line); color:var(--dim);
+  padding:7px 12px; border-radius:999px; font-size:13px; font-weight:500; transition:.15s}
+.chip[aria-pressed="true"]{background:var(--brass-soft); border-color:var(--brass); color:var(--text)}
+.chip .qn{font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--faint); margin-left:6px}
+.chip[aria-pressed="true"] .qn{color:var(--brass)}
+
+.lenrow{display:flex; gap:7px; margin-top:16px}
+.len{flex:1; background:var(--steel); border:1px solid var(--line); color:var(--dim);
+  padding:10px; border-radius:10px; font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:500}
+.len[aria-pressed="true"]{background:var(--brass-soft); border-color:var(--brass); color:var(--text)}
+
+.cta{display:block; width:100%; margin-top:20px; padding:16px;
+  background:var(--brass); color:#1c150a; border-radius:12px;
+  font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:19px;
+  letter-spacing:.04em; text-transform:uppercase; transition:.15s}
+.cta:hover{filter:brightness(1.06)}
+.cta:disabled{opacity:.4; cursor:not-allowed; filter:none}
+.cta.ghost{background:transparent; border:1px solid var(--line); color:var(--text)}
+
+.footnote{margin-top:24px; padding-top:16px; border-top:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:12px}
+.footnote p{margin:0; font-size:12px; color:var(--faint); max-width:62%}
+.linkbtn{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--dim); border:1px solid var(--line);
+  padding:8px 12px; border-radius:8px; transition:.15s}
+.linkbtn:hover{border-color:var(--err); color:var(--err)}
+
+/* Study */
+.studytop{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px}
+.studytop .qbadge{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--faint)}
+.studytop .qbadge b{color:var(--brass)}
+.progress{height:4px; background:var(--raised); border-radius:99px; overflow:hidden; margin-bottom:18px}
+.progress i{display:block; height:100%; background:var(--brass); width:0; transition:width .3s ease}
+
+.qcard{background:var(--card); color:var(--ink-text); border:1px solid var(--card-line);
+  border-radius:16px; padding:20px 18px}
+.qcat{font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--brass-dim); margin-bottom:10px;
+  display:flex; gap:8px; align-items:center}
+.qcat .num{color:var(--ink-dim)}
+.qtext{font-family:"IBM Plex Sans",sans-serif; font-size:17.5px; font-weight:500;
+  line-height:1.42; margin:0 0 4px}
+
+.opts{margin-top:16px; display:flex; flex-direction:column; gap:9px}
+.opt{display:flex; gap:12px; align-items:flex-start; text-align:left;
+  background:#fff; border:1.5px solid var(--card-line); border-radius:11px;
+  padding:13px 14px; color:var(--ink-text); font-size:15px; line-height:1.36; transition:.13s}
+.opt:hover:not(:disabled){border-color:var(--brass)}
+.opt .mk{flex:none; width:24px; height:24px; border-radius:7px; background:#eef0f3;
+  border:1px solid var(--card-line); font-family:"IBM Plex Mono",monospace; font-weight:600;
+  font-size:13px; display:grid; place-items:center; color:var(--ink-dim)}
+.opt.correct{border-color:var(--ok-line); background:var(--ok-soft)}
+.opt.correct .mk{background:var(--ok); border-color:var(--ok); color:#fff}
+.opt.wrong{border-color:var(--err-line); background:var(--err-soft)}
+.opt.wrong .mk{background:var(--err); border-color:var(--err); color:#fff}
+.opt:disabled{cursor:default}
+.opt.dim{opacity:.5}
+
+.verdict{margin-top:16px; display:none; align-items:center; gap:10px;
+  font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.04em}
+.verdict.show{display:flex}
+.verdict .tag{padding:5px 10px; border-radius:7px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; font-size:11px}
+.verdict.ok .tag{background:var(--ok-soft); color:var(--ok)}
+.verdict.err .tag{background:var(--err-soft); color:var(--err)}
+.verdict .move{color:var(--dim)}
+.verdict .move b{color:var(--text)}
+
+.studybtns{display:flex; gap:10px; margin-top:18px}
+.studybtns .cta{margin-top:0}
+.studybtns .cta.next{flex:1}
+
+/* Done */
+.done-card{background:var(--steel); border:1px solid var(--line); border-radius:var(--r); padding:24px 20px; text-align:center}
+.done-card .big{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:54px; line-height:.9; color:var(--brass)}
+.done-card .sub{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--faint); margin-top:6px}
+.done-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:20px}
+.done-grid .metric{text-align:left}
+.donenote{margin-top:16px; font-size:13px; color:var(--dim); text-align:center}
+
+.empty{background:var(--steel); border:1px dashed var(--line); border-radius:var(--r);
+  padding:26px 20px; text-align:center}
+.empty .ic{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:20px; color:var(--ok); letter-spacing:.04em; text-transform:uppercase}
+.empty p{color:var(--dim); font-size:14px; margin:8px 0 0}
+.empty .mono{display:block; margin-top:10px; font-size:12px; color:var(--faint)}
+
+/* Modal */
+.modal{position:fixed; inset:0; background:rgba(8,10,12,.66); display:none; place-items:center; padding:20px; z-index:9}
+.modal.on{display:grid}
+.modal .box{background:var(--steel); border:1px solid var(--line); border-radius:var(--r); padding:22px; max-width:380px; width:100%}
+.modal h3{font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:22px; margin:0 0 8px; text-transform:uppercase}
+.modal p{color:var(--dim); font-size:14px; margin:0 0 18px}
+.modal .mbtns{display:flex; gap:10px}
+.modal .mbtns button{flex:1; padding:13px; border-radius:10px; font-weight:600; font-size:14px}
+.modal .keep{background:var(--raised); border:1px solid var(--line); color:var(--text)}
+.modal .wipe{background:var(--err); color:#fff}
+
+@media (max-width:420px){
+  .metric .v{font-size:26px}
+  .qtext{font-size:16.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important; transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <span class="eyebrow">Examen teórico · D · E · F</span>
+      <h1>Tirada de estudio</h1>
+    </div>
+    <div class="headstat" id="headstat">—</div>
+  </header>
+
+  <!-- HOME -->
+  <section class="screen on" id="home">
+    <div class="rack-card">
+      <div class="rack-head">
+        <span class="lbl">Cajas Leitner · dominio</span>
+        <span class="pend" id="pendTag">—</span>
+      </div>
+      <div class="rack" id="rack"></div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric"><div class="v" id="mDom">0<small>/210</small></div><div class="k">Dominadas</div></div>
+      <div class="metric"><div class="v" id="mAcc">—</div><div class="k">Precisión</div></div>
+      <div class="metric"><div class="v" id="mSeen">0</div><div class="k">Vistas</div></div>
+    </div>
+
+    <div class="controls">
+      <p class="row-lbl">Tema</p>
+      <div class="chips" id="chips"></div>
+
+      <p class="row-lbl" style="margin-top:18px">Preguntas por sesión</p>
+      <div class="lenrow" id="lenrow"></div>
+
+      <button class="cta" id="startBtn">Empezar repaso</button>
+    </div>
+
+    <div class="footnote">
+      <p>Tu progreso se guarda solo en este dispositivo. Las que fallas vuelven a la caja 1; las que aciertas suben y tardan más en reaparecer.</p>
+      <button class="linkbtn" id="resetBtn">Reiniciar</button>
+    </div>
+  </section>
+
+  <!-- STUDY -->
+  <section class="screen" id="study">
+    <div class="studytop">
+      <span class="qbadge">Sesión <b id="sPos">1</b> / <span id="sTot">1</span></span>
+      <button class="linkbtn" id="endBtn">Terminar</button>
+    </div>
+    <div class="progress"><i id="sBar"></i></div>
+
+    <div class="qcard">
+      <div class="qcat"><span id="qCat">—</span><span class="num" id="qNum">#—</span></div>
+      <p class="qtext" id="qText">—</p>
+      <div class="opts" id="opts"></div>
+      <div class="verdict" id="verdict">
+        <span class="tag" id="vTag">—</span>
+        <span class="move" id="vMove"></span>
+      </div>
+    </div>
+
+    <div class="studybtns">
+      <button class="cta next" id="nextBtn" disabled>Siguiente</button>
+    </div>
+  </section>
+
+  <!-- DONE -->
+  <section class="screen" id="done">
+    <div class="done-card">
+      <div class="big" id="dAcc">—</div>
+      <div class="sub">Precisión de la sesión</div>
+      <div class="done-grid">
+        <div class="metric"><div class="v" id="dAns">0</div><div class="k">Respondidas</div></div>
+        <div class="metric"><div class="v" id="dOk" style="color:var(--ok)">0</div><div class="k">Aciertos</div></div>
+        <div class="metric"><div class="v" id="dErr" style="color:var(--err)">0</div><div class="k">Fallos</div></div>
+      </div>
+      <p class="donenote" id="dNote"></p>
+    </div>
+    <button class="cta" id="againBtn" style="margin-top:18px">Otra sesión</button>
+    <button class="cta ghost" id="homeBtn" style="margin-top:10px">Volver al panel</button>
+  </section>
+</div>
+
+<div class="modal" id="modal">
+  <div class="box">
+    <h3>Reiniciar progreso</h3>
+    <p>Se borrarán todas tus cajas, aciertos y fallos. Las 210 preguntas volverán a empezar desde cero. No se puede deshacer.</p>
+    <div class="mbtns">
+      <button class="keep" id="mKeep">Conservar</button>
+      <button class="wipe" id="mWipe">Borrar todo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [{"id": 1, "t": "El arma de fuego que se recarga automáticamente, después de cada disparo, efectuando varios disparos sucesivos accionando el disparador una sola vez, se denomina:", "o": ["Arma de fuego semiautomática.", "Arma de fuego de repetición.", "Arma de fuego automática."], "c": 2, "k": 0}, {"id": 2, "t": "El arma de fuego que después de cada disparo, se recarga automáticamente y solo es posible efectuar un disparo al accionar el disparador cada vez, se denomina:", "o": ["Arma de fuego semiautomática.", "Arma de fuego de repetición.", "Arma de fuego automática."], "c": 0, "k": 0}, {"id": 3, "t": "Si el arma de fuego se recarga después de cada disparo, mediante un mecanismo accionado por el tirador, estaremos ante:", "o": ["Arma de fuego semiautomática.", "Arma de fuego de repetición.", "Arma de fuego automática."], "c": 1, "k": 0}, {"id": 4, "t": "¿Cómo se denomina el arma de fuego sin depósito de municiones, que se carga antes de cada disparo mediante la introducción manual de un cartucho en la recámara, o alojamiento especial a la entrada del cañón?", "o": ["Arma de un solo tiro.", "Arma de fuego automática.", "Arma de fuego semiautomática."], "c": 0, "k": 0}, {"id": 5, "t": "¿Qué elemento de un arma de fuego conduce y estabiliza el proyectil?", "o": ["El disparador.", "El cañón.", "El estabilizador."], "c": 1, "k": 0}, {"id": 6, "t": "La culata de un arma sirve para:", "o": ["Instalar en ella el punto de mira.", "Apoyar el arma sobre el hombro para efectuar el disparo.", "Las armas no tienen culata."], "c": 1, "k": 0}, {"id": 7, "t": "Las ánimas de los cañones de escopetas son:", "o": ["Estriadas.", "Lisas o estriadas.", "Con rayas paralelas."], "c": 1, "k": 0}, {"id": 8, "t": "Las ánimas de los cañones de un rifle son:", "o": ["Lisas.", "Estriadas.", "Estriadas o lisas, dependiendo del fabricante."], "c": 1, "k": 0}, {"id": 9, "t": "En una escopeta semiautomática, el percutor, extractor y grapón, son piezas que componen:", "o": ["Cerrojo.", "Culata.", "Cajón de los mecanismos."], "c": 0, "k": 0}, {"id": 10, "t": "¿Qué pieza o piezas protege el guardamonte?", "o": ["La biela y el fiador.", "El disparador.", "Es macizo."], "c": 1, "k": 0}, {"id": 11, "t": "¿Qué misión tiene el muelle del cargador de un rifle?", "o": ["Mantener presión en los cartuchos.", "Expulsar la vaina cuando se produce el disparo.", "Elevar el cartucho y colocarlo frente a la recámara."], "c": 2, "k": 0}, {"id": 12, "t": "En un arma semiautomática, ¿qué pieza introduce el cartucho en el interior de la recámara?", "o": ["El cierre.", "El muelle elevador.", "La biela."], "c": 0, "k": 0}, {"id": 13, "t": "¿De qué partes se compone el mecanismo de percusión?", "o": ["Percutor y muelle del percutor.", "Percutor y cabeza del cierre.", "Cabeza y punta del percutor."], "c": 0, "k": 0}, {"id": 14, "t": "Para la expulsión del cartucho, ¿qué pieza engarza el culote del cartucho cuando está alojado en la recámara?", "o": ["Cerrojo.", "Tope de cerrojo.", "Uña extractora."], "c": 2, "k": 0}, {"id": 15, "t": "¿Qué dispositivo bloquea el funcionamiento del mecanismo de disparo a voluntad del tirador?", "o": ["Elementos de puntería.", "Nada.", "Seguro manual."], "c": 2, "k": 0}, {"id": 16, "t": "¿Cómo se denomina el extremo del cañón de una escopeta opuesto a la parte en que se aloja el cartucho?", "o": ["Boca.", "Cámara.", "Recámara."], "c": 0, "k": 0}, {"id": 17, "t": "¿Cuándo decimos que un arma está montada?", "o": ["Cuando está preparada para hacer fuego.", "Que está totalmente ensamblada.", "Ser portada por el tirador."], "c": 0, "k": 0}, {"id": 18, "t": "Arma alimentada es aquella que:", "o": ["Tiene la munición alojada en el mecanismo de alimentación.", "Ya ha efectuado el disparo.", "No tiene munición en el mecanismo de alimentación."], "c": 0, "k": 0}, {"id": 19, "t": "Arma montada es aquella que:", "o": ["El mecanismo de disparo y percusión se encuentra en disposición de funcionamiento.", "Está ensamblada y pavonada.", "Está ensamblada pero no pavonada."], "c": 0, "k": 0}, {"id": 20, "t": "¿Dónde se aloja el cartucho de un arma para ser disparado?", "o": ["En el cargador.", "En la recámara.", "En la canana."], "c": 1, "k": 0}, {"id": 21, "t": "¿Qué diferencia existe entre cargar y alimentar un arma?", "o": ["Cargar es montarla para disparar, alimentarla introducir cartuchos en el depósito.", "Cargar es introducir cartuchos en el depósito, alimentarla es montarla para disparar.", "No existe diferencia."], "c": 0, "k": 0}, {"id": 22, "t": "¿Con qué elementos cuenta un arma para enfilarla hacia un blanco?", "o": ["A través del mecanismo de puntería.", "Con un buen empuñamiento.", "Con una buena sujeción del arma."], "c": 0, "k": 0}, {"id": 23, "t": "¿Qué elemento del arma regula el desplazamiento en altura de un impacto?", "o": ["El alza.", "El punto de mira.", "La longitud del cañón."], "c": 0, "k": 0}, {"id": 24, "t": "¿Qué elemento del arma regula el desplazamiento lateral de un impacto?", "o": ["El alza.", "El punto de mira.", "La longitud del cañón."], "c": 1, "k": 0}, {"id": 25, "t": "¿Qué pieza del mecanismo de disparo transmite el movimiento del disparador?", "o": ["La biela.", "El elevador.", "El fiador."], "c": 0, "k": 0}, {"id": 26, "t": "El disparador está protegido por:", "o": ["El guardamano.", "El guardamonte.", "La culata."], "c": 1, "k": 0}, {"id": 27, "t": "¿Para qué sirve el seguro manual?", "o": ["Para evitar el disparo, aun estando el arma montada.", "Para que no se caiga el cargador del arma accidentalmente.", "Para asegurar el blanco y efectuar un disparo certero."], "c": 0, "k": 0}, {"id": 28, "t": "¿Qué pieza golpea el fulminante del cartucho?", "o": ["El tope del cerrojo.", "El percutor.", "La uña de extracción."], "c": 1, "k": 0}, {"id": 29, "t": "¿Qué avería se puede producir al disparar un arma en vacío?", "o": ["Encasquillamiento del cierre.", "Bloqueo del elevador de cartucho.", "Rotura de la aguja percutora."], "c": 2, "k": 0}, {"id": 30, "t": "El mecanismo de seguridad de un arma, ¿qué misión tiene?", "o": ["Evitar que se produzca un disparo involuntario.", "Evitar que se cargue el arma.", "Evitar que se descargue el arma."], "c": 0, "k": 0}, {"id": 31, "t": "¿Cómo se denomina la varilla que se utiliza para limpiar el interior del cañón de las armas?", "o": ["Escobilla.", "Baqueta.", "Plumero."], "c": 1, "k": 0}, {"id": 32, "t": "¿Se debe dejar un arma en el maletero del vehículo estacionado en la vía pública, hasta que al día siguiente se vaya a ir de caza?", "o": ["Sí, siempre que el maletero se encuentre perfectamente cerrado.", "Sí, siempre que el vehículo se encuentre estacionado cerca del domicilio del titular del arma.", "No, nunca."], "c": 2, "k": 1}, {"id": 33, "t": "¿Cómo deberá transportarse un arma de fuego en un vehículo?", "o": ["Cargadas.", "Dispuestas para disparar si nos encontramos en época hábil de caza.", "Descargadas."], "c": 2, "k": 1}, {"id": 34, "t": "¿Cómo se han de guardar las armas?", "o": ["Cargadas y dispuestas para su uso.", "Los rifles separados de las escopetas.", "Descargadas y sin alimentar."], "c": 2, "k": 1}, {"id": 35, "t": "¿Qué medidas deben adoptarse al manejar un arma?", "o": ["Como si estuviera siempre cargada.", "Con el seguro puesto.", "Como si estuviera descargada."], "c": 0, "k": 1}, {"id": 36, "t": "¿Qué debe comprobarse siempre que se coja un arma?", "o": ["Que tenga el seguro puesto.", "Que está descargada.", "Que esté limpia."], "c": 1, "k": 1}, {"id": 37, "t": "¿Qué lugar puede ser el más adecuado en el domicilio, para efectuar la limpieza de las armas?", "o": ["Una habitación donde se esté solo.", "El lugar de reunión de la familia, pues en el caso de un accidente, siempre se obtendrá ayuda inmediata de algún familiar.", "En la puerta de la calle, pues en el caso de producirse un disparo fortuito, saldría el proyectil al aire."], "c": 0, "k": 1}, {"id": 38, "t": "¿Qué es lo que nunca debemos hacer cuando desconozcamos el funcionamiento de un arma?", "o": ["Desmontarla en evitación de que se produzca un disparo.", "Manipularla.", "Guardarla en su funda."], "c": 1, "k": 1}, {"id": 39, "t": "¿Qué es lo que se trata de evitar con el exacto cumplimiento de las normas de seguridad en el manejo de las armas?", "o": ["Que se produzcan disparos fortuitos y por tanto causar daños irreparables.", "Ser sancionado por la Autoridad municipal.", "Que el arma se deteriore."], "c": 0, "k": 1}, {"id": 40, "t": "¿Qué precauciones se han de tomar al coger un arma de fuego?", "o": ["Cogerla sin poner el dedo en el disparador (gatillo).", "Que se encuentre bien engrasada.", "Comprobar que no está cargada apretando el gatillo."], "c": 0, "k": 1}, {"id": 41, "t": "¿Cómo se debe actuar ante la presencia o proximidad de otras personas?", "o": ["Con habilidad.", "Con destreza.", "Descargando el arma."], "c": 2, "k": 1}, {"id": 42, "t": "Una pistola semiautomática cuyo cargador admite veinticinco cartuchos, ¿es arma prohibida a particulares?", "o": ["No.", "Sí, pues su capacidad de carga supera los veintiún cartuchos.", "Sí, siempre que se utilice para cazar."], "c": 1, "k": 2}, {"id": 43, "t": "Un arma de fuego automática que haya sido transformada en semiautomática, ¿es arma prohibida a particulares?", "o": ["Sí.", "No.", "Dependerá del uso de la misma."], "c": 0, "k": 2}, {"id": 44, "t": "Sobre las armas de guerra, ¿qué está prohibido a los particulares?", "o": ["Su adquisición, tenencia y uso.", "No les están prohibidas.", "Las dos respuestas son falsas."], "c": 0, "k": 2}, {"id": 45, "t": "Las armas de fuego automáticas, son siempre:", "o": ["Armas de guerra.", "Armas de la 1ª categoría.", "Ambas respuestas son falsas."], "c": 0, "k": 2}, {"id": 46, "t": "¿Quién puede legalizar las armas de guerra para un particular?", "o": ["No puede legalizarse.", "Ministro de Defensa.", "Ministro del Interior."], "c": 0, "k": 2}, {"id": 47, "t": "De las que se citan a continuación, ¿cuáles son armas prohibidas?", "o": ["Los silenciadores adaptables a armas de fuego.", "Los puñales.", "Las respuestas anteriores (A y B) son armas prohibidas."], "c": 2, "k": 2}, {"id": 48, "t": "De las que se citan a continuación, ¿cuáles se consideran armas prohibidas?", "o": ["Las armas de fuego que sean resultado de modificar sustancialmente las características de fabricación u origen de otras armas, sin la reglamentaria autorización de modelo o prototipo.", "Armas con culata plegable para facilitar los movimientos del cazador en terrenos abruptos.", "Las respuestas anteriores (A y B) son armas prohibidas."], "c": 0, "k": 2}, {"id": 49, "t": "Las armas de fuego que sean resultado de modificar sustancialmente las características de fabricación u origen de otras armas, sin la reglamentaria autorización de modelo o prototipo, ¿qué clase de armas son?", "o": ["Reglamentadas.", "Prohibidas a particulares.", "Prohibidas."], "c": 2, "k": 2}, {"id": 50, "t": "¿Cuáles de las siguientes armas están prohibidas?", "o": ["Las armas de fuego largas con cañones recortados.", "Los cuchillos de hoja superior a 11 centímetros de longitud.", "Las cerbatanas."], "c": 0, "k": 2}, {"id": 51, "t": "Las armas de fuego, reales o simuladas, combinadas con armas blancas, son:", "o": ["Armas prohibidas.", "Armas reglamentadas.", "Armas prohibidas a particulares."], "c": 0, "k": 2}, {"id": 52, "t": "Un arma de fuego simulada bajo apariencia de cualquier otro objeto es:", "o": ["Un arma prohibida.", "Un arma prohibida a particulares.", "Un arma reglamentada."], "c": 0, "k": 2}, {"id": 53, "t": "De las armas blancas que se detallan, ¿cuáles están prohibidas?", "o": ["Los puñales.", "Los machetes del Ejército para desollar la caza.", "Las dos anteriores."], "c": 2, "k": 2}, {"id": 54, "t": "De las armas blancas que se detallan, ¿cuáles están prohibidas?", "o": ["Los puñales.", "Navajas de hoja inferior a 11 centímetros.", "Espadas."], "c": 0, "k": 2}, {"id": 55, "t": "De las que se relacionan, ¿cuáles son armas prohibidas?", "o": ["Navajas automáticas.", "Navajas de menos de 11 centímetros de longitud de hoja.", "Cuchillos de monte de doble filo con hoja de 13 centímetros de longitud."], "c": 0, "k": 2}, {"id": 56, "t": "Un arma simulada, combinada con un arma blanca, ¿es un arma prohibida?", "o": ["No.", "Sí.", "Depende del tipo de arma blanca de que se trate."], "c": 1, "k": 2}, {"id": 57, "t": "De los tipos de cartuchería que se citan, ¿cuál está prohibida a particulares?", "o": ["La munición metálica blindada.", "La cartuchería con bala expansiva.", "La cartuchería con balas perforantes, explosivas o incendiarias."], "c": 2, "k": 2}, {"id": 58, "t": "De los tipos de cartuchería que se citan, ¿cuál está prohibida a particulares?", "o": ["La munición metálica blindada.", "La cartuchería con bala expansiva.", "Las municiones con proyectiles dum-dum."], "c": 2, "k": 2}, {"id": 59, "t": "¿Cómo se denomina el documento que ampara el traslado, sin licencia ni guía de pertenencia, entre dos lugares, de armas de las categorías 2ª y 3ª?", "o": ["Guía de circulación.", "Guía de transporte.", "Albarán de circulación."], "c": 0, "k": 3}, {"id": 60, "t": "Cuando un particular adquiera una escopeta en localidad distinta a la de su residencia, ¿quién expedirá la Guía de Circulación?", "o": ["La Intervención de Armas de su residencia.", "La Intervención de Armas del lugar de la compra.", "Las dos anteriores pueden ser válidas."], "c": 1, "k": 3}, {"id": 61, "t": "¿Cuándo necesitará guía de circulación una carabina de aire comprimido, que se traslade sin guía de pertenencia y sin licencia?", "o": ["En todos los casos.", "Nunca.", "Si se trata de una carabina cuya energía cinética del proyectil en boca exceda de 24,2 Julios."], "c": 2, "k": 3}, {"id": 62, "t": "¿Qué armas de las que se citan a continuación, que se trasladan sin guía de pertenencia y sin licencia, no necesitan guía de circulación para ser trasladadas entre dos localidades?", "o": ["Las escopetas.", "Las armas de fuego largas rayadas.", "Las dos anteriores son falsas."], "c": 2, "k": 3}, {"id": 63, "t": "¿Qué armas de las que se citan a continuación, que se trasladan sin guía de pertenencia y sin licencia, necesitan guía de circulación para su traslado entre dos localidades distintas?", "o": ["Las escopetas.", "Las armas de fuego largas rayadas.", "Las dos anteriores son ciertas."], "c": 2, "k": 3}, {"id": 64, "t": "Además de la guía de circulación, ¿se necesita algún otro documento que acompañe al arma, cuando ésta se envíe a reparar a otra localidad?", "o": ["La guía de pertenencia.", "Autorización escrita por el titular.", "Ningún otro documento."], "c": 2, "k": 3}, {"id": 65, "t": "¿Es cierto que el Reglamento de Armas contempla que las armas reglamentadas de cualquier categoría y sus componentes esenciales acabados circularán en envases debidamente acondicionados para su seguridad durante el traslado?", "o": ["Cierto.", "Falso.", "Depende del tipo de armas."], "c": 0, "k": 3}, {"id": 66, "t": "¿Cómo deberán circular las armas reglamentadas de cualquier categoría y sus componentes esenciales?", "o": ["En envases debidamente acondicionados para su seguridad durante el traslado.", "En su funda y en una caja de cartón.", "Si va desmontada, es suficiente."], "c": 0, "k": 3}, {"id": 67, "t": "¿Es cierto que el Reglamento de Armas preceptúa que en ningún caso podrán hacerse envíos o transportes de armas cargadas ni de armas conjuntamente con cartuchería susceptible de ser utilizada con las armas transportadas?", "o": ["No lo preceptúa.", "En el transporte de algunas armas.", "Sí es cierto."], "c": 2, "k": 3}, {"id": 68, "t": "¿Se puede enviar a reparar una escopeta por Correo?", "o": ["No.", "Cuando vayan desmontadas.", "Sí, siempre que no se envíe conjuntamente con munición."], "c": 0, "k": 3}, {"id": 69, "t": "¿Cuándo se puede enviar a reparar las armas cargadas?", "o": ["Sí, si son cortas.", "Nunca.", "Con autorización del Interventor de Armas."], "c": 1, "k": 3}, {"id": 70, "t": "¿Qué plazo establece el Reglamento de Armas al particular que compra una escopeta en localidad distinta a la de su residencia para personarse en la Intervención de Armas y solicitar la Guía de Pertenencia?", "o": ["No hay plazo establecido.", "Diez días.", "Un día."], "c": 1, "k": 3}, {"id": 71, "t": "En ningún caso podrán hacerse los envíos de:", "o": ["Armas cargadas.", "Armas con cartuchería correspondiente a las mismas.", "La a) y la b) son ciertas."], "c": 2, "k": 3}, {"id": 72, "t": "Al remitir un arma para reparación u otras causas, ¿dónde debe figurar la declaración del contenido?", "o": ["En la documentación y en el mismo paquete, en caracteres de suficiente claridad.", "No debe figurar en ningún sitio visible, por tratarse de armas que deben transportarse con toda reserva.", "Solamente debe figurar en la documentación (guía de circulación)."], "c": 0, "k": 3}, {"id": 73, "t": "Cuando un particular reciba notificación del remitente de que le ha sido enviada a la Intervención de Armas de la Guardia Civil la escopeta que compró, ¿qué deberá hacer?", "o": ["Presentarse en la Intervención de Armas con la licencia de caza.", "Trasladarse a la Intervención de Armas para ver si le gusta y si no devolverla.", "Presentarse en la Intervención de Armas provisto de licencia o documento que le autorice para adquirirla."], "c": 2, "k": 3}, {"id": 74, "t": "¿Cada cuántos años pasan revista las armas?", "o": ["Dos años.", "Cinco años.", "Todos los años."], "c": 1, "k": 4}, {"id": 75, "t": "¿Es necesario presentar el arma para pasar revista?", "o": ["Sí.", "No.", "Alguna vez."], "c": 0, "k": 4}, {"id": 76, "t": "El hecho de no pasar dos revistas del arma, ¿es causa de anulación y retirada de la guía de pertenencia?", "o": ["No.", "Sí.", "Depende del valor histórico del arma."], "c": 1, "k": 4}, {"id": 77, "t": "¿Qué necesita un familiar, con licencia de armas, de un titular de un arma para pasar la revista de las mismas?", "o": ["Demostrar la relación de parentesco con el titular del arma.", "Autorización escrita del titular del arma.", "Autorización escrita del Delegado/a del Gobierno de la Comunidad."], "c": 1, "k": 4}, {"id": 78, "t": "No pasar dos revistas consecutivas dará lugar a la anulación y retirada de la Guía de Pertenencia, ¿a qué dará lugar también?", "o": ["La pérdida de la propiedad del arma.", "A la apertura de un expediente sancionador.", "No poder cazar en el transcurso de un año."], "c": 1, "k": 4}, {"id": 79, "t": "¿Quién realizará las anotaciones correspondientes al pasar la Revista de Armas?", "o": ["La persona afectada.", "El/La Interventor/a de Armas.", "El/La Jefe de la Comandancia de la Guardia Civil."], "c": 1, "k": 4}, {"id": 80, "t": "¿Qué requisito es imprescindible para pasar la Revista de Armas?", "o": ["La presentación del arma.", "Tiene que ser pasada por el/la titular del arma.", "Las respuestas a) y b) son ciertas."], "c": 0, "k": 4}, {"id": 81, "t": "El hecho de no pasar la revista de armas constituye:", "o": ["Una infracción administrativa.", "Un delito.", "Una falta penal."], "c": 0, "k": 4}, {"id": 82, "t": "¿Cada cuánto tiempo pasarán revista las armas de concurso?", "o": ["Cada tres años.", "Cada cinco años.", "En cada concurso."], "c": 1, "k": 4}, {"id": 83, "t": "¿En qué circunstancias se puede pasar revista de armas sin presentarla en la Intervención de Armas o Puesto de la Guardia Civil?", "o": ["En caso de enfermedad.", "Cuando sea de nueva adquisición.", "En ningún caso."], "c": 2, "k": 4}, {"id": 84, "t": "¿Es cierto que el particular que desee enajenar un arma tiene que hacer la cesión a persona que posea la licencia, tarjeta o certificado de inutilización correspondiente?", "o": ["Sí, siempre que sea necesario con arreglo a lo dispuesto en el Reglamento de Armas.", "Puede enajenarse a cualquiera.", "Las armas de fuego no pueden enajenarse."], "c": 0, "k": 5}, {"id": 85, "t": "Al enajenar un particular un arma de fuego, ¿dónde entregará la guía de pertenencia?", "o": ["Al adquirente.", "En la Intervención de Armas.", "En el Ayuntamiento."], "c": 1, "k": 5}, {"id": 86, "t": "¿Debe comunicarse a la Intervención de Armas la enajenación de un arma?", "o": ["Siempre.", "Nunca.", "Únicamente las armas cortas."], "c": 0, "k": 5}, {"id": 87, "t": "¿En qué caso no es necesario participar a la Intervención de Armas la enajenación de un arma?", "o": ["Se participa siempre.", "Cuando se enajena a una armería.", "Cuando se regala a alguien, sin mediar precio."], "c": 0, "k": 5}, {"id": 88, "t": "¿Qué requisito es indispensable que tenga el comprador de un arma de fuego?", "o": ["Que se halle en posesión de la licencia para el arma que pretende adquirir.", "Que tenga licencia de caza y seguro del cazador.", "No es necesario requisito alguno."], "c": 0, "k": 5}, {"id": 89, "t": "La enajenación de un arma entre particulares, ¿qué nuevo documento le será expedido al comprador?", "o": ["Recibo de compra-venta.", "Entrega del arma al nuevo titular con su guía de pertenencia.", "Expedición de nueva guía de pertenencia."], "c": 2, "k": 5}, {"id": 90, "t": "La venta de un arma de fuego se efectuará siempre con conocimiento de:", "o": ["Comisaría de Policía.", "Dirección General de la Guardia Civil.", "Intervención de Armas correspondiente."], "c": 2, "k": 5}, {"id": 91, "t": "¿Qué requisitos debe cumplir una persona para que se le pueda ceder el arma?", "o": ["Ser propietario/a de un coto de caza.", "Poseer la correspondiente licencia de armas.", "Tener aficiones cinegéticas."], "c": 1, "k": 5}, {"id": 92, "t": "¿Cómo se debe hacer la cesión temporal de las armas?", "o": ["Por escrito, fechado y firmado.", "De palabra.", "Por teléfono."], "c": 0, "k": 5}, {"id": 93, "t": "¿Qué requisito es necesario acreditar para obtener la guía de pertenencia de un arma?", "o": ["Que cumple con las medidas de seguridad impuestas en la custodia de la misma.", "Que no ha tenido ningún incidente en el uso de las armas.", "Que no ha extraviado en ninguna ocasión la guía de pertenencia."], "c": 0, "k": 5}, {"id": 94, "t": "¿Un rifle automático puede ampararse en una Licencia de Armas \"D\"?", "o": ["Sí.", "No, por ser arma de guerra prohibida a particulares.", "Sí, si emplea munición de caza."], "c": 1, "k": 6}, {"id": 95, "t": "Para la expedición de una licencia de armas, ¿qué edad mínima tendrá el peticionario?", "o": ["14 años.", "16 años.", "18 años."], "c": 2, "k": 6}, {"id": 96, "t": "¿Cuántas licencias de armas \"D\" se podrán poseer?", "o": ["Dependerá del número de armas que se posean.", "Una.", "Dos."], "c": 1, "k": 6}, {"id": 97, "t": "¿Se puede expedir una licencia de armas a un español residente en Francia?", "o": ["Sí.", "No.", "Sí, por ser un país de la U.E."], "c": 0, "k": 6}, {"id": 98, "t": "¿Qué documento se entrega al Interventor de Armas, por pérdida, destrucción, robo o sustracción de un arma de la categoría 2ª y 3ª?", "o": ["Guía de pertenencia.", "Licencia de armas correspondiente.", "Tarjeta federativa."], "c": 0, "k": 6}, {"id": 99, "t": "¿Qué documento podrá solicitarse en la Intervención de Armas, ante la pérdida, destrucción, robo o sustracción de la licencia de armas?", "o": ["Guía de pertenencia.", "Guía de circulación.", "Autorización temporal de uso de armas."], "c": 2, "k": 6}, {"id": 100, "t": "Cuando las licencias de armas estén próximas a caducar, ¿qué documento podrán expedir los/las Interventores/ras de Armas a los/las peticionarios/as?", "o": ["Guía de pertenencia.", "Guía de circulación.", "Autorización temporal de uso de armas."], "c": 2, "k": 6}, {"id": 101, "t": "¿Qué es una autorización temporal de uso de armas?", "o": ["Es una autorización que se otorga a cualquier persona mayor de edad para poder cazar quince días.", "Es una autorización que se concede a las personas con licencias de armas caducadas para poder cazar.", "Son autorizaciones que expiden los Interventores de Armas a las personas con licencias de armas próximas a caducar, con un período de vigencia de tres meses y solamente para el uso de las armas."], "c": 2, "k": 6}, {"id": 102, "t": "Los titulares de licencias de armas próximas a caducar, cuando solicitan su nueva concesión, podrán recibir autorizaciones temporales de uso de dichas armas, ¿qué plazo de validez tendrán?", "o": ["Un mes.", "Dos meses.", "Tres meses."], "c": 2, "k": 6}, {"id": 103, "t": "¿Quién expide la autorización temporal de uso de armas a los titulares de licencias de armas próximas a caducar, cuando éstos solicitan su nueva concesión?", "o": ["El/La Alcalde/sa del Ayuntamiento.", "El/La Interventor/a de Armas y Explosivos.", "El/La Armero/a autorizado/a."], "c": 1, "k": 6}, {"id": 104, "t": "¿Cuántas armas irán reseñadas en una guía de pertenencia?", "o": ["Una.", "Dos.", "Ninguna."], "c": 0, "k": 6}, {"id": 105, "t": "¿En qué casos acompañará la guía de pertenencia al arma?", "o": ["No es necesario.", "Solo cuando se deposite el arma.", "En caso de uso, depósito y transporte."], "c": 2, "k": 6}, {"id": 106, "t": "Señale, entre las siguientes, el arma exceptuada de estar amparada con guía de pertenencia:", "o": ["Escopetas.", "Pistolas.", "Arcos."], "c": 2, "k": 6}, {"id": 107, "t": "Señale, entre las siguientes, el arma exceptuada de estar amparada con guía de pertenencia:", "o": ["Pistola lanza bengalas.", "Fusil lanzacabos.", "Fusil de inyección anestésica."], "c": 0, "k": 6}, {"id": 108, "t": "¿Cuántas escopetas de caza se pueden legalizar con una sola guía de pertenencia?", "o": ["Solamente se puede legalizar una escopeta.", "Más de una escopeta si es del mismo titular.", "Con una guía de varios cuerpos, se pueden legalizar escopetas y rifles a la vez."], "c": 0, "k": 6}, {"id": 109, "t": "En una Guía de Pertenencia, aparte del D.N.I. y los datos personales del propietario, así como los de la Licencia, ¿qué otros datos deben figurar?", "o": ["El nombre del fabricante.", "La provincia donde fue fabricada el arma.", "La reseña completa del arma."], "c": 2, "k": 6}, {"id": 110, "t": "Quienes precisen armas utilizables para la caza mayor, ¿qué licencia de armas deberán obtener?", "o": ["Licencia de armas \"D\".", "Licencia de armas \"E\".", "Licencia de armas \"F\"."], "c": 0, "k": 6}, {"id": 111, "t": "Para la tenencia de un cañón estriado adaptable a una escopeta de caza, con recámara para cartuchos metálicos, siempre que no estén clasificadas como armas de guerra, ¿qué licencia será necesaria?", "o": ["Licencia de armas \"E\".", "Licencia de armas \"F\".", "Licencia de armas \"D\"."], "c": 2, "k": 6}, {"id": 112, "t": "¿Qué armas ampara la licencia de armas \"D\"?", "o": ["Fusiles lanzacabos.", "Escopetas.", "Armas largas rayadas para caza mayor."], "c": 2, "k": 6}, {"id": 113, "t": "¿Qué licencia de armas debe obtenerse para llevar y usar armas de fuego largas rayadas para tiro deportivo, de calibre 5,6 mm (22 americano), de percusión anular (Categoría 3ª1)?", "o": ["Licencia de armas \"D\".", "Licencia de armas \"C\".", "Licencia de armas \"E\"."], "c": 2, "k": 6}, {"id": 114, "t": "¿Qué licencia de armas debe obtenerse para poseer, llevar y usar ballestas (Categoría 7ª2)?", "o": ["No precisan licencia.", "Licencia de armas \"E\".", "Tarjeta deportiva."], "c": 1, "k": 6}, {"id": 115, "t": "La Licencia \"E\" autoriza a poseer, llevar y usar ¿qué categoría de armas?", "o": ["Armas de la categoría 3ª, 7ª2 y 7ª3.", "Armas de la categoría 4ª y 5ª.", "Armas de la categoría 3ª y 4ª."], "c": 0, "k": 6}, {"id": 116, "t": "La licencia de armas \"E\" autoriza a poseer, llevar y usar armas de las categorías 3ª, 7ª2 y 7ª3. ¿Cuántas armas se podrán poseer como máximo?", "o": ["Cinco armas largas rayadas.", "Su número no excederá de 6 escopetas o 6 armas largas rayadas para tiro deportivo, ni 12 armas en total.", "Ninguna de las anteriores."], "c": 1, "k": 6}, {"id": 117, "t": "¿Hasta cuántas escopetas puede ampararse con una licencia de armas \"E\"?", "o": ["Cuatro.", "Cinco.", "Seis."], "c": 2, "k": 6}, {"id": 118, "t": "¿Hasta cuántas armas de fuego largas rayadas para tiro deportivo puede amparar una licencia de armas \"E\"?", "o": ["Cuatro.", "Cinco.", "Seis."], "c": 2, "k": 6}, {"id": 119, "t": "¿Cuántas carabinas de aire comprimido se pueden legalizar con una licencia de armas tipo \"D\"?", "o": ["Cinco, lo mismo que los rifles.", "Solamente tres.", "Ninguna, las carabinas de aire o gas comprimido se legalizan con tarjetas de armas que expiden los/las Alcaldes/as."], "c": 2, "k": 6}, {"id": 120, "t": "El titular de armas de fuego, cuando viaje con ellas por países miembros de la Unión Europea, ¿de qué deberá ser portador?", "o": ["De licencia de armas correspondiente al país donde viaje.", "De Tarjetas de armas correspondiente al país donde viaje.", "De la Tarjeta Europea de Armas."], "c": 2, "k": 6}, {"id": 121, "t": "¿Cuál es la vigencia de la Tarjeta Europea de Armas?", "o": ["Dos años.", "Tres años.", "Cinco años."], "c": 2, "k": 6}, {"id": 122, "t": "¿Qué armas figurarán en la Tarjeta Europea de Armas?", "o": ["Solo armas cortas.", "Las que lleve o utilice su titular.", "Armas amparadas con guía especial."], "c": 1, "k": 6}, {"id": 123, "t": "El solicitante de licencia \"E\", entre otros documentos, ¿cómo acreditará que se dedica al ejercicio de la caza?", "o": ["Mediante exhibición de la correspondiente licencia de caza.", "Justificante del solicitante de pertenecer a una Federación Deportiva.", "Ninguna de las anteriores."], "c": 0, "k": 6}, {"id": 124, "t": "Con la presentación de la licencia de caza en vigor, ¿puede el solicitante de una licencia E acreditar que se dedica al ejercicio de la caza?", "o": ["No.", "Sí.", "Tendrá que acompañar el justificante de ser socio de un coto de caza."], "c": 1, "k": 6}, {"id": 125, "t": "¿A quiénes les podrá ser expedida la Tarjeta Europea de Armas?", "o": ["A los/las españoles/las y extranjeros/ras residentes en España.", "A los/las españoles/las residentes o no en España.", "A los/las extranjeros/as residentes o no en España."], "c": 0, "k": 6}, {"id": 126, "t": "En la renovación de la Tarjeta Europea de Armas, ¿qué se exigirá?", "o": ["Mantener la titularidad de las armas que ampare.", "Licencia correspondiente.", "Certificado de antecedentes penales."], "c": 0, "k": 6}, {"id": 127, "t": "¿Qué validez tendrán las autorizaciones especiales de uso de armas para menores?", "o": ["Cinco años.", "Tres años.", "Hasta la mayoría de edad."], "c": 2, "k": 6}, {"id": 128, "t": "¿Qué edad mínima tendrá un menor para utilizar un arma larga rayada para caza mayor o tiro deportivo?", "o": ["14 años.", "16 años.", "18 años."], "c": 1, "k": 6}, {"id": 129, "t": "¿Qué edad mínima tendrá un menor para utilizar armas de las categorías 3ª.2 y 3ª.3?", "o": ["14 años.", "16 años.", "18 años."], "c": 0, "k": 6}, {"id": 130, "t": "¿De quiénes irán siempre acompañados los menores cuando utilicen armas de las categorías 2ª.2 o 3ª?", "o": ["Personas mayores de edad.", "Personas mayores de edad con licencia de armas D, E o F.", "Personas mayores de edad y para cazar."], "c": 1, "k": 6}, {"id": 131, "t": "La persona mayor de edad con licencia D, E o F que acompañe a un/a menor con autorización especial que esté utilizando armas de las categorías 2ª2 o 3ª, ¿a qué se habrá comprometido previamente?", "o": ["A acompañarlo hasta el lugar de la cacería.", "A vigilarlo en todo momento y lugar.", "A acompañarlo y vigilarlo en cada cacería o acto deportivo."], "c": 2, "k": 6}, {"id": 132, "t": "Un menor, ¿puede ser titular de una escopeta?", "o": ["Sí, si tiene autorización especial de menores.", "Puede ser titular de una escopeta solamente para cazar.", "Un menor no puede ser titular de una escopeta."], "c": 2, "k": 6}, {"id": 133, "t": "Indique el plazo de validez de una licencia de armas tipo \"D\" expedida a una persona de 55 años.", "o": ["Cinco años.", "Dos años.", "Tres años."], "c": 0, "k": 6}, {"id": 134, "t": "Indique el plazo de validez de una licencia de armas \"E\" expedida a una persona de más de 50 años y menos de 60 años.", "o": ["Un año.", "Tres años.", "Cinco años."], "c": 2, "k": 6}, {"id": 135, "t": "Un joven de 17 años, ¿cuántas licencias de armas tipo \"E\" puede tener?", "o": ["Una.", "Dos, si no tiene licencia de armas tipo \"D\".", "Ninguna."], "c": 2, "k": 6}, {"id": 136, "t": "¿Por quién estarán suscritas las solicitudes de autorizaciones especiales de uso de armas para menores?", "o": ["Por el interesado.", "Por el interesado y por la persona que ejerce la patria potestad o tutela.", "Por el padre del interesado."], "c": 1, "k": 6}, {"id": 137, "t": "Indique el plazo de validez de una licencia de armas tipo \"E\" expedida a una persona de 62 años.", "o": ["Tres años.", "Un año.", "Cinco años."], "c": 2, "k": 6}, {"id": 138, "t": "Indique el plazo de validez de una licencia de armas tipo \"D\" expedida a una persona de 68 años.", "o": ["Permanente.", "Un año.", "Cinco años visada cada tres años."], "c": 2, "k": 6}, {"id": 139, "t": "Indique el plazo de validez de una licencia de armas tipo \"E\" expedida a una persona de 72 años.", "o": ["Dos años.", "Tres años.", "Cinco años visada cada tres."], "c": 2, "k": 6}, {"id": 140, "t": "Indique el plazo de validez de una licencia de armas tipo \"D\" expedida a una persona de 71 años.", "o": ["Cinco años visada cada tres.", "Dos años.", "Permanente."], "c": 0, "k": 6}, {"id": 141, "t": "¿A partir de qué edad es necesario visar la Licencia un particular?", "o": ["Setenta años.", "Sesenta y cinco años.", "Sesenta y siete años."], "c": 2, "k": 6}, {"id": 142, "t": "¿En qué plazo debe resolverse una solicitud de licencia de armas?", "o": ["Un mes.", "Dos meses.", "Tres meses."], "c": 2, "k": 6}, {"id": 143, "t": "Caso de no mantenerse los requisitos que se exigen para el otorgamiento de una licencia de armas, ¿qué procede?", "o": ["Retirada de todas las armas.", "Revocar la licencia.", "Ninguna de las anteriores."], "c": 1, "k": 6}, {"id": 144, "t": "Según el Reglamento de Armas, ¿por cuánto tiempo se puede revocar una licencia de armas?", "o": ["Por un período máximo de dos años.", "Por el tiempo que le falte para caducar.", "Máximo tres años."], "c": 0, "k": 6}, {"id": 145, "t": "¿Cuándo podrá comprobar la Administración el mantenimiento de los requisitos exigibles para mantener la vigencia de una licencia de armas?", "o": ["Cuando lo solicite el titular.", "En cualquier momento.", "En los casos de infracción."], "c": 1, "k": 6}, {"id": 146, "t": "La vigencia de una licencia de armas estará condicionada a:", "o": ["Mantenimiento de los requisitos exigibles en el Reglamento de Armas.", "No haber cambiado de residencia.", "No haber llegado a la edad de 65 años."], "c": 0, "k": 6}, {"id": 147, "t": "¿Es cierto que el Reglamento de Armas contempla que la reparación de armas de fuego se hará solamente por industrias que las hubiesen fabricado o por armeros autorizados por la Intervención de Armas de la Guardia Civil, con establecimientos abiertos e inscritos en un registro?", "o": ["Cierto.", "Falso.", "Es indiferente."], "c": 0, "k": 7}, {"id": 148, "t": "¿Qué documento será aportado al armero, cuando se le entregue un arma de fuego para reparación?", "o": ["La Licencia o Autorización de armas.", "La Guía de Pertenencia o la Guía de Circulación en su caso.", "La Guía de Pertenencia y la Licencia de Armas."], "c": 1, "k": 7}, {"id": 149, "t": "¿Qué destino se le dará a la Guía de pertenencia de un arma de fuego que ha sido reparada?", "o": ["Se devolverá al/la propietario/a del arma.", "Se hará una nueva guía haciendo constar que ha sido reparada.", "Se destruirá."], "c": 0, "k": 7}, {"id": 150, "t": "¿Puede llevar un arma de fuego personalmente el/la titular de la misma para su reparación?", "o": ["No.", "Algunas veces.", "Sí."], "c": 2, "k": 7}, {"id": 151, "t": "Cuando el arma a reparar proceda de una localidad distinta a la del establecimiento del armero y no la lleva personalmente su propietario, ¿qué documento deberá sustituir a la Guía de Pertenencia?", "o": ["Tan solo una nota con las deficiencias que tiene el arma, si se manda por una agencia de transportes.", "Una guía de circulación expedida por la Intervención de Armas de origen o demarcación del/la propietario/a del arma.", "Si la lleva personalmente el/la propietario/a, necesita igualmente guía de circulación."], "c": 1, "k": 7}, {"id": 152, "t": "¿Qué requisito será imprescindible para poder reparar armas de fuego?", "o": ["Ser un técnico en la reparación de armas y realizarlo de forma habitual.", "Tener la condición de armero y establecimiento abierto e inscrito en un registro que llevará la Intervención de Armas de su residencia.", "Ser titular de una armería debidamente autorizada por la Autoridad Gubernativa."], "c": 1, "k": 7}, {"id": 153, "t": "¿Es imprescindible obtener la condición de armero para dedicarse a la reparación de armas de fuego?", "o": ["Algunas veces.", "Sí.", "Cuando se trate de armas blancas sí es necesario."], "c": 1, "k": 7}, {"id": 154, "t": "¿Las industrias que fabrican armas de fuego están autorizadas a reparar las mismas?", "o": ["No, si la avería es muy grave.", "Sí.", "Depende del tipo de arma."], "c": 1, "k": 7}, {"id": 155, "t": "¿Se admitirá un arma de fuego para su reparación si no lleva la Guía de pertenencia?", "o": ["Sí, cuando esté en muy mal estado.", "No, en ningún caso.", "Sí, siempre que dicho documento se haya sustituido por una guía de circulación."], "c": 2, "k": 7}, {"id": 156, "t": "¿Puede el titular de un arma de fuego llevarla personalmente a un establecimiento autorizado para su reparación?", "o": ["No.", "Sí, si va acompañada de la Guía de Pertenencia.", "Sí, si va acompañada de la Guía de Pertenencia y Licencia correspondiente."], "c": 2, "k": 7}, {"id": 157, "t": "La reparación de armas se hará solamente:", "o": ["Por las industrias que las hubiesen fabricado.", "Por armeros/as que, autorizados/as por Intervención de Armas, cuenten con establecimiento abierto al público y estén inscritos en el correspondiente registro.", "Las dos respuestas anteriores (A y B) son válidas."], "c": 2, "k": 7}, {"id": 158, "t": "No se admitirá un arma a reparar si no va acompañada de:", "o": ["Guía de Pertenencia.", "Guía de Circulación.", "La A) y la B) son correctas."], "c": 2, "k": 7}, {"id": 159, "t": "¿Dónde quedará la Guía de Pertenencia del arma que se esté reparando?", "o": ["Será devuelta al propietario del arma una vez se tomen los datos del arma por el armero.", "Quedará en poder del/la armero/a mientras dure la reparación del arma.", "No es necesario, en este caso, que el arma vaya acompañada por la Guía de Pertenencia."], "c": 1, "k": 7}, {"id": 160, "t": "¿Cuándo deberá ser entregada a su titular la guía de pertenencia de un arma llevada a reparar a una armería?", "o": ["Una vez presentada el arma en la armería.", "Una vez que el/la Armero/a ha tomado nota de la misma.", "En el momento de retirar el arma de la armería."], "c": 2, "k": 7}, {"id": 161, "t": "Además del arma, ¿qué entregará al armero/a el/la titular que le deje su arma para reparar?", "o": ["La Guía de Pertenencia.", "La licencia de armas.", "No es preciso que le entregue nada."], "c": 0, "k": 7}, {"id": 162, "t": "Sin conocimiento de la Intervención de Armas y Explosivos de la Guardia Civil, ¿en qué casos está permitida la reparación que suponga modificación de las características, estructura o calibre de un arma de caza?", "o": ["En cualquier caso.", "En ningún caso.", "Es indiferente."], "c": 1, "k": 7}, {"id": 163, "t": "¿Puede llevarse a cabo una reparación que suponga modificación del calibre de un arma?", "o": ["Sí, si es de caza y está aprobado por un banco oficial de pruebas y notificado a la Intervención de Armas.", "Sí, siempre que las variaciones hayan sido realizadas por los propios fabricantes del arma y hayan entregado esta documentación técnica en la Intervención de Armas de la demarcación del establecimiento.", "Son correctas las dos respuestas anteriores."], "c": 2, "k": 7}, {"id": 164, "t": "¿En qué casos se permitirá que la reparación del arma suponga la modificación sustancial de sus características?", "o": ["Con conocimiento del Ministerio de Cultura.", "Con conocimiento de la Intervención de Armas y aprobación en su caso del Ministerio de Defensa o del Banco Oficial de Pruebas.", "Con conocimiento de la Intervención de Armas y Ministerio de Hacienda."], "c": 1, "k": 7}, {"id": 165, "t": "¿Para modificar el calibre de un arma es preciso la aprobación en su caso del Ministerio de Defensa?", "o": ["Sí, siempre que se trate de armas de la 1ª y 2ª categoría.", "Sí, siempre que se trate de armas de guerra.", "Las dos respuestas son correctas."], "c": 1, "k": 7}, {"id": 166, "t": "¿Puede cambiarse la estructura de un arma?", "o": ["Sí, siempre que lo haga un armero autorizado y por un motivo razonado.", "Sí, previo conocimiento de la Intervención de Armas de la Guardia Civil y aprobación en su caso del Ministerio de Defensa o de un Banco Oficial de Pruebas según el arma de que se trate.", "En ningún caso."], "c": 1, "k": 7}, {"id": 167, "t": "¿Puede repararse un arma de caza de tal forma que suponga una modificación sustancial de la misma?", "o": ["Sí, con conocimiento y aprobación de los organismos competentes.", "Nunca.", "Solo en caso de que la reparación fuera efectuada por un herrero."], "c": 0, "k": 7}, {"id": 168, "t": "Los/Las fabricantes y comerciantes autorizados/as y sus representantes, ¿a quiénes podrán dejar a prueba las armas de fuego?", "o": ["A personas mayores de edad.", "A personas que posean la correspondiente licencia.", "A personas interesadas en la compra de las armas."], "c": 1, "k": 8}, {"id": 169, "t": "¿Quiénes podrán dejar a prueba las armas de fuego?", "o": ["Los/Las fabricantes y comerciantes autorizados/as.", "Los/Las representantes de los fabricantes y comerciantes autorizados.", "Las dos anteriores son correctas."], "c": 2, "k": 8}, {"id": 170, "t": "Los/Las comerciantes autorizados/as, ¿dejarán a probar un arma de fuego a una persona sin Licencia de Armas?", "o": ["Sí.", "No.", "Sí, con autorización del/de la Armero/a."], "c": 1, "k": 8}, {"id": 171, "t": "¿Qué plazo de validez tendrá el documento expedido por un comerciante autorizado para probar un arma de fuego en la misma localidad de residencia del interesado en comprarla?", "o": ["24 horas.", "5 días.", "7 días."], "c": 1, "k": 8}, {"id": 172, "t": "En el documento que expida un fabricante a favor de la persona interesada en adquirir un arma de fuego, ¿podrá omitir el lugar donde se va a efectuar la prueba con dicha arma?", "o": ["Siempre.", "No.", "No tiene importancia."], "c": 1, "k": 8}, {"id": 173, "t": "¿Cualquier titular de la licencia de armas correspondiente y en vigor podrá probar las armas de fuego que desea adquirir?", "o": ["Sí.", "Nunca.", "Con autorización del/de la Subdelegado/a del Gobierno."], "c": 0, "k": 8}, {"id": 174, "t": "La persona interesada en comprar un arma, ¿puede probarla antes de adquirirla en galería autorizada?", "o": ["No, en ningún caso.", "Sí, pero debe probarla tan solo el viajante.", "Sí."], "c": 2, "k": 8}, {"id": 175, "t": "Una persona que posee licencia de armas correspondiente, ¿puede probar un arma de caza?", "o": ["Sí, en caso de que se la deje un comerciante autorizado.", "Solo en caso de que sea titular de una licencia de caza.", "Las dos anteriores son correctas."], "c": 0, "k": 8}, {"id": 176, "t": "¿Qué será indispensable para que una persona interesada en adquirir un arma pueda probarla?", "o": ["Que le acompañe el comercial o fabricante.", "Que tenga una autorización del vendedor.", "Estar en posesión de la correspondiente licencia."], "c": 2, "k": 8}, {"id": 177, "t": "¿Qué datos deberá contener el documento, de carácter personal e intransferible, que emite el/la fabricante o comerciante a la persona que vaya a realizar la prueba de un arma de fuego interesada en adquirirla?", "o": ["Denominación expresa del lugar en donde se deben realizar las pruebas.", "Reseña del arma, la licencia y el lugar de las pruebas, plazos de validez y estar visado por la Intervención de Armas.", "Que se reseñe un plazo de tres días para realizar la prueba."], "c": 1, "k": 8}, {"id": 178, "t": "¿Qué carácter tiene el documento que el/la fabricante o comerciante expide a favor de la persona interesada en adquirir un arma de fuego que quiere probar?", "o": ["Genérico, para cualquier posible adquirente.", "Transferible a un tercer posible adquirente, siempre que posea licencia de armas.", "Personal e intransferible."], "c": 2, "k": 8}, {"id": 179, "t": "Un fabricante autorizado ha dejado en prueba un arma a un particular que desea adquirirla y que posee la licencia correspondiente, ¿qué le debe expedir el fabricante?", "o": ["La guía de pertenencia.", "La factura del arma.", "Un documento de carácter personal e intransferible visado por la Intervención de Armas y Explosivos."], "c": 2, "k": 8}, {"id": 180, "t": "¿Por quién será visado el documento de autorización para la prueba de un arma de fuego expedido a favor de un/a particular por un/a fabricante autorizado?", "o": ["Intervención de Armas.", "Comerciante.", "No es necesario este requisito."], "c": 0, "k": 8}, {"id": 181, "t": "El documento de autorización para la prueba de un arma de fuego, a favor de la persona interesada en adquirirla, ¿en qué modelo de documento se formalizará?", "o": ["En triplicado ejemplar.", "Por escrito.", "Conforme a un modelo oficial."], "c": 2, "k": 8}, {"id": 182, "t": "¿Dónde se podrán probar las armas de fuego, además de en los campos de las Federaciones deportivas o en los polígonos, campos o galerías de tiro?", "o": ["En los terrenos privados.", "En los terrenos que cuenten con autorización de la autoridad local.", "En los terrenos cinegéticos controlados."], "c": 2, "k": 8}, {"id": 183, "t": "¿Se podrán probar las armas de fuego en Galerías de Tiro?", "o": ["No.", "No, si no se tiene autorización del/de la Alcalde/sa.", "Sí."], "c": 2, "k": 8}, {"id": 184, "t": "¿Se podrá probar un arma de fuego en la vía pública?", "o": ["Solo en caso de que no haya personas en la misma.", "Si es de noche y en descampado.", "Nunca."], "c": 2, "k": 8}, {"id": 185, "t": "Con motivo del fallecimiento de una persona que posea armas de fuego, los/las herederos/ras o albaceas, ¿cuándo deberán depositar las armas en la Intervención de Armas?", "o": ["Al día siguiente del fallecimiento.", "Tan pronto como tengan conocimiento de la obligación de hacerlo y en cualquier caso dentro de los 6 meses siguientes al fallecimiento.", "Será determinado por el/la Interventor/a de Armas y Explosivos de la residencia del fallecido/a."], "c": 1, "k": 9}, {"id": 186, "t": "¿Es cierto que el Reglamento de Armas dispone que, al cesar en la habilitación para la tenencia legal de las armas, el/la interesado/a deberá depositarlas inmediatamente?", "o": ["Cierto.", "Falso.", "Solo en caso de armas de caza."], "c": 0, "k": 9}, {"id": 187, "t": "Al cesar en la habilitación para la tenencia legal de las armas, ¿en qué momento el/la interesado/a deberá depositar las armas con las correspondientes guías de pertenencia?", "o": ["Dentro del plazo de 10 días desde que cesó en dicha habilitación.", "Inmediatamente.", "Quedará exento del depósito si comunica tal vicisitud a la Intervención de Armas y adopta medidas de seguridad."], "c": 1, "k": 9}, {"id": 188, "t": "No pasar dos revistas consecutivas de un arma será motivo de retirada de la guía de pertenencia, ¿qué debe hacerse con el arma?", "o": ["Guardarla con las suficientes medidas de seguridad.", "Depositarla.", "Llevar la guía de pertenencia a la Intervención de Armas."], "c": 1, "k": 9}, {"id": 189, "t": "¿Qué tiempo permanecerán las armas que se depositen en las Intervenciones de Armas a disposición de los/las herederos/as, como consecuencia del fallecimiento de sus titulares?", "o": ["6 meses.", "1 año.", "2 años."], "c": 1, "k": 9}, {"id": 190, "t": "¿Qué documento acompañará a las armas que se depositen en las Intervenciones de Armas, como consecuencia del fallecimiento de sus titulares?", "o": ["La Licencia de armas del/de la fallecido/a y el certificado de defunción.", "La guía de pertenencia.", "La guía de pertenencia, acompañada de certificado de defunción."], "c": 1, "k": 9}, {"id": 191, "t": "En caso de caducidad de la licencia de armas, ¿qué tiempo tendrá para depositarlas?", "o": ["3 meses.", "1 año.", "Inmediatamente."], "c": 2, "k": 9}, {"id": 192, "t": "¿Qué documentos acompañarán a las armas de fuego que vayan a ser depositadas?", "o": ["Las Guías de Pertenencia.", "La Licencia de Armas.", "Las Tarjetas de Armas."], "c": 0, "k": 9}, {"id": 193, "t": "¿Qué deberá depositar el/la titular de armas de fuego que extraviase la licencia de armas?", "o": ["Las Armas y las Guías de Pertenencia.", "Las Guías.", "No depositará ningún arma."], "c": 0, "k": 9}, {"id": 194, "t": "¿Qué deberá depositar el/la titular de armas de fuego que extraviase las Guías de Pertenencia?", "o": ["La Licencia de Armas.", "Las Armas que amparan dichas Guías.", "Licencia de caza."], "c": 1, "k": 9}, {"id": 195, "t": "¿Es cierto que el/la titular de un arma de fuego no puede depositarla en la Intervención de Armas y Explosivos para ser subastada?", "o": ["Cierto.", "Falso.", "Depende de si el arma es de caza o no."], "c": 0, "k": 9}, {"id": 196, "t": "¿Puede el/la titular de un arma de fuego depositarla en la Intervención de Armas y Explosivos para ser subastada?", "o": ["No.", "A veces.", "Sí."], "c": 0, "k": 9}, {"id": 197, "t": "¿Puede el/la titular de un arma de fuego depositarla en la Intervención de Armas y Explosivos para su reducción a chatarra?", "o": ["No; el destino reglamentario de reducción a chatarra es solo en caso de armas depositadas que carezcan de punzones necesarios o sean prohibidas.", "A veces.", "Sí."], "c": 2, "k": 9}, {"id": 198, "t": "¿Cuándo procede el depósito de las armas y la retirada y anulación de la guía de pertenencia?", "o": ["Al no pasar la revista, en una ocasión.", "Al no pasar dos revistas consecutivas.", "En ningún caso procede el depósito de las armas."], "c": 1, "k": 9}, {"id": 199, "t": "En caso de fallecimiento del/de la titular de un arma, ¿qué deberán hacer los familiares con las armas del fallecido?", "o": ["Pueden hacer uso de las mismas sin ningún requisito previo.", "Depositarlas en la Intervención de Armas.", "Pasarán a propiedad del hijo mayor de la familia."], "c": 1, "k": 9}, {"id": 200, "t": "¿Qué plazo tienen los herederos/as de un arma, depositada en la Intervención de Armas y Explosivos por fallecimiento del/de la titular, para enajenarla?", "o": ["Una semana.", "Un año.", "No hay plazo establecido."], "c": 1, "k": 9}, {"id": 201, "t": "En caso de anulación de la guía de pertenencia de un arma, ¿qué debe hacerse con el arma?", "o": ["Depositarla inmediatamente en la Intervención de Armas.", "Esperar a que me devuelvan la guía.", "Nada."], "c": 0, "k": 9}, {"id": 202, "t": "Señale el plazo de que disponen los/las herederos/as del/de la titular de una escopeta para depositarla en la Intervención de Armas y Explosivos en caso de fallecimiento del/de la titular:", "o": ["Tan pronto como tenga conocimiento de la obligación de hacerlo.", "Dentro de los seis meses siguientes al fallecimiento.", "Correctas A) y B)."], "c": 2, "k": 9}, {"id": 203, "t": "Señale el plazo de que disponen los/las herederos/as del/de la titular de una escopeta para depositarla en la Intervención de Armas y Explosivos en caso de fallecimiento del/de la titular:", "o": ["Dentro de los seis meses siguientes al fallecimiento.", "Al año del fallecimiento.", "Las dos anteriores son correctas."], "c": 0, "k": 9}, {"id": 204, "t": "Una escopeta depositada por infracción a la Ley de Caza, ¿podrá ser recuperada por su dueño/a?", "o": ["Sí.", "No.", "Algunas veces."], "c": 0, "k": 9}, {"id": 205, "t": "¿Qué destino se les dará a las armas depositadas por infracción a la Ley de Caza, cuando los/las titulares de las mismas no deseen recuperarlas?", "o": ["Venderlas.", "Depositadas hasta que la Autoridad Judicial disponga de ellas.", "Destruirlas."], "c": 2, "k": 9}, {"id": 206, "t": "¿Qué destino recibirán las armas depositadas a disposición de los/las herederos/as por fallecimiento de sus titulares, cuando haya transcurrido el plazo reglamentario sin que las armas hayan sido enajenadas o recuperadas?", "o": ["Se reducirán a chatarra, si no se ha pedido expresamente que se subasten.", "Se destruirán.", "Se enajenarán a los armeros/as que lo soliciten."], "c": 1, "k": 9}, {"id": 207, "t": "¿Qué fin se le dará a un arma depositada en la Intervención de Armas que, transcurridos los plazos reglamentarios, no ha sido transferida?", "o": ["Se entregará al museo de armas del Ejército.", "Se destruirán.", "Se alquilará a persona en posesión de licencia de armas."], "c": 1, "k": 9}, {"id": 208, "t": "En las importaciones, las armas llegadas a un aeropuerto que no fuesen retiradas por sus destinatarios/as después de despachadas por las aduanas, ¿cuánto tiempo estarán depositadas como máximo a disposición del interesado/a?", "o": ["Durante un año.", "Durante seis meses.", "Durante cinco meses."], "c": 0, "k": 9}, {"id": 209, "t": "En las importaciones, las armas llegadas a un aeropuerto que no fuesen retiradas por sus destinatarios/as después de despachadas por las aduanas, ¿qué fin les será dado?", "o": ["Se venderán.", "Serán devueltas al país de origen.", "Serán depositadas en la Intervención de Armas y Explosivos."], "c": 2, "k": 9}, {"id": 210, "t": "¿Qué destino se dará a un arma que tiene un valor acreditado como patrimonio histórico en el caso de que haya transcurrido un año depositada?", "o": ["Se enajenarán en pública subasta.", "Se le devolverá a su legítimo/a dueño/a.", "Lo que dictamine la Autoridad Judicial."], "c": 0, "k": 9}];
+const CATS = ["Armas y mecanismos", "Seguridad en el manejo", "Armas y municiones prohibidas", "Guías y transporte", "Revista de armas", "Enajenación y cesión", "Licencias y tarjetas", "Reparación y modificación", "Prueba de armas", "Depósito y fallecimiento"];
+const TOTAL = QUESTIONS.length;
+const STORE_KEY = "fmto_v1_progress";
+const DAY = 86400000;
+const INTERVAL = {1:0, 2:1*DAY, 3:2*DAY, 4:4*DAY, 5:8*DAY};
+const MASTER_INTERVAL = 16*DAY;
+
+let state = {};           // id -> {box, due, seen, ok, no}
+let filterCat = -1;       // -1 = todas
+let sessionLen = 15;
+let queue = [];           // session queue of ids
+let pos = 0;              // index into a fixed plan length for progress
+let plannedTotal = 0;
+let answered = 0, sok = 0, sno = 0, moved = 0, dropped = 0;
+let locked = false;
+
+const $ = s => document.querySelector(s);
+const now = () => Date.now();
+
+function blank(){ return {box:1, due:0, seen:false, ok:0, no:0}; }
+function get(id){ if(!state[id]) state[id]=blank(); return state[id]; }
+
+function load(){
+  try{
+    const v = localStorage.getItem(STORE_KEY);
+    if(v){ state = JSON.parse(v) || {}; }
+  }catch(e){ state = {}; }
+}
+function save(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  catch(e){ /* almacenamiento no disponible: la sesión sigue en memoria */ }
+}
+
+// ---- metrics ----
+function isDue(id){ const s=state[id]; if(!s||!s.seen) return true; return s.due<=now(); }
+function inFilter(q){ return filterCat<0 || q.k===filterCat; }
+function boxCounts(){
+  const c={1:0,2:0,3:0,4:0,5:0};
+  QUESTIONS.forEach(q=>{ const s=state[q.id]; if(s&&s.seen) c[s.box]++; });
+  return c;
+}
+function masteredCount(){ let n=0; QUESTIONS.forEach(q=>{const s=state[q.id]; if(s&&s.seen&&s.box>=5)n++;}); return n; }
+function seenCount(){ let n=0; QUESTIONS.forEach(q=>{const s=state[q.id]; if(s&&s.seen)n++;}); return n; }
+function accuracy(){
+  let ok=0,no=0; QUESTIONS.forEach(q=>{const s=state[q.id]; if(s){ok+=s.ok;no+=s.no;}});
+  const t=ok+no; return t? Math.round(ok*100/t):null;
+}
+function dueCount(){ return QUESTIONS.filter(q=>inFilter(q)&&isDue(q.id)).length; }
+
+function nextDueMs(){
+  let best=Infinity;
+  QUESTIONS.forEach(q=>{ if(!inFilter(q))return; const s=state[q.id];
+    if(s&&s.seen && s.due>now()) best=Math.min(best,s.due); });
+  return best===Infinity?null:best;
+}
+function fmtUntil(ms){
+  const d=ms-now(); if(d<=0) return "ahora";
+  const days=Math.round(d/DAY);
+  if(days<1) return "hoy mismo";
+  if(days===1) return "mañana";
+  return "en "+days+" días";
+}
+
+// ---- render home ----
+function renderHome(){
+  const c=boxCounts();
+  const max=Math.max(1,...Object.values(c));
+  const rack=$("#rack"); rack.innerHTML="";
+  for(let b=1;b<=5;b++){
+    const h=Math.round(8 + (c[b]/max)*100);
+    const master=b===5;
+    const cell=document.createElement("div");
+    cell.className="cell"+(master?" master":"");
+    cell.innerHTML=
+      '<span class="n">'+c[b]+'</span>'+
+      '<div class="bar" style="height:'+h+'px"><div class="fill" style="height:'+(c[b]?100:0)+'%"></div></div>'+
+      '<span class="cl">'+(master?'DOM':'C'+b)+'</span>';
+    rack.appendChild(cell);
+  }
+  const due=dueCount();
+  $("#pendTag").textContent = due>0 ? (due+" pendientes") : "al día";
+  $("#mDom").innerHTML = masteredCount()+'<small>/'+TOTAL+'</small>';
+  const acc=accuracy(); $("#mAcc").textContent = acc===null?"—":acc+"%";
+  $("#mSeen").textContent = seenCount();
+  $("#headstat").innerHTML = '<b>'+seenCount()+'</b>/'+TOTAL+' vistas · <b>'+masteredCount()+'</b> dominadas';
+  $("#startBtn").disabled = due===0;
+  $("#startBtn").textContent = due===0 ? "Nada pendiente — repasar igual" : "Empezar repaso";
+  if(due===0) $("#startBtn").disabled=false;
+}
+
+function renderChips(){
+  const wrap=$("#chips"); wrap.innerHTML="";
+  const mk=(label,idx)=>{
+    const cnt = QUESTIONS.filter(q=> idx<0?true:q.k===idx ).length;
+    const b=document.createElement("button");
+    b.className="chip"; b.setAttribute("aria-pressed", filterCat===idx);
+    b.innerHTML=label+'<span class="qn">'+cnt+'</span>';
+    b.onclick=()=>{ filterCat=idx; renderChips(); renderHome(); };
+    wrap.appendChild(b);
+  };
+  mk("Todas",-1);
+  CATS.forEach((c,i)=>mk(c,i));
+}
+function renderLen(){
+  const wrap=$("#lenrow"); wrap.innerHTML="";
+  [10,15,25,40].forEach(n=>{
+    const b=document.createElement("button");
+    b.className="len"; b.setAttribute("aria-pressed", sessionLen===n);
+    b.textContent=n;
+    b.onclick=()=>{ sessionLen=n; renderLen(); };
+    wrap.appendChild(b);
+  });
+}
+
+// ---- session ----
+function buildQueue(){
+  let pool = QUESTIONS.filter(q=>inFilter(q)&&isDue(q.id));
+  let ahead=false;
+  if(pool.length===0){ pool = QUESTIONS.filter(q=>inFilter(q)); ahead=true; }
+  pool.sort((a,b)=>{
+    const sa=get(a.id), sb=get(b.id);
+    if(sa.box!==sb.box) return sa.box-sb.box;       // débiles primero
+    if(sa.due!==sb.due) return sa.due-sb.due;
+    return Math.random()-0.5;
+  });
+  queue = pool.slice(0, sessionLen).map(q=>q.id);
+  plannedTotal = queue.length;
+  return ahead;
+}
+
+function show(screen){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));
+  $("#"+screen).classList.add("on");
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+function startSession(){
+  buildQueue();
+  if(queue.length===0){ renderHome(); return; }
+  pos=0; answered=0; sok=0; sno=0; moved=0; dropped=0;
+  show("study");
+  renderQuestion();
+}
+
+function renderQuestion(){
+  locked=false;
+  const id=queue[0];
+  const q=QUESTIONS.find(x=>x.id===id);
+  const s=get(id);
+  $("#sPos").textContent = answered+1;
+  $("#sTot").textContent = plannedTotal;
+  $("#sBar").style.width = Math.round((answered/plannedTotal)*100)+"%";
+  $("#qCat").textContent = CATS[q.k];
+  $("#qNum").textContent = "#"+q.id+" · caja "+s.box;
+  $("#qText").textContent = q.t;
+  const opts=$("#opts"); opts.innerHTML="";
+  q.o.forEach((text,i)=>{
+    const b=document.createElement("button");
+    b.className="opt"; b.dataset.i=i;
+    b.innerHTML='<span class="mk">'+["A","B","C"][i]+'</span><span>'+text+'</span>';
+    b.onclick=()=>answer(i);
+    opts.appendChild(b);
+  });
+  const v=$("#verdict"); v.className="verdict"; v.querySelector(".move").innerHTML="";
+  $("#nextBtn").disabled=true;
+}
+
+function answer(choice){
+  if(locked) return; locked=true;
+  const id=queue[0];
+  const q=QUESTIONS.find(x=>x.id===id);
+  const s=get(id);
+  const correct=q.c;
+  const right = choice===correct;
+  answered++;
+
+  // update Leitner
+  s.seen=true;
+  const oldBox=s.box;
+  if(right){ s.ok++; sok++; s.box=Math.min(5,s.box+1);
+    s.due = now() + (s.box>=5?MASTER_INTERVAL:INTERVAL[s.box]); }
+  else { s.no++; sno++; s.box=1; s.due=now(); }
+
+  // visuals
+  const btns=[...document.querySelectorAll(".opt")];
+  btns.forEach(b=>{
+    b.disabled=true;
+    const i=+b.dataset.i;
+    if(i===correct) b.classList.add("correct");
+    else if(i===choice) b.classList.add("wrong");
+    else b.classList.add("dim");
+  });
+  const v=$("#verdict");
+  v.classList.add("show", right?"ok":"err");
+  $("#vTag").textContent = right?"Correcto":"Incorrecto";
+  if(right){
+    if(s.box>=5 && oldBox<5) $("#vMove").innerHTML='Dominada — <b>caja 5</b>';
+    else $("#vMove").innerHTML='Sube a <b>caja '+s.box+'</b>';
+  } else {
+    $("#vMove").innerHTML='Vuelve a <b>caja 1</b> — reaparecerá hoy';
+  }
+
+  // session flow: remove current; if wrong, requeue within session
+  queue.shift();
+  if(right){ dropped++; }
+  else {
+    const gap=Math.min(4, queue.length);
+    queue.splice(gap,0,id);
+    plannedTotal++; // it will be shown again this session
+  }
+  moved += right?1:0;
+  $("#sBar").style.width = Math.round((answered/plannedTotal)*100)+"%";
+  $("#nextBtn").disabled=false;
+  $("#nextBtn").focus();
+  save();
+}
+
+function nextQuestion(){
+  if(queue.length===0){ finish(); return; }
+  renderQuestion();
+}
+
+function finish(){
+  show("done");
+  const acc = answered? Math.round(sok*100/answered):0;
+  $("#dAcc").textContent = acc+"%";
+  $("#dAns").textContent = answered;
+  $("#dOk").textContent = sok;
+  $("#dErr").textContent = sno;
+  const nd=nextDueMs();
+  const left=dueCount();
+  let note = left>0 ? (left+" preguntas siguen pendientes hoy.") : "Has puesto al día este filtro.";
+  if(left===0 && nd) note += " Próxima revisión "+fmtUntil(nd)+".";
+  $("#dNote").textContent=note;
+  renderHome();
+}
+
+// ---- events ----
+$("#startBtn").onclick=startSession;
+$("#againBtn").onclick=startSession;
+$("#homeBtn").onclick=()=>{ renderHome(); show("home"); };
+$("#nextBtn").onclick=nextQuestion;
+$("#endBtn").onclick=()=>{ finish(); };
+
+$("#resetBtn").onclick=()=>$("#modal").classList.add("on");
+$("#mKeep").onclick=()=>$("#modal").classList.remove("on");
+$("#mWipe").onclick=async()=>{
+  state={}; save(); $("#modal").classList.remove("on");
+  filterCat=-1; renderChips(); renderHome();
+};
+
+document.addEventListener("keydown",e=>{
+  if($("#study").classList.contains("on")){
+    if(!locked && ["1","2","3","a","b","c","A","B","C"].includes(e.key)){
+      const map={"1":0,"2":1,"3":2,"a":0,"b":1,"c":2,"A":0,"B":1,"C":2};
+      answer(map[e.key]);
+    } else if(locked && (e.key==="Enter"||e.key===" ")){
+      e.preventDefault(); nextQuestion();
+    }
+  }
+});
+
+(async function init(){
+  load();
+  renderChips(); renderLen(); renderHome();
+})();
+</script>
+</body>
+</html>
