@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#E9EBE4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Rumbo">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2310222E'/%3E%3Crect x='8' y='30' width='16' height='4' fill='%238C3A25'/%3E%3Crect x='28' y='26' width='8' height='12' fill='%239A6B14'/%3E%3Crect x='40' y='30' width='16' height='4' fill='%232E7D8C'/%3E%3C/svg%3E">
+<link rel="manifest" href='data:application/manifest+json,{"name":"Rumbo","short_name":"Rumbo","start_url":"./","display":"standalone","background_color":"%23E9EBE4","theme_color":"%23E9EBE4","icons":[{"src":"data:image/svg+xml,%253Csvg xmlns=%2527http://www.w3.org/2000/svg%2527 viewBox=%25270 0 64 64%2527%253E%253Crect width=%252764%2527 height=%252764%2527 fill=%2527%252310222E%2527/%253E%253C/svg%253E","sizes":"any","type":"image/svg+xml"}]}'>
+<title>Rumbo — protocolo de reset</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10222E;
+  --paper:#E9EBE4;
+  --paper-2:#DEE1D8;
+  --steel:#16394A;
+  --brass:#9A6B14;
+  --cyan:#2E7D8C;
+  --drift:#8C3A25;
+  --line:rgba(16,34,46,.16);
+  --grid:rgba(16,34,46,.045);
+  --card-bg:rgba(255,255,255,.35);
+  --ph:rgba(16,34,46,.3);
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+/* ── carta nocturna ── */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:#D6DCD4;
+    --paper:#0C1720;
+    --paper-2:#1C2A34;
+    --steel:#2C6E85;
+    --brass:#D6A03C;
+    --cyan:#5FB6C4;
+    --drift:#D26B4E;
+    --line:rgba(214,220,212,.18);
+    --grid:rgba(214,220,212,.05);
+    --card-bg:rgba(214,220,212,.045);
+    --ph:rgba(214,220,212,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#D6DCD4;
+  --paper:#0C1720;
+  --paper-2:#1C2A34;
+  --steel:#2C6E85;
+  --brass:#D6A03C;
+  --cyan:#5FB6C4;
+  --drift:#D26B4E;
+  --line:rgba(214,220,212,.18);
+  --grid:rgba(214,220,212,.05);
+  --card-bg:rgba(214,220,212,.045);
+  --ph:rgba(214,220,212,.28);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:18px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    linear-gradient(to right,var(--grid) 1px,transparent 1px),
+    linear-gradient(to bottom,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  transition:background-color .25s ease,color .25s ease;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px 80px}
+
+/* ── cinta de rumbo (signature) ── */
+.ribbon{
+  position:sticky;top:0;z-index:10;
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+  padding:12px 0 10px;
+  margin-bottom:38px;
+}
+.ribbon-labels{
+  display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:7px;
+}
+.lab-drift{color:var(--drift)}
+.lab-course{color:var(--cyan)}
+.lab-mid{color:var(--ink);opacity:.45}
+.marks{display:flex;gap:2px;align-items:flex-end;height:16px}
+.mark{
+  flex:1;height:5px;background:var(--paper-2);
+  border-radius:1px;transition:height .25s ease,background .25s ease;
+}
+.mark.done{background:var(--steel);height:9px}
+.mark.here{background:var(--brass);height:16px}
+
+/* ── tipografía ── */
+h1{
+  font-family:var(--display);
+  font-weight:800;font-size:clamp(34px,9vw,58px);
+  line-height:.96;letter-spacing:-.03em;
+  margin:44px 0 14px;
+}
+h1 em{font-style:normal;color:var(--brass)}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--steel);opacity:.75;margin-bottom:4px;
+}
+.lede{font-size:19px;max-width:52ch;opacity:.85}
+.lede strong{font-weight:400;box-shadow:inset 0 -8px 0 rgba(154,107,20,.18)}
+
+.q-index{
+  font-family:var(--mono);font-size:12px;color:var(--brass);
+  letter-spacing:.1em;margin-bottom:12px;
+}
+.q-text{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(23px,5.4vw,33px);line-height:1.14;letter-spacing:-.02em;
+  margin:0 0 10px;
+}
+.q-hint{font-size:16px;font-style:italic;opacity:.62;margin:0 0 22px;max-width:46ch}
+
+textarea{
+  width:100%;min-height:190px;resize:vertical;font-size:max(16px,1rem);
+  background:transparent;border:none;border-bottom:2px solid var(--line);
+  font-family:var(--body);font-size:19px;line-height:1.6;color:var(--ink);
+  padding:6px 2px 12px;outline:none;
+}
+textarea:focus{border-bottom-color:var(--brass)}
+textarea::placeholder{color:var(--ph)}
+input[type=date],input[type=text]{
+  font-family:var(--mono);font-size:15px;color:var(--ink);
+  background:transparent;border:none;border-bottom:2px solid var(--line);
+  padding:8px 2px;outline:none;
+}
+input:focus{border-bottom-color:var(--brass)}
+
+/* ── controles ── */
+.nav{display:flex;gap:10px;align-items:center;margin-top:32px;flex-wrap:wrap}
+button{
+  font-family:var(--mono);font-size:13px;letter-spacing:.06em;
+  text-transform:uppercase;cursor:pointer;
+  border:1.5px solid var(--ink);background:transparent;color:var(--ink);
+  padding:12px 18px;border-radius:2px;
+  transition:background .15s,color .15s,transform .1s;
+}
+button:hover{background:var(--ink);color:var(--paper)}
+button:active{transform:translateY(1px)}
+button.primary{background:var(--steel);border-color:var(--steel);color:var(--paper)}
+button.primary:hover{background:var(--ink);border-color:var(--ink)}
+button.ghost{border-color:var(--line);opacity:.75}
+button:focus-visible,textarea:focus-visible,input:focus-visible,a:focus-visible{
+  outline:2px solid var(--brass);outline-offset:3px;
+}
+.saved{font-family:var(--mono);font-size:11px;opacity:.5;letter-spacing:.08em}
+
+/* ── bloques informativos ── */
+.card{
+  border:1px solid var(--line);border-left:3px solid var(--brass);
+  padding:20px 22px;margin:26px 0;background:var(--card-bg);
+}
+.card h3{
+  font-family:var(--display);font-weight:600;font-size:20px;
+  margin:0 0 8px;letter-spacing:-.01em;
+}
+.sched{width:100%;border-collapse:collapse;margin:16px 0;font-size:16px}
+.sched td{padding:8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.sched td:first-child{
+  font-family:var(--mono);font-size:13px;color:var(--brass);
+  width:72px;white-space:nowrap;padding-right:14px;
+}
+
+/* ── carta final ── */
+.chart{display:grid;gap:0;margin:30px 0;border-top:1px solid var(--ink)}
+.slot{border-bottom:1px solid var(--line);padding:16px 0}
+.slot .k{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;opacity:.6;display:flex;justify-content:space-between;
+}
+.slot .k span:last-child{opacity:.55}
+.slot textarea{min-height:76px;font-size:17px;border-bottom:none}
+.slot.drift{border-left:3px solid var(--drift);padding-left:14px}
+.slot.course{border-left:3px solid var(--cyan);padding-left:14px}
+.dl{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+footer{
+  margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;line-height:1.9;opacity:.55;
+}
+footer a{color:inherit}
+.hide{display:none}
+#theme{
+  position:fixed;right:14px;bottom:14px;z-index:20;
+  padding:9px 13px;border-radius:20px;
+  border:1px solid var(--line);background:var(--paper);color:var(--ink);
+  font-size:11px;letter-spacing:.1em;opacity:.5;
+}
+#theme:hover{opacity:1;background:var(--paper);color:var(--ink);border-color:var(--brass)}
+@media (max-width:520px){#theme{right:10px;bottom:10px;padding:8px 11px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* respaldo si la CDN de tipografías no carga */
+@supports not (font-variation-settings:normal){body{font-family:Georgia,serif}}
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <div class="wrap" style="padding-bottom:0">
+    <div class="ribbon-labels">
+      <span class="lab-drift">Deriva</span>
+      <span class="lab-mid" id="pos">—</span>
+      <span class="lab-course">Rumbo</span>
+    </div>
+    <div class="marks" id="marks"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- INTRO -->
+  <section id="intro">
+    <div class="eyebrow">Protocolo de un día · uso personal</div>
+    <h1>Fija el <em>rumbo</em> antes de remar.</h1>
+    <p class="lede">21 preguntas en tres tandas: por la mañana cavas, durante el día te interrumpes, por la noche decides. Al final te llevas <strong>un markdown con todo</strong> y <strong>un archivo de calendario</strong> que se encarga de recordártelo. Nada sale de este dispositivo.</p>
+    <div class="card">
+      <h3>Antes de empezar</h3>
+      <p style="margin:0">Reserva la tarde. Las preguntas 7 y 10 están diseñadas para incomodar, y funcionan. Puedes cerrar la pestaña cuando quieras: se guarda cada pulsación.</p>
+    </div>
+    <div class="nav">
+      <button class="primary" onclick="go(0)">Empezar</button>
+      <button onclick="pickMd()">Importar .md</button>
+      <button class="ghost" onclick="goChart()">Ir a la carta</button>
+      <button class="ghost" onclick="wipe()">Borrar todo</button>
+    </div>
+    <input type="file" id="imp" class="hide" accept=".md,.markdown,.txt,text/markdown,text/plain">
+  </section>
+
+  <!-- PREGUNTA -->
+  <section id="quiz" class="hide">
+    <div class="eyebrow" id="block"></div>
+    <div class="q-index" id="qi"></div>
+    <p class="q-text" id="qt"></p>
+    <p class="q-hint" id="qh"></p>
+    <textarea id="ans" placeholder="Escribe aquí. Sin editar, sin quedar bien."></textarea>
+    <div class="nav">
+      <button onclick="prev()">Anterior</button>
+      <button class="primary" onclick="next()" id="nextBtn">Siguiente</button>
+      <span class="saved" id="saved"></span>
+    </div>
+  </section>
+
+  <!-- BLOQUE 2: RECORDATORIOS -->
+  <section id="sched" class="hide">
+    <div class="eyebrow">Tanda 2 · durante el día</div>
+    <p class="q-text">Seis interrupciones, catorce días, y luego desaparecen.</p>
+    <p class="q-hint">No son un hábito: son un andamio. Van al archivo .ics con fecha de caducidad para que no se conviertan en ruido que ignoras.</p>
+    <table class="sched" id="schedTable"></table>
+    <p style="font-size:16px;opacity:.8;margin:22px 0 6px">Primer día de los avisos:</p>
+    <input type="date" id="startDate">
+    <div class="nav">
+      <button onclick="prev()">Anterior</button>
+      <button class="primary" onclick="next()">Continuar a la noche</button>
+    </div>
+  </section>
+
+  <!-- CARTA FINAL -->
+  <section id="chart" class="hide">
+    <div class="eyebrow">Carta de navegación</div>
+    <h1>Una hoja. Seis casillas.</h1>
+    <p class="lede">Lo que no entre en ninguna de estas casillas, se descarta. Ese es todo el mecanismo.</p>
+    <div class="chart" id="chartSlots"></div>
+    <div class="dl">
+      <button class="primary" onclick="dlMd()">Descargar .md</button>
+      <button class="primary" onclick="dlIcs()">Descargar .ics</button>
+      <button onclick="pickMd()">Importar .md</button>
+      <button onclick="go(0)">Volver a las preguntas</button>
+    </div>
+    <div class="card" style="margin-top:34px">
+      <h3>Qué contiene el .ics</h3>
+      <p style="margin:0 0 8px">Seis avisos diarios durante dos semanas, con la pregunta dentro. Una revisión mensual de 20 minutos que te enseña tu deriva y tu rumbo. Un aviso anual para repetir la excavación.</p>
+      <p style="margin:0;font-size:16px;opacity:.75">Ábrelo con tu app de calendario y acepta la importación. Tu calendario es mejor recordando cosas que cualquier app de hábitos.</p>
+    </div>
+    <div class="card">
+      <h3>El ciclo mensual</h3>
+      <p style="margin:0">Importa el último <strong>.md</strong> desde donde lo guardes, revisa, y exporta encima. El archivo es el original; esta pantalla es solo el mando. Así da igual que el navegador olvide los datos.</p>
+    </div>
+    <footer>
+      Todo se guarda en este navegador. Ningún servidor, ninguna cuenta.<br>
+      Preguntas adaptadas de «How to fix your entire life in 1 day», Dan Koe, dic. 2025.
+    </footer>
+  </section>
+</div>
+
+<button id="theme" onclick="cycleTheme()" aria-label="Cambiar apariencia"></button>
+
+<script>
+/* ══ apariencia ══ */
+const THEMES=["auto","light","dark"];
+const TLABEL={auto:"Auto",light:"Día",dark:"Noche"};
+function applyTheme(t){
+  const r=document.documentElement;
+  if(t==="auto") r.removeAttribute("data-theme"); else r.setAttribute("data-theme",t);
+  const dark = t==="dark" || (t==="auto" && matchMedia("(prefers-color-scheme:dark)").matches);
+  document.querySelector('meta[name="theme-color"]').content = dark?"#0C1720":"#E9EBE4";
+  document.getElementById("theme").textContent=TLABEL[t];
+}
+function cycleTheme(){
+  D.theme=THEMES[(THEMES.indexOf(D.theme||"auto")+1)%3];
+  applyTheme(D.theme);save();
+}
+
+/* ══ almacenamiento (artifact o navegador) ══ */
+const KEY="rumbo:v1";
+const store={
+  async get(){
+    try{
+      if(window.storage){const r=await window.storage.get(KEY);return r?JSON.parse(r.value):{};}
+    }catch(e){}
+    try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}
+  },
+  async set(o){
+    const s=JSON.stringify(o);
+    try{if(window.storage){await window.storage.set(KEY,s);return;}}catch(e){}
+    try{localStorage.setItem(KEY,s);}catch(e){}
+  },
+  async clear(){
+    try{if(window.storage){await window.storage.delete(KEY);}}catch(e){}
+    try{localStorage.removeItem(KEY);}catch(e){}
+  }
+};
+
+/* ══ contenido ══ */
+const QS=[
+ // Tanda 1A — qué toleras
+ {b:"Tanda 1 · mañana · qué toleras",t:"¿Qué insatisfacción de bajo grado has normalizado?",h:"No el dolor agudo. Lo que aguantas sin ni siquiera quejarte."},
+ {b:"Tanda 1 · mañana · qué toleras",t:"Tus tres quejas más repetidas del último año.",h:"Las que has dicho en voz alta más veces. Literales."},
+ {b:"Tanda 1 · mañana · qué toleras",t:"Por cada queja: si alguien juzgara solo por tu conducta, ¿qué concluiría que quieres?",h:"Ignora tus palabras. Solo el registro de lo que hiciste."},
+ {b:"Tanda 1 · mañana · qué toleras",t:"¿Qué verdad sobre tu vida actual te avergonzaría admitir ante alguien a quien respetas?",h:""},
+ // Tanda 1B — anti-visión
+ {b:"Tanda 1 · mañana · anti-visión",t:"Nada cambia en cinco años. Describe un martes cualquiera.",h:"Dónde despiertas, cómo está tu cuerpo, tu primer pensamiento, quién te rodea, qué haces de 9 a 18h, cómo te sientes a las 22h."},
+ {b:"Tanda 1 · mañana · anti-visión",t:"Lo mismo a diez años. ¿Qué te has perdido?",h:"Qué puertas se cerraron. Qué dicen de ti cuando no estás delante."},
+ {b:"Tanda 1 · mañana · anti-visión",t:"Final de tu vida, versión segura, patrón nunca roto. ¿Cuál fue el precio?",h:"Qué no te permitiste sentir, intentar o llegar a ser."},
+ {b:"Tanda 1 · mañana · anti-visión",t:"¿Quién de tu entorno ya vive esa versión, veinte años más adelantado?",h:"Y qué sientes exactamente al imaginarte como él."},
+ {b:"Tanda 1 · mañana · anti-visión",t:"¿Qué identidad tendrías que soltar para cambiar de verdad?",h:"Completa: «yo soy el tipo de persona que…». ¿Qué te costaría socialmente dejar de serlo?"},
+ {b:"Tanda 1 · mañana · anti-visión",t:"El motivo más vergonzoso por el que no has cambiado.",h:"El que te hace parecer débil o perezoso. No el que suena razonable."},
+ {b:"Tanda 1 · mañana · anti-visión",t:"Si tu conducta es una forma de protección, ¿qué protege? ¿Y qué te cuesta?",h:""},
+ // Tanda 1C — visión
+ {b:"Tanda 1 · mañana · visión v1",t:"Sin filtro de realismo: si en tres años vivieras otra vida, ¿cuál?",h:"Mismo nivel de detalle que el martes de la pregunta 5."},
+ {b:"Tanda 1 · mañana · visión v1",t:"¿Qué tendrías que creer sobre ti para que esa vida se sintiera natural?",h:"Escríbelo como identidad, no como objetivo: «yo soy el tipo de persona que…»."},
+ {b:"Tanda 1 · mañana · visión v1",t:"Una cosa que harías esta semana si ya fueras esa persona.",h:"Una. Concreta. Con fecha."},
+ // (aquí se inserta la pantalla de recordatorios)
+ // Tanda 3 — noche
+ {b:"Tanda 3 · noche · síntesis",t:"Tras hoy, ¿qué te parece más cierto sobre por qué estás atascado?",h:""},
+ {b:"Tanda 3 · noche · síntesis",t:"Nombra al enemigo real.",h:"No circunstancias. No otras personas. El patrón interno que lleva el mando."},
+ {b:"Tanda 3 · noche · síntesis",t:"Una frase con lo que te niegas a que sea tu vida.",h:"Tu anti-visión comprimida. Debe removerte al leerla. Va a tu calendario cada mes."},
+ {b:"Tanda 3 · noche · síntesis",t:"Una frase con lo que estás construyendo.",h:"Sabiendo que evolucionará. Es una v1, no un juramento."},
+ {b:"Tanda 3 · noche · lentes",t:"Lente de un año: una cosa concreta que demuestre que rompiste el patrón.",h:"Verificable. Que un tercero pueda comprobar."},
+ {b:"Tanda 3 · noche · lentes",t:"Lente de un mes: ¿qué tiene que ser cierto en 30 días para que el año siga en pie?",h:""},
+ {b:"Tanda 3 · noche · lentes",t:"Lente diaria: dos o tres acciones para el calendario de mañana.",h:"Las que la persona en la que te conviertes haría sin pensárselo."}
+];
+const SCHED_AT=14; // la pantalla de recordatorios va tras la pregunta 14
+
+const PINGS=[
+ {h:11,m:0, q:"¿Qué estoy evitando al hacer justo esto?"},
+ {h:13,m:30,q:"Si alguien hubiera grabado mis últimas dos horas, ¿qué concluiría que quiero de mi vida?"},
+ {h:15,m:15,q:"¿Me estoy moviendo hacia la vida que odio o hacia la que quiero?"},
+ {h:17,m:0, q:"¿Qué es lo más importante que estoy fingiendo que no es importante?"},
+ {h:19,m:30,q:"¿Qué he hecho hoy por proteger mi identidad y no por deseo real?"},
+ {h:21,m:0, q:"¿Cuándo me he sentido más vivo hoy? ¿Y más muerto?"}
+];
+
+const SLOTS=[
+ {k:"Anti-visión",g:"deriva — donde acabo sin corregir",src:16,cls:"drift"},
+ {k:"Visión",g:"rumbo — el ángulo que elijo",src:17,cls:"course"},
+ {k:"Meta a 1 año",g:"misión principal",src:18,cls:""},
+ {k:"Proyecto a 1 mes",g:"jefe final",src:19,cls:""},
+ {k:"Palancas diarias",g:"misiones",src:20,cls:""},
+ {k:"Restricciones",g:"reglas — qué no sacrifico",src:null,cls:""}
+];
+
+/* ══ estado ══ */
+let D={a:{},slots:{},start:""};
+let view="intro", i=0;
+
+async function init(){
+  D=Object.assign({a:{},slots:{},start:"",theme:"auto"},await store.get());
+  applyTheme(D.theme||"auto");
+  matchMedia("(prefers-color-scheme:dark)").addEventListener("change",()=>{
+    if((D.theme||"auto")==="auto") applyTheme("auto");
+  });
+  buildMarks();buildSched();buildChart();
+  const t=new Date();t.setDate(t.getDate()+1);
+  document.getElementById("startDate").value=D.start||t.toISOString().slice(0,10);
+  document.getElementById("startDate").onchange=e=>{D.start=e.target.value;save();};
+  document.getElementById("imp").onchange=onImport;
+  if(Object.keys(D.a).length) paint();
+}
+function save(){store.set(D);const s=document.getElementById("saved");s.textContent="Guardado";clearTimeout(save._t);save._t=setTimeout(()=>s.textContent="",1400);}
+
+function buildMarks(){
+  const m=document.getElementById("marks");m.innerHTML="";
+  QS.forEach((_,n)=>{const d=document.createElement("div");d.className="mark";d.dataset.n=n;m.appendChild(d);});
+}
+function buildSched(){
+  const t=document.getElementById("schedTable");
+  t.innerHTML=PINGS.map(p=>`<tr><td>${String(p.h).padStart(2,"0")}:${String(p.m).padStart(2,"0")}</td><td>${p.q}</td></tr>`).join("");
+}
+function buildChart(){
+  const c=document.getElementById("chartSlots");
+  c.innerHTML=SLOTS.map((s,n)=>`
+    <div class="slot ${s.cls}">
+      <div class="k"><span>${s.k}</span><span>${s.g}</span></div>
+      <textarea data-slot="${n}" placeholder="${s.src!==null?"Se rellena desde tu respuesta "+(s.src+1):"Escríbelo ahora"}"></textarea>
+    </div>`).join("");
+  c.querySelectorAll("textarea").forEach(ta=>{
+    ta.oninput=()=>{D.slots[ta.dataset.slot]=ta.value;save();};
+  });
+}
+
+/* ══ vistas ══ */
+function show(id){["intro","quiz","sched","chart"].forEach(s=>document.getElementById(s).classList.toggle("hide",s!==id));view=id;window.scrollTo(0,0);}
+function go(n){i=n;paint();}
+function paint(){
+  if(i===SCHED_AT){show("sched");markPos(SCHED_AT);return;}
+  const idx=i>SCHED_AT?i-1:i;
+  if(idx>=QS.length){goChart();return;}
+  const q=QS[idx];
+  document.getElementById("block").textContent=q.b;
+  document.getElementById("qi").textContent=`${String(idx+1).padStart(2,"0")} / ${QS.length}`;
+  document.getElementById("qt").textContent=q.t;
+  const h=document.getElementById("qh");h.textContent=q.h;h.style.display=q.h?"block":"none";
+  const ta=document.getElementById("ans");
+  ta.value=D.a[idx]||"";
+  ta.oninput=()=>{D.a[idx]=ta.value;save();markPos(i);};
+  document.getElementById("nextBtn").textContent=(idx===QS.length-1)?"Ver la carta":"Siguiente";
+  show("quiz");markPos(i);ta.focus({preventScroll:true});
+}
+function markPos(cur){
+  const idx=cur>SCHED_AT?cur-1:(cur===SCHED_AT?SCHED_AT-.5:cur);
+  document.querySelectorAll(".mark").forEach(m=>{
+    const n=+m.dataset.n;
+    m.className="mark"+((D.a[n]||"").trim()?" done":"")+(n===idx?" here":"");
+  });
+  const done=Object.values(D.a).filter(v=>(v||"").trim()).length;
+  document.getElementById("pos").textContent=`${done} de ${QS.length} respondidas`;
+}
+function next(){i++;paint();}
+function prev(){if(i>0){i--;paint();}}
+function goChart(){
+  SLOTS.forEach((s,n)=>{
+    const ta=document.querySelector(`[data-slot="${n}"]`);
+    ta.value=D.slots[n]||(s.src!==null?(D.a[s.src]||""):"");
+  });
+  show("chart");markPos(-1);
+}
+async function wipe(){
+  if(!confirm("Se borran todas tus respuestas de este navegador. No hay copia.")) return;
+  const t=D.theme||"auto";
+  await store.clear();D={a:{},slots:{},start:"",theme:t};await store.set(D);
+  buildChart();markPos(-1);show("intro");
+}
+
+/* ══ export markdown ══ */
+function mdText(){
+  const d=new Date().toISOString().slice(0,10);
+  let o=`# Carta de navegación — ${d}\n\n`;
+  o+=`## Tablero\n\n| Casilla | Contenido |\n|---|---|\n`;
+  SLOTS.forEach((s,n)=>{
+    const v=(D.slots[n]||(s.src!==null?D.a[s.src]:"")||"—").replace(/\n+/g," ").replace(/\|/g,"\\|");
+    o+=`| **${s.k}** | ${v} |\n`;
+  });
+  o+=`\n---\n\n## Respuestas\n`;
+  let blk="";
+  QS.forEach((q,n)=>{
+    if(q.b!==blk){blk=q.b;o+=`\n### ${blk}\n`;}
+    o+=`\n**${n+1}. ${q.t}**${q.h?`\n\n*${q.h}*`:""}\n\n${D.a[n]||"_(sin responder)_"}\n`;
+  });
+  o+=`\n---\n\n## Interrupciones programadas\n\n`;
+  PINGS.forEach(p=>{o+=`- **${String(p.h).padStart(2,"0")}:${String(p.m).padStart(2,"0")}** — ${p.q}\n`;});
+  o+=`\nDesde el ${D.start||"—"}, catorce días.\n\n## Revisión mensual\n\nCompara tu respuesta 3 (qué concluiría alguien juzgando tu conducta) con la casilla Visión. Si divergen, la visión no está gobernando nada.\n`;
+  return o;
+}
+
+/* ══ export ics ══ */
+function pad(n){return String(n).padStart(2,"0");}
+function esc(s){return String(s||"").replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n");}
+function fold(l){ // RFC5545: líneas de 75 octetos
+  const out=[];while(l.length>73){out.push(l.slice(0,73));l=" "+l.slice(73);}out.push(l);return out.join("\r\n");
+}
+function stamp(){return new Date().toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";}
+function local(y,mo,d,h,mi){return `${y}${pad(mo)}${pad(d)}T${pad(h)}${pad(mi)}00`;}
+function uid(k){return `${k}-${Date.now()}@rumbo.local`;}
+
+function vevent({uidKey,start,end,summary,desc,rrule,alarm=true}){
+  let e=["BEGIN:VEVENT",`UID:${uid(uidKey)}`,`DTSTAMP:${stamp()}`,
+    `DTSTART:${start}`,`DTEND:${end}`,fold(`SUMMARY:${esc(summary)}`)];
+  if(desc) e.push(fold(`DESCRIPTION:${esc(desc)}`));
+  if(rrule) e.push(`RRULE:${rrule}`);
+  if(alarm) e.push("BEGIN:VALARM","ACTION:DISPLAY","TRIGGER:PT0S",fold(`DESCRIPTION:${esc(summary)}`),"END:VALARM");
+  e.push("END:VEVENT");return e.join("\r\n");
+}
+
+function icsText(){
+  const s=D.start||new Date().toISOString().slice(0,10);
+  const [y,mo,d]=s.split("-").map(Number);
+  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Rumbo//Protocolo de reset//ES","CALSCALE:GREGORIAN","METHOD:PUBLISH"];
+
+  // 6 interrupciones · 14 días
+  PINGS.forEach((p,n)=>{
+    const st=local(y,mo,d,p.h,p.m);
+    const em=p.m+10, eh=p.h+(em>=60?1:0);
+    L.push(vevent({uidKey:"ping"+n,start:st,end:local(y,mo,d,eh,em%60),
+      summary:"Interrupción — "+p.q, desc:"Pausa de dos minutos. Contéstala en voz alta o de cabeza.",
+      rrule:"FREQ=DAILY;COUNT=14"}));
+  });
+
+  // revisión mensual
+  const rd=new Date(y,mo-1,d);rd.setMonth(rd.getMonth()+1);
+  const drift=(D.slots[0]||D.a[16]||"(sin definir)"), course=(D.slots[1]||D.a[17]||"(sin definir)");
+  L.push(vevent({uidKey:"review",
+    start:local(rd.getFullYear(),rd.getMonth()+1,rd.getDate(),9,0),
+    end:local(rd.getFullYear(),rd.getMonth()+1,rd.getDate(),9,20),
+    summary:"Revisión mensual del rumbo (20 min)",
+    desc:`DERIVA — ${drift}\n\nRUMBO — ${course}\n\n1. ¿Sigue viva la lente de un año?\n2. ¿Qué proyecto toca este mes?\n3. ¿Mi conducta de las últimas semanas ha sido rumbo o deriva?`,
+    rrule:"FREQ=MONTHLY"}));
+
+  // excavación anual
+  L.push(vevent({uidKey:"annual",
+    start:local(y+1,mo,d,9,0),end:local(y+1,mo,d,18,0),
+    summary:"Repetir la excavación (día completo)",
+    desc:"Bloquea el día. Vuelve a la tanda 1 desde cero, sin releer las respuestas del año pasado hasta el final.",
+    rrule:"FREQ=YEARLY"}));
+
+  L.push("END:VCALENDAR");
+  return L.join("\r\n")+"\r\n";
+}
+
+function dl(name,text,mime){
+  const b=new Blob([text],{type:mime}),u=URL.createObjectURL(b),a=document.createElement("a");
+  a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),2000);
+}
+function dlMd(){dl(`carta-rumbo-${new Date().toISOString().slice(0,10)}.md`,mdText(),"text/markdown;charset=utf-8");}
+function dlIcs(){dl("rumbo.ics",icsText(),"text/calendar;charset=utf-8");}
+
+/* ══ import markdown ══ */
+function parseMd(txt){
+  const t=String(txt).replace(/\r\n/g,"\n");
+  const out={a:{},slots:{},start:""};
+
+  // tablero → casillas
+  t.split("\n").forEach(l=>{
+    const m=l.match(/^\|\s*\*\*(.+?)\*\*\s*\|\s*(.*?)\s*\|\s*$/);
+    if(!m) return;
+    const n=SLOTS.findIndex(s=>s.k===m[1].trim());
+    if(n<0) return;
+    const v=m[2].replace(/\\\|/g,"|").trim();
+    if(v && v!=="—") out.slots[n]=v;
+  });
+
+  // respuestas → preguntas
+  const sec=t.split(/^## Respuestas\s*$/m)[1]||"";
+  const parts=sec.split(/^\*\*(\d+)\.\s/m);
+  for(let k=1;k<parts.length;k+=2){
+    const n=parseInt(parts[k],10)-1;
+    if(!(n>=0&&n<QS.length)) continue;
+    const lines=parts[k+1].split("\n");
+    lines.shift();                                  // resto del enunciado
+    const body=[];
+    for(const l of lines){
+      if(/^(---\s*$|## )/.test(l)) break;           // fin de la sección
+      if(/^### /.test(l)) break;                    // siguiente tanda
+      if(/^\*[^*].*\*\s*$/.test(l)) continue;       // pista en cursiva
+      body.push(l);
+    }
+    const v=body.join("\n").trim();
+    if(v && v!=="_(sin responder)_") out.a[n]=v;
+  }
+
+  const s=t.match(/Desde el (\d{4}-\d{2}-\d{2})/);
+  if(s) out.start=s[1];
+
+  if(!Object.keys(out.a).length && !Object.keys(out.slots).length)
+    throw new Error("No he encontrado respuestas en ese archivo.");
+  return out;
+}
+
+function pickMd(){document.getElementById("imp").click();}
+
+function onImport(e){
+  const f=e.target.files&&e.target.files[0];
+  e.target.value="";
+  if(!f) return;
+  const r=new FileReader();
+  r.onerror=()=>alert("No he podido leer el archivo.");
+  r.onload=()=>{
+    let p;
+    try{p=parseMd(r.result);}
+    catch(err){alert(err.message+" Asegúrate de que es un .md exportado por esta herramienta.");return;}
+    const nq=Object.keys(p.a).length, ns=Object.keys(p.slots).length;
+    const had=Object.keys(D.a).length||Object.keys(D.slots).length;
+    if(had && !confirm(`Vas a sustituir lo que hay guardado por ${nq} respuestas y ${ns} casillas del archivo. ¿Sigo?`)) return;
+    D.a=p.a;D.slots=p.slots;if(p.start)D.start=p.start;
+    save();buildChart();
+    document.getElementById("startDate").value=D.start||document.getElementById("startDate").value;
+    goChart();
+    alert(`Importado: ${nq} respuestas y ${ns} casillas.`);
+  };
+  r.readAsText(f);
+}
+
+init();
+</script>
+</body>
+</html>
